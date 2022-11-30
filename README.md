@@ -359,7 +359,7 @@ ALLOWED_HOSTS = ['string-rota.herokuapp.com', 'localhost']
 This tells Heroku that thew app will be displayed using the gunicorn webserver
 - Create 'Procfile' at the top level, next to manage.py
 ```
-web: gunicorn  string-rota.wsgi
+web: gunicorn django_string_rota.wsgi
 ```
 #### Push to GitHub and connect repository to Heroku
 - Push to git hub

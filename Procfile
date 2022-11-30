@@ -1,1 +1,1 @@
-web: gunicorn  string-rota.wsgi
+web: gunicorn django_string_rota.wsgi
