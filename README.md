@@ -414,6 +414,18 @@ Extensive use of the built in debugger was used to test the more complex aspects
 ## Bugs and Fixes
 [Back to Top](#contents)
 
+### First Deployment
+```
+       Failed to build backports.zoneinfo
+       ERROR: Could not build wheels for backports.zoneinfo, which is required to install pyproject.toml-based projects
+```
+- Stack Overflow: 20BCS055_Ankur Mishira writes:
+"In order to do that you need to tell heroku to switch that version and it can be done as follows :
+
+Create runtime.txt in root directory.
+python-3.8.10 <- write this in 'runtime.txt' there as to specify the version.
+heroku will then install this version and you will be not getting anymore error."
+
 
 ## Known Issues
 [Back to Top](#contents)
