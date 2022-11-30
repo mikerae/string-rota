@@ -425,6 +425,28 @@ Extensive use of the built in debugger was used to test the more complex aspects
 Create runtime.txt in root directory.
 python-3.8.10 <- write this in 'runtime.txt' there as to specify the version.
 heroku will then install this version and you will be not getting anymore error."
+- The next build failed:
+```
+-----> Building on the Heroku-22 stack
+-----> Determining which buildpack to use for this app
+-----> Python app detected
+-----> Using Python version specified in runtime.txt
+ !     Requested runtime 'python-3.8.10' is not available for this stack (heroku-22).
+ !     For supported versions, see: https://devcenter.heroku.com/articles/python-support
+ !     Push rejected, failed to compile Python app.
+ !     Push failed
+```
+- Installed version of Python is:
+```
+gitpod /workspace/string-rota (main) $ python3 --version
+Python 3.8.11
+```
+- Heroku supported versions of Python are:
+python-3.11.0 on all supported stacks
+python-3.10.8 on all supported stacks (recommended)
+python-3.9.15 on all supported stacks
+python-3.8.15 on Heroku-18 and Heroku-20 only
+python-3.7.15 on Heroku-18 and Heroku-20 only
 
 
 ## Known Issues
