@@ -447,8 +447,36 @@ python-3.10.8 on all supported stacks (recommended)
 python-3.9.15 on all supported stacks
 python-3.8.15 on Heroku-18 and Heroku-20 only
 python-3.7.15 on Heroku-18 and Heroku-20 only
+- Removed runtime.txt file, added Python buildpack to Heroku
+    - Build failed with same error:
+    ```
+Failed to build backports.zoneinfo
+       ERROR: Could not build wheels for backports.zoneinfo, which is required to install pyproject.toml-based projects
+ !     Push rejected, failed to compile Python app.
+ !     Push failed
+    ```
+It was determined that I used an incompatible version of Django.
 
 
+student suport:
+```
+pip uninstall Django
+﻿
+﻿pip install Django==3.2
+﻿
+﻿pip freeze > requirements.txt
+```
+
+I would recommend using the versions of packages used in the walkthrough. First you can uninstall existing packages:
+﻿pip uninstall -r requirements.txt -y
+﻿
+﻿then you can replace your requirements file with this one:
+
+﻿https://github.com/Code-Institute-Solutions/Django3blog/blob/master/12_final_deployment/requirements.txt
+﻿
+﻿then install the packages listed in the requirements file:
+﻿
+﻿pip install -r requirements.txt
 ## Known Issues
 [Back to Top](#contents)
 
