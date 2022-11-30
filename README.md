@@ -310,7 +310,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'cloudinary_storage',
     'django.contrib.staticfiles',
-    'cloudinary'
+    'cloudinary',
     'string_rota',
 ]
 ```
@@ -369,7 +369,8 @@ web: gunicorn django_string_rota.wsgi
     - Select the string-rota repository
     - choose auomatic deployment
 
-
+#### Build, deploy and open app on Heroku
+After some trouble-shooting (see bugs and fixes) the default Django landing page was shown on the Heroku deployed site.
 
 
 
@@ -414,7 +415,7 @@ Extensive use of the built in debugger was used to test the more complex aspects
 ## Bugs and Fixes
 [Back to Top](#contents)
 
-### First Deployment
+### First Deployment Fail
 ```
        Failed to build backports.zoneinfo
        ERROR: Could not build wheels for backports.zoneinfo, which is required to install pyproject.toml-based projects
@@ -456,27 +457,39 @@ Failed to build backports.zoneinfo
  !     Push failed
     ```
 It was determined that I used an incompatible version of Django.
-
-
-student suport:
+Django was uninstalled
+Then re-installed using:
 ```
-pip uninstall Django
-﻿
-﻿pip install Django==3.2
-﻿
-﻿pip freeze > requirements.txt
+pip3 install Django==3.2
+pip3 freeze --local > requirements.txt
 ```
-
+After further Heroku build fails, Code Institue Student Support recomended re-installing all libraries using the following:
+```
+pip3 uninstall -r requirements.txt -y
+```
+The contents of requirements.txt was replaced from:
 I would recommend using the versions of packages used in the walkthrough. First you can uninstall existing packages:
-﻿pip uninstall -r requirements.txt -y
-﻿
-﻿then you can replace your requirements file with this one:
+https://github.com/Code-Institute-Solutions/Django3blog/blob/master/12_final_deployment/requirements.txt
+Then the new requirements were installedfor  the packages listed in the requirements file:
+pip3 install -r requirements.txt
 
-﻿https://github.com/Code-Institute-Solutions/Django3blog/blob/master/12_final_deployment/requirements.txt
-﻿
-﻿then install the packages listed in the requirements file:
-﻿
-﻿pip install -r requirements.txt
+After this, the build on Heroku succeeded , but the app did not open.
+The app log showed that a comma was missing in the INSTALLED APPS.
+This was corrected to:
+```
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'cloudinary_storage',
+    'django.contrib.staticfiles',
+    'cloudinary',
+    'string_rota',
+]
+```
+The build deployed  successfully, and the app opend with the default Django landing page.
 ## Known Issues
 [Back to Top](#contents)
 
