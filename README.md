@@ -128,6 +128,10 @@ The following libraries were used:
 #### psycopg2-2.9.5
 #### Django-4.1.3
 
+#### gspread google-auth
+
+#### pandas numpy pyjanitor
+
 #### Python Libraries
 The following internal python libraries were used:
 - 
@@ -165,15 +169,47 @@ pip3 freeze --local > requirements.txt
 ```
 This stored the following requirements:
 ```
-asgiref==3.5.2
-backports.zoneinfo==0.2.1
-cloudinary==1.30.0
-dj-database-url==1.0.0
-dj3-cloudinary-storage==0.0.6
-Django==4.1.3
+asgiref==3.3.4
+cachetools==5.2.0
+cloudinary==1.25.0
+cryptography==3.4.8
+dj-database-url==0.5.0
+dj3-cloudinary-storage==0.0.5
+Django==3.2.3
+django-allauth==0.44.0
+django-crispy-forms==1.11.2
+django-summernote==0.8.11.6
+google-api-core==2.11.0
+google-api-python-client==2.68.0
+google-auth==2.15.0
+google-auth-httplib2==0.1.0
+google-auth-oauthlib==0.7.1
+googleapis-common-protos==1.57.0
+gspread==5.7.2
 gunicorn==20.1.0
-psycopg2==2.9.5
-sqlparse==0.4.3
+httplib2==0.21.0
+lazy_loader==0.1rc2
+multipledispatch==0.6.0
+natsort==8.2.0
+numpy==1.23.5
+oauthlib==3.1.1
+pandas==1.5.2
+pandas-flavor==0.3.0
+protobuf==4.21.10
+psycopg2==2.8.6
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
+pyjanitor==0.24.0
+PyJWT==2.1.0
+python3-openid==3.2.0
+pytz==2021.1
+requests-oauthlib==1.3.0
+rsa==4.9
+scipy==1.9.3
+sqlparse==0.4.1
+tabulate==0.9.0
+tqdm==4.64.1
+xarray==2022.12.0
 ```
 
 A Django project was created:
@@ -371,6 +407,14 @@ web: gunicorn django_string_rota.wsgi
 
 #### Build, deploy and open app on Heroku
 After some trouble-shooting (see bugs and fixes) the default Django landing page was shown on the Heroku deployed site.
+
+#### RSNO Program and Player Data
+Access to live RSNO data was not within the scope of this project. This access was assumed. To simulate live project data and current player data then following data was received from the RSNO in csv form: 
+- a 4 week schedule of orchestal projects
+- a list of string player names and their Annual Natural Free Day Allocation
+These csv files were imported into a google worksheet.
+The worksheet data was accessed using google drive and gspread APIs.
+Pandas, Numpy and Janitor libraries were used to clean the data and import it into the required string-rota models.
 
 
 
