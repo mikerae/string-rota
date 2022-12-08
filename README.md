@@ -13,7 +13,7 @@ Written in python, developed on GitPod and Git Hub and deployed via Heroku.
     + [Structure](#structure)
     + [Skeleton](#skeleton)
     + [Surface](#surface)
-+ [Schemas](#model-schema)
++ [Schemas](#Schemas)
 + [Technologies Used](#technologies-used)
 + [Resources](#resources)
 + [Development](#development)
@@ -104,7 +104,14 @@ T
 
 #### XX
 
-### Model Schema
+## Schemas
+### Model Entity Relationship Diagram (EDR)
+The entities for this project have the following relationships and attributes:
+![String-Rota-Erd](static/readme_images/string-roto-erd.png)
+### Model Schemas
+The Models Schemas erds for this project are:
+![String-Rota-erd-Schema](static/readme_images/string-rota-erd-schema.png)
+
 [Back to Top](#contents)
 
 ## Technologies Used

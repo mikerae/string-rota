@@ -17,5 +17,5 @@ PLAYERS_RAW_DATA = get_players(SHEET)
 projects_landing_df = pd.DataFrame(PROJECTS_RAW_DATA)
 players_landing_df = pd.DataFrame(PLAYERS_RAW_DATA)
 
-print(projects_landing_df.head())
-# print(players_landing_df.head())
+# print(projects_landing_df.head())
+print(players_landing_df.head())
