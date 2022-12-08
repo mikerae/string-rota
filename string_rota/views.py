@@ -1,6 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
 
 
 # Create your views here.
-def hello_admin(request):
-    return HttpResponse("Hello Admin")
+def get_projects_list(request):
+    return render(request, 'string_rota/projects_list.html')

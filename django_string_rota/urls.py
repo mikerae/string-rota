@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from string_rota.views import hello_admin
+from string_rota.views import get_projects_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello_admin/', hello_admin, name='hello_admin')
+    path('', get_projects_list, name='get_projects_list')
 ]
