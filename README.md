@@ -151,6 +151,7 @@ The following resources were used:
     + CI ....
 
 + Python Documentation
++ Django Documentation: https://docs.djangoproject.com/en/3.2/ref/
 + Stack Overflow: https://stackoverflow.com/
 + Wikapedia: https://en.wikipedia.org/wiki/Main_Page
 ## Development
