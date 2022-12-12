@@ -5,6 +5,19 @@ from django.db import models
 class Project(models.Model):
     project_name = models.CharField(max_length=200, null=False, blank=False)
 
+    def __str__(self):
+        return self.project_name
+
+
+class Repertoire(models.Model):
+    rep_name = models.CharField(
+        max_length=200, unique=True, null=False, blank=False
+        )
+    instrumentation = models.CharField(max_length=14, null=False, blank=False)
+
+    def __str__(self):
+        return self.rep_name
+
 
 # class Player_Project(models.Model):
 #     PERFORMANCE_STATUS_CHOICES = (
@@ -84,32 +97,3 @@ class Project(models.Model):
 
 # class Session(models.Model):
 #     pass
-
-
-# class Project_Repertoire(models.Model):
-#     pass
-
-
-# class Repertoire(model.Models):
-#     def vln1_nos(self.intrumentation):
-#         pass
-
-#     def vln2_nos(self.intrumentation):
-#         pass
-
-#     def vla_nos(self.intrumentation):
-#         pass
-
-#     def vlc_nos(self.intrumentation):
-#         pass
-
-#     def db_nos(self.intrumentation):
-#         pass
-
-#     name = models.CharField(max_length=200, unique=True)
-#     intrumentation = models.CharField(max_length=14)
-#     vln1_nos = vln1_nos
-#     vln2_nos = vln2_nos
-#     vla_nos = vla_nos
-#     vlc_nos = vlc_nos
-#     db_nos = db_nos
