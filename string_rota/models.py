@@ -19,6 +19,18 @@ class Repertoire(models.Model):
         return self.rep_name
 
 
+class ProjectRepertoire(models.Model):
+    project = models.OneToOneField(
+        Project,
+        on_delete=models.CASCADE,
+    )
+    repertoire = models.ManyToManyField(
+        Repertoire,
+    )
+
+    def __str__(self):
+        return self.project.project_name
+
 # class Player_Project(models.Model):
 #     PERFORMANCE_STATUS_CHOICES = (
 #         (PL, 'Playing'),

@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Project, Repertoire
+from .models import Project, Repertoire, ProjectRepertoire
 
 # Register your models here.
 admin.site.register(Project)
 admin.site.register(Repertoire)
+admin.site.register(ProjectRepertoire)

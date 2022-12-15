@@ -3,7 +3,7 @@
 # Orchestra String Rota
 Code Institute Milestone Project 4
 Written in python, developed on GitPod and Git Hub and deployed via Heroku.
-## You can view a live version [here](#)
+## You can view a live version [here](https://string-rota.herokuapp.com/)
 ## How to use
 
 ## Contents
@@ -13,7 +13,7 @@ Written in python, developed on GitPod and Git Hub and deployed via Heroku.
     + [Structure](#structure)
     + [Skeleton](#skeleton)
     + [Surface](#surface)
-+ [Schemas](#Schemas)
++ [Database Design](#database-design)
 + [Technologies Used](#technologies-used)
 + [Resources](#resources)
 + [Development](#development)
@@ -89,7 +89,7 @@ Future versions of the game can include:
 ### Structure
 [Back to Top](#contents)
 #### Flow Chart
-![flow chart](/assets/images/flow-chart.png)
+![xxx](//assets/images/#)
 
 
 ### Skeleton
@@ -103,14 +103,64 @@ T
 [Back to Top](#contents)
 
 #### XX
+## Database Design
+[Back to Top](#contents)
+### Mission Statement
+The purpose of the string-rota database is to facilitate the creation, management and disemination of Orchestral String Section Rotas and related data.
+### Mission Objectives
+- Present Orchestral Program data for each project
+- Create and view section seating plans for each project
+- Maintain and present player Natural Free Day Data
+- Maintain and present player Reserve status for each project
+- Maintain and present player Reduced-Repertoitre status for each project
+### Requirements
+#### User Requirements
+1. Return a list of all projects
+2. Return a seating plan for a specific string section project
+3. Return a list of who is Reserve for each project
+4. Return a list of who is not required for Reduced Repertoire.
+5. Return a player's current Natural Free Day Data in the context of their annual quota.
+6. Return an historical list of Reserve Allcations for each player.
+#### Rota-Manager Requirements
+1. Add players to specific seating positions for each project
+2. Allocate Reserve/On/Off/Not-Available Status to each player in the Rota-Manager's section for each  project.
+3. Allocate Reduced-Repertoire status to particular players per project.
+4. Create and edit Seating Plans and allocations in draft mode, and pubish to users when ready.
+#### Office Requirements
+1. Return a seating plan for all sections per project
+2. Return Natural Free Day Allcoation and totals for each player, for each project
+3. Return roling totals for Natural Free Day Allocations and usage for each player
+4. Return a list of all players with Reserve status for each project
+5. Edit and update all 
+#### System Requirements
+1. Return Program Data
+2. Return Seating Position Data for each player, project and section.
+3. Store and Calculate Natural Free Day allocations and totals based on Allocation for each porject.
+4. Store and Return Reserve player status for each project.
+### Preliminary Field List
+![Preliminary Field List](/assets/images/preliminary-field-list.png)
+### Resolution of Field and Table anomilies
+Inorder to resolve field and table anomilies, and in order to preserve data integrity the following process was followed:
+- The tables were flattened, and populated with data.
+    - Any problematic fields were resolved
+- The resulting fields and tables were compared with the characteristics of a sound field or table.
 
-## Schemas
-### Model Entity Relationship Diagram (EDR)
+Very Academy produced a helfull checklist to evaluate fields and tables (https://www.youtube.com/watch?v=ycw8ZsT1ofw&t=1901s):
+![Field and Table Checklist](/assets/images/field-and-table-checklist.png)
+
+When attempting to flatten the project table, the resulting table produced duplicate data, further need for flattening and some caluculated data:
+![Example of field and table problem resolution](/assets/images/example-of-field-table-problem-resolution-1.png)
+
+The products table was amended to remove duplucate data, multi-data fields and calculated fields. At this point the checklists above were mostly saticefied.
+
+![Rationalisation of project table](/assets/images/rationalisation-of-product-table.png)
+
+#### Model Entity Relationship Diagram (EDR)
 The entities for this project have the following relationships and attributes:
-![String-Rota-Erd](static/readme_images/string-roto-erd.png)
-### Model Schemas
+![String-Rota-Erd](/assets/images/string-roto-erd.png)
+#### Model Schemas
 The Models Schemas erds for this project are:
-![String-Rota-erd-Schema](static/readme_images/string-rota-erd-schema.png)
+![String-Rota-erd-Schema](/assets/images/string-rota-erd-schema.png)
 
 [Back to Top](#contents)
 
@@ -552,7 +602,7 @@ The build deployed  successfully, and the app opend with the default Django land
 ### Initial Development Deployment
 The project was deployed to Heroku in the intitial stages of development in order to resolve early and fundamental deployment issues.
 
-#### !!!!! Review and update all of the following!!!!!
+# !!!!! Review and update all of the following!!!!!
 
 The project was deployed to the Heroku platform using the following steps:
 - Delete unused resources/libraries
@@ -568,7 +618,6 @@ The project was deployed to the Heroku platform using the following steps:
         -  key: “PORT”, Value : “8000”
     - Add build packs:
         - Heroku/python
-        - Heroic/nodejs
 - in deploy
     - choose deployment method
         - GitHub
@@ -625,3 +674,4 @@ The project was deployed to the Heroku platform using the following steps:
 Grateful acknowledgment is given to the following
 - Mentor: Martina Terlevic for her amazing guidance and encouragement
 - Code Institute: for training materials, training environment and specific code
+- Very Academy: Django ORM | Case Study 1 https://www.youtube.com/watch?v=ycw8ZsT1ofw&t=1901s
