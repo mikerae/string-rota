@@ -392,7 +392,7 @@ gitpod /workspace/string-rota (main) $ python3 manage.py migrate
 #### Add Temporary Config Var to Heroku
 There are no static files yet, and without the following variable set, the build will fail on Heroku.
 Once static files are introduced into the project, this variable can be removed.
-- DISABLE_COLLECTSATIC: 
+- DISABLE_COLLECTSATICK:1
 #### Update Installed Apps and media/ static files in settings.py
 - add 'cloudinary_storage' above 'django.contrib.staticfiles'
 ```
