@@ -22,27 +22,29 @@ class Section(models.Model):
         return self.section_name
 
 
-# class Player(models.Model):
+class Player(models.Model):
 
-#     player_name = models.CharField(max_length=50, unique=True)
-#     is_contract = models.BooleanField(
-#         null=False, blank=False, default=True
-#         )
-#     player_notes = models.TextField()
-#     annual_nfd_quota = models.IntegerField(
-# null=False, blank=False, default=0)
-#     nfds_used_to_date = models.IntegerField(
-# null=False, blank=False, default=0)
-#     off_reduced_rep_tot = models.IntegerField(
-#         null=False, blank=False, default=0
-#         )
-#     section_name = models.ForeignKey(Section,  on_delete=models.CASCADE)
-#     users_django_id = models.OneToOneField(
-#         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-#         )
+    player_name = models.CharField(max_length=50, unique=True)
+    is_contract = models.BooleanField(
+        null=False, blank=False, default=True
+        )
+    player_notes = models.TextField()
+    annual_nfd_quota = models.IntegerField(
+        null=False, blank=False, default=0
+        )
+    nfds_used_to_date = models.IntegerField(
+        null=False, blank=False, default=0
+        )
+    off_reduced_rep_tot = models.IntegerField(
+        null=False, blank=False, default=0
+        )
+    section_name = models.ForeignKey(Section,  on_delete=models.CASCADE)
+    users_django_id = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+        )
 
-#     def __str__(self):
-#         return self.player_name
+    def __str__(self):
+        return self.player_name
 
 
 # class Role(models.Model):

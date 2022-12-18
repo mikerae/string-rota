@@ -470,9 +470,13 @@ After some trouble-shooting (see bugs and fixes) the default Django landing page
 Access to live RSNO data was not within the scope of this project. This access was assumed. To simulate live project data and current player data then following data was received from the RSNO in csv form: 
 - a 4 week schedule of orchestal projects
 - a list of string player names and their Annual Natural Free Day Allocation
+
 These csv files were imported into a google worksheet.
 The worksheet data was accessed using google drive and gspread APIs.
-Pandas, Numpy and Janitor libraries were used to clean the data and import it into the required string-rota models.
+
+The worksheets were separated into separate sheets reflecting the structure of the project models. The data was cleaned manually. In future versions, data would be cleaned using Pandas, Numpy and Pyjanitor.
+
+The worksheet data was imported incrementally into the database using a script. Niroj in https://www.edureka.co/community/73739/django-script-access-model-objects-without-using-manage-shell provided a solutin to access the project models for this purpose.
 
 
 
@@ -675,3 +679,4 @@ Grateful acknowledgment is given to the following
 - Mentor: Martina Terlevic for her amazing guidance and encouragement
 - Code Institute: for training materials, training environment and specific code
 - Very Academy: Django ORM | Case Study 1 https://www.youtube.com/watch?v=ycw8ZsT1ofw&t=1901s
+- Niroj: https://www.edureka.co/community/73739/django-script-access-model-objects-without-using-manage-shell

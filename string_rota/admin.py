@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     Repertoire,
     Section,
-    # Player,
+    Player,
     # Role,
     # Session,
     # Project,
@@ -15,7 +15,7 @@ from .models import (
 # Register your models here.
 admin.site.register(Repertoire)
 admin.site.register(Section)
-# admin.site.register(Player)
+admin.site.register(Player)
 # admin.site.register(Role)
 # admin.site.register(Session)
 # admin.site.register(Project)
