@@ -24,7 +24,8 @@ class Section(models.Model):
 
 class Player(models.Model):
 
-    player_name = models.CharField(max_length=50, unique=True)
+    player_first_name = models.CharField(max_length=50, unique=True)
+    player_last_name = models.CharField(max_length=50, unique=True)
     is_contract = models.BooleanField(
         null=False, blank=False, default=True
         )
@@ -43,20 +44,15 @@ class Player(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
         )
 
+    @property
+    def player_name(self):
+        player_name = Concat(
+            'self.player_first_name', Value(' '), 'player_last_name', Value()
+            )
+        return player_nmae
+
     def __str__(self):
         return self.player_name
-
-
-# class Role(models.Model):
-#     player = models.BooleanField(default=True)
-#     rota_manager = models.BooleanField()
-#     office = models.BooleanField()
-#     super_user = models.BooleanField()
-#     users_django_id = models.ManyToManyField(settings.AUTH_USER_MODEL)
-
-#     def __str__(self):
-#         return self.users_django_id
-
 
 # class Session(models.Model):
 #     SESSION_TYPE_CHOICES = [

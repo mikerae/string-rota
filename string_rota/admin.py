@@ -3,7 +3,6 @@ from .models import (
     Repertoire,
     Section,
     Player,
-    # Role,
     # Session,
     # Project,
     # Seating_Position,
@@ -16,7 +15,6 @@ from .models import (
 admin.site.register(Repertoire)
 admin.site.register(Section)
 admin.site.register(Player)
-# admin.site.register(Role)
 # admin.site.register(Session)
 # admin.site.register(Project)
 # admin.site.register(Seating_Position)
