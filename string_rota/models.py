@@ -5,7 +5,7 @@ from django.db.models import Value as V
 
 
 class Repertoire(models.Model):
-    rep_name = models.CharField(
+    name = models.CharField(
         max_length=200, null=False, blank=False
         )
     instrumentation = models.CharField(max_length=14, null=False, blank=False)
@@ -14,24 +14,24 @@ class Repertoire(models.Model):
         verbose_name_plural = "repertoire"
 
     def __str__(self):
-        return self.rep_name
+        return self.name
 
 
 class Section(models.Model):
-    section_name = models.CharField(max_length=11, null=False, blank=False)
+    name = models.CharField(max_length=11, null=False, blank=False)
 
     def __str__(self):
-        return self.section_name
+        return self.name
 
 
 class Player(models.Model):
 
-    player_first_name = models.CharField(max_length=50)
-    player_last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     is_contract = models.BooleanField(
         null=False, blank=False, default=True
         )
-    player_notes = models.TextField()
+    notes = models.TextField()
     annual_nfd_quota = models.IntegerField(
         null=False, blank=False, default=0
         )
@@ -41,13 +41,13 @@ class Player(models.Model):
     off_reduced_rep_tot = models.IntegerField(
         null=False, blank=False, default=0
         )
-    section_name = models.ForeignKey(Section,  on_delete=models.CASCADE)
-    users_django_id = models.OneToOneField(
+    section = models.ForeignKey(Section,  on_delete=models.CASCADE)
+    users_django = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True,
         )
 
     def __str__(self):
-        return self.player_first_name
+        return f"{self.first_name} {self.last_name}"
 
 # class Session(models.Model):
 #     SESSION_TYPE_CHOICES = [
