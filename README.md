@@ -249,15 +249,12 @@ httplib2==0.21.0
 lazy_loader==0.1rc2
 multipledispatch==0.6.0
 natsort==8.2.0
-numpy==1.23.5
 oauthlib==3.1.1
-pandas==1.5.2
 pandas-flavor==0.3.0
 protobuf==4.21.10
 psycopg2==2.8.6
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-pyjanitor==0.24.0
 PyJWT==2.1.0
 python3-openid==3.2.0
 pytz==2021.1
@@ -394,6 +391,7 @@ There are no static files yet, and without the following variable set, the build
 Once static files are introduced into the project, this variable can be removed.
 - DISABLE_COLLECTSATICK:1
 #### Update Installed Apps and media/ static files in settings.py
+The deploymet platform, Heroku, is epherimal i.e. when it is not being used, it stops running activiely and any state data is lost. It is necessary, therefore, to store static files in a permenant state localtion. For this project, Cloudinary was used as the permenante storage location for the static files.
 - add 'cloudinary_storage' above 'django.contrib.staticfiles'
 ```
 INSTALLED_APPS = [
@@ -467,16 +465,20 @@ web: gunicorn django_string_rota.wsgi
 After some trouble-shooting (see bugs and fixes) the default Django landing page was shown on the Heroku deployed site.
 
 #### RSNO Program and Player Data
-Access to live RSNO data was not within the scope of this project. This access was assumed. To simulate live project data and current player data then following data was received from the RSNO in csv form: 
+Access to live RSNO data was not within the scope of this project.
+This access was assumed. To simulate live project data and current player data then following data was received from the RSNO in csv form: 
 - a 4 week schedule of orchestal projects
 - a list of string player names and their Annual Natural Free Day Allocation
+##### Data Security
+The RSNO data is private. No RSNO data is accesible via the Github repository, and the data is only accessable via the Heroku deployed app for authenticated users.
+To preserve this level of privacy, a private google drive was used to store the RSNO data before importing it into the project.
 
-These csv files were imported into a google worksheet.
-The worksheet data was accessed using google drive and gspread APIs.
+These RSNO csv files were imported into a google worksheet, stored on the private google drive.
+The worksheet data was accessed using the google drive and gspread APIs.
 
 The worksheets were separated into separate sheets reflecting the structure of the project models. The data was cleaned manually. In future versions, data would be cleaned using Pandas, Numpy and Pyjanitor.
 
-The worksheet data was imported incrementally into the database using a script. Niroj in https://www.edureka.co/community/73739/django-script-access-model-objects-without-using-manage-shell provided a solutin to access the project models for this purpose.
+The worksheet data was imported incrementally into the database using a script run from the terminal.  Niroj in https://www.edureka.co/community/73739/django-script-access-model-objects-without-using-manage-shell, and the Django documantation provided a solution to access the project models for this purpose, since specific Django setup code was needed for stand-alone scripts.
 
 
 

@@ -4,7 +4,7 @@ from django.conf import settings
 
 class Repertoire(models.Model):
     rep_name = models.CharField(
-        max_length=200, unique=True, null=False, blank=False
+        max_length=200, null=False, blank=False
         )
     instrumentation = models.CharField(max_length=14, null=False, blank=False)
 

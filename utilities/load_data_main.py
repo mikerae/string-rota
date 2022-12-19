@@ -14,16 +14,17 @@ def load_data_main():
     PLAYER_DATA = get_players(SHEET)
 
     def load_repertoire_data(DATA):
-        """ Load project data into project database """
-        # for row in WORKSHEET_DATA:
-        #     print(row)
-        print(DATA[0])
+        """ Load repertoire data into project database """
+        for row in DATA:
+            repertoire_row = Repertoire(
+                rep_name=row['Repertoire'],
+                instrumentation=row['Instrumentation']
+                )
+            repertoire_row.save()
 
     def load_player_data(DATA):
-        """ Load project data into project database """
-        # for row in WORKSHEET_DATA:
-        #     print(row)
+        """ Load player data into project database """
         print(DATA[0])
 
-    load_repertoire_data(REPERTOIRE_DATA)
-    load_player_data(PLAYER_DATA)
+    load_repertoire_data(REPERTOIRE_DATA)  # Data already loaded!
+    # load_player_data(PLAYER_DATA)
