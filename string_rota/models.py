@@ -80,42 +80,54 @@ class Project(models.Model):
     player = models.ManyToManyField(Player, through='player_project')
     repertoire_name = models.ManyToManyField(Repertoire)
     seating_plan = models.ManyToManyField(
-            'Seating_Position', through='Seating_Plan'
+        'Seating_Plan',
+        related_name='plan_seating'
         )
 
     def __str__(self):
         return self.name
 
 
+class Seating_Plan(models.Model):
+    PLAN_STATUS_CHOICES = [
+        ('D', 'Draft'),
+        ('P', 'Published')
+        ]
+    plan_status = models.CharField(
+        max_length=1,
+        null=False,
+        blank=False,
+        choices=PLAN_STATUS_CHOICES,
+        default='D'
+        )
+    project = models.ForeignKey(
+        Project,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='project_plan'
+        )
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    player = models.ManyToManyField(
+        Player,
+        through='seating_position',
+        through_fields=('seating_plan', 'player')
+        )
+
+    def __str__(self):
+        return f'{self.section} {self.project}'
+
+
 class Seating_Position(models.Model):
     position_number = models.IntegerField()
     seating_plan = models.ForeignKey(
-        'Seating_Plan', on_delete=models.CASCADE, related_name='plan',
+        Seating_Plan,
+        null=True,
+        on_delete=models.CASCADE
         )
-    player_id = models.ForeignKey(
-        Player, on_delete=models.CASCADE
-        )
-    section_id = models.ForeignKey(
-        Section, on_delete=models.CASCADE
-        )
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.position_number
-
-
-class Seating_Plan(models.Model):
-    is_published = models.BooleanField(default=False)
-    project_id = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name='seating_plans',
-        )
-    section_name = models.ForeignKey(Section, on_delete=models.CASCADE)
-    seating_position = models.ForeignKey(
-        Seating_Position, on_delete=models.CASCADE, related_name='postition',
-        )
-    player = models.ManyToManyField(Player, through='seating_position',)
-
-    def __str__(self):
-        return self.project_id
+        return f'{self.seating_plan} {self.player} {self.position_number}'
 
 
 class Player_Project(models.Model):
