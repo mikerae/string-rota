@@ -81,11 +81,25 @@ class Project(models.Model):
     repertoire_name = models.ManyToManyField(Repertoire)
     seating_plan = models.ManyToManyField(
         'Seating_Plan',
-        related_name='plan_seating'
+        related_name='plan_seating',
         )
+    sessions = models.ManyToManyField(Session, related_name='session')
 
     def __str__(self):
         return self.name
+
+
+class Seating_Position(models.Model):
+    position_number = models.IntegerField()
+    seating_plan = models.ForeignKey(
+        'Seating_Plan',
+        null=True,
+        on_delete=models.CASCADE
+        )
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.seating_plan} {self.player} {self.position_number}'
 
 
 class Seating_Plan(models.Model):
@@ -109,25 +123,12 @@ class Seating_Plan(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     player = models.ManyToManyField(
         Player,
-        through='seating_position',
+        through='Seating_Position',
         through_fields=('seating_plan', 'player')
         )
 
     def __str__(self):
         return f'{self.section} {self.project}'
-
-
-class Seating_Position(models.Model):
-    position_number = models.IntegerField()
-    seating_plan = models.ForeignKey(
-        Seating_Plan,
-        null=True,
-        on_delete=models.CASCADE
-        )
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.seating_plan} {self.player} {self.position_number}'
 
 
 class Player_Project(models.Model):
@@ -150,12 +151,12 @@ class Player_Project(models.Model):
     guest_principal = models.BooleanField(
         null=False, default=False
         )
-    project_id = models.ForeignKey(
+    project = models.ForeignKey(
         Project,  on_delete=models.CASCADE
         )
-    player_id = models.ForeignKey(
+    player = models.ForeignKey(
         Player,  on_delete=models.CASCADE
         )
 
     def __str__(self):
-        return self.performance_status
+        return f'{self.player} {self.project}'
