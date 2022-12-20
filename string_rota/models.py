@@ -69,81 +69,81 @@ class Session(models.Model):
     repertoire = models.ManyToManyField(
         Repertoire
         )
+    project = models.ForeignKey('Project', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.date} {self.start_time}"
+        return f"{self.start_time} / {self.date} / {self.project}"
 
 
 class Project(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
-    # player = models.ManyToManyField(Player, through='player_project')
+    player = models.ManyToManyField(Player, through='player_project')
     repertoire_name = models.ManyToManyField(Repertoire)
-    # seating_plan = models.ManyToManyField(
-    #         'Seating_Position', through='Seating_Plan'
-    #     )
-    # session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    seating_plan = models.ManyToManyField(
+            'Seating_Position', through='Seating_Plan'
+        )
 
     def __str__(self):
         return self.name
 
 
-# class Seating_Position(models.Model):
-#     position_number = models.IntegerField()
-#     seating_plan = models.ForeignKey(
-#         'Seating_Plan', on_delete=models.CASCADE, related_name='plan',
-#         )
-#     player_id = models.ForeignKey(
-#         Player, on_delete=models.CASCADE
-#         )
-#     section_id = models.ForeignKey(
-#         Section, on_delete=models.CASCADE
-#         )
+class Seating_Position(models.Model):
+    position_number = models.IntegerField()
+    seating_plan = models.ForeignKey(
+        'Seating_Plan', on_delete=models.CASCADE, related_name='plan',
+        )
+    player_id = models.ForeignKey(
+        Player, on_delete=models.CASCADE
+        )
+    section_id = models.ForeignKey(
+        Section, on_delete=models.CASCADE
+        )
 
-#     def __str__(self):
-#         return self.position_number
-
-
-# class Seating_Plan(models.Model):
-#     is_published = models.BooleanField(default=False)
-#     project_id = models.ForeignKey(
-#         Project, on_delete=models.CASCADE, related_name='seating_plans',
-#         )
-#     section_name = models.ForeignKey(Section, on_delete=models.CASCADE)
-#     seating_position = models.ForeignKey(
-#         Seating_Position, on_delete=models.CASCADE, related_name='postition',
-#         )
-#     player = models.ManyToManyField(Player, through='seating_position',)
-
-#     def __str__(self):
-#         return self.project_id
+    def __str__(self):
+        return self.position_number
 
 
-# class Player_Project(models.Model):
-#     PERFORMANCE_STATUS_CHOICES = [
-#         ('PL', 'Playing'),
-#         ('RE', 'Reserve'),
-#         ('NA', 'Not Available'),
-#     ]
-#     performance_status = models.CharField(
-#         max_length=2,
-#         null=False,
-#         blank=False,
-#         choices=PERFORMANCE_STATUS_CHOICES,
-#         default='PL'
-#         )
-#     off_reduced_rep = models.BooleanField(
-#         null=False, default=False
-#         )
-#     trialist = models.BooleanField(null=False, blank=False, default=False)
-#     guest_principal = models.BooleanField(
-#         null=False, default=False
-#         )
-#     project_id = models.ForeignKey(
-#         Project,  on_delete=models.CASCADE
-#         )
-#     player_id = models.ForeignKey(
-#         Player,  on_delete=models.CASCADE
-#         )
+class Seating_Plan(models.Model):
+    is_published = models.BooleanField(default=False)
+    project_id = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name='seating_plans',
+        )
+    section_name = models.ForeignKey(Section, on_delete=models.CASCADE)
+    seating_position = models.ForeignKey(
+        Seating_Position, on_delete=models.CASCADE, related_name='postition',
+        )
+    player = models.ManyToManyField(Player, through='seating_position',)
 
-#     def __str__(self):
-#         return self.performance_status
+    def __str__(self):
+        return self.project_id
+
+
+class Player_Project(models.Model):
+    PERFORMANCE_STATUS_CHOICES = [
+        ('PL', 'Playing'),
+        ('RE', 'Reserve'),
+        ('NA', 'Not Available'),
+    ]
+    performance_status = models.CharField(
+        max_length=2,
+        null=False,
+        blank=False,
+        choices=PERFORMANCE_STATUS_CHOICES,
+        default='PL'
+        )
+    off_reduced_rep = models.BooleanField(
+        null=False, default=False
+        )
+    trialist = models.BooleanField(null=False, blank=False, default=False)
+    guest_principal = models.BooleanField(
+        null=False, default=False
+        )
+    project_id = models.ForeignKey(
+        Project,  on_delete=models.CASCADE
+        )
+    player_id = models.ForeignKey(
+        Player,  on_delete=models.CASCADE
+        )
+
+    def __str__(self):
+        return self.performance_status
