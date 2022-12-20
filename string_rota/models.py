@@ -1,7 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.db.models.functions import Concat
-from django.db.models import Value as V
 
 
 class Repertoire(models.Model):
@@ -14,7 +12,7 @@ class Repertoire(models.Model):
         verbose_name_plural = "repertoire"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.instrumentation}"
 
 
 class Section(models.Model):
@@ -49,37 +47,44 @@ class Player(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
-# class Session(models.Model):
-#     SESSION_TYPE_CHOICES = [
-#         ('REH', 'Rehersal'),
-#         ('CON', 'Concert'),
-#         ('REC', 'Recording'),
-#     ]
-#     session_date = models.DateField(
-#         auto_now=False, auto_now_add=False, null=False, blank=False
-#         )
-#     session_start_time = models.DateTimeField(null=False, blank=False)
-#     session_end_time = models.DateTimeField(null=False, blank=False)
-#     session_type = models.CharField(
-#         max_length=3, choices=SESSION_TYPE_CHOICES, default='REH'
-#         )
-#     repertoire_id = models.ForeignKey(Repertoire, on_delete=models.RESTRICT)
 
-#     def __str__(self):
-#         return self.session_type
+class Session(models.Model):
+    SESSION_TYPE_CHOICES = [
+        ('REH', 'Rehersal'),
+        ('CON', 'Concert'),
+        ('REC', 'Recording'),
+    ]
+    date = models.DateField(
+        auto_now=False, auto_now_add=False, null=False, blank=False
+        )
+    start_time = models.TimeField(
+        auto_now=False, auto_now_add=False, null=False, blank=False
+        )
+    end_time = models.TimeField(
+        auto_now=False, auto_now_add=False, null=False, blank=False
+        )
+    session_type = models.CharField(
+        max_length=3, choices=SESSION_TYPE_CHOICES, default='REH'
+        )
+    repertoire = models.ManyToManyField(
+        Repertoire
+        )
+
+    def __str__(self):
+        return f"{self.date} {self.start_time}"
 
 
-# class Project(models.Model):
-#     project_name = models.CharField(max_length=200, null=False, blank=False)
-#     player = models.ManyToManyField(Player, through='player_project')
-#     repertoire_name = models.ManyToManyField(Repertoire)
-#     seating_plan = models.ManyToManyField(
-#             'Seating_Position', through='Seating_Plan'
-#         )
-#     session = models.ForeignKey(Session, on_delete=models.CASCADE)
+class Project(models.Model):
+    name = models.CharField(max_length=200, null=False, blank=False)
+    # player = models.ManyToManyField(Player, through='player_project')
+    repertoire_name = models.ManyToManyField(Repertoire)
+    # seating_plan = models.ManyToManyField(
+    #         'Seating_Position', through='Seating_Plan'
+    #     )
+    # session = models.ForeignKey(Session, on_delete=models.CASCADE)
 
-#     def __str__(self):
-#         return self.project_name
+    def __str__(self):
+        return self.name
 
 
 # class Seating_Position(models.Model):

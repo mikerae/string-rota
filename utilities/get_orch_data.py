@@ -30,18 +30,32 @@ def connect_to_worksheet():
 
 def get_repertoire(SHEET):
     """
-    Import raw sample data for 4 weeks of RSNO projects
+    Import sample data for 4 weeks of RSNO projects
     """
-
     repertoire = SHEET.worksheet('repertoire')
     return repertoire.get_all_records()
 
 
 def get_players(SHEET):
     """
-    Import raw sample data for RSNO String Player
+    Import sample data for RSNO String Player
     Annual Natural Free Day Allocation
     """
-
     players = SHEET.worksheet('players')
     return players.get_all_records()
+
+
+def get_sessions(SHEET):
+    """
+    Import sample data for RSNO Project Sessions
+    """
+    sessions = SHEET.worksheet('sessions')
+    return sessions.get_all_records()
+
+
+def get_projects(SHEET):
+    """
+    Import sample data for RSNO Project Sessions
+    """
+    projects = SHEET.worksheet('projects')
+    return projects.get_all_records()
