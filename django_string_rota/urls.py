@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from string_rota.views import get_projects_list
+from string_rota.views import log_in
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', get_projects_list, name='get_projects_list')
+    path('', log_in, name='log_in')
 ]

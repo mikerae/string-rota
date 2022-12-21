@@ -4,15 +4,16 @@
 Code Institute Milestone Project 4
 Written in python, developed on GitPod and Git Hub and deployed via Heroku.
 ## You can view a live version [here](https://string-rota.herokuapp.com/)
-## How to use
-
 ## Contents
++ [Project Summary](#project-summary)
++ [Design Thinking](#design-thinking)
 + [UXD](#uxd)
     + [Strategy](#strategy)
     + [Scope](#scope)
     + [Structure](#structure)
     + [Skeleton](#skeleton)
     + [Surface](#surface)
++ [Agile Development](#agile-development)
 + [Database Design](#database-design)
 + [Technologies Used](#technologies-used)
 + [Resources](#resources)
@@ -21,71 +22,41 @@ Written in python, developed on GitPod and Git Hub and deployed via Heroku.
 + [Known Issues](#known-issues)
 + [Deployment](#deployment)
 + [Acknowledgments](#acknowledgments)
+
+## Project Summary
+This app facilitates members of the string sections of the RSNO to view seating plans and related information for a set of RSNO projects. It facilitates Rota Managers of these sections to create and manage their scetion rotas, and facilatates members of the office to integrate this information into their own work flows.
+A sample set of RSNO project data was used to simulate conection to RSNO the server.
+## Design Thinking
+The phases of design thinking were followed in the development of this project:
+- Empathize: Recorded, 15 minute nterviews were conducted with stakeholders using a questions template. The stakeholders were from the RSNO were:
+    - Rota Managers from each of the 5 String Sections
+    - A player from each of the 5 String Sections 
+    - 2 Office managers: one who fixes guest players, and mangages seating positions, and one who mnagags time off permissions.
+- The remaining phase (Define, Ideate, Prototype and Test) were acheived through the Agile development process described below.
+
+
+The interview questions were:
+![String Rota Questions](/assets/images/string_rota_questions.png)
 ## UXD
+[Back to Top](#contents)
 ### Strategy
-[Back to Top](#contents)
-- Agile design process
-- 3Cs: 
-    - Card
-        - User Story Template
-    - Conversation
-        - Tasks
-    - Confirmation
-        - Acceptance Criterea
-- Predicted Project Effort
-    - Ideal Time
-        - Elapsed time
-    - Story Points
-        - Bench Mark Task: 1 story point
-        - Allocated task: x story points
-    - Methods of allocation of Story Points
-        - Modified Fibonacci: 1, 3, 5, 8, 13, 20, 40
-        - Doubling Score: 1, 2, 4, 8, 16, 32, 64
-- Backlog
-    - GitHub Milestones as Backlog
-- Sprints
-    - GitHub Milestones as Sprints (Iterations)
-        - Timeboxing 1 - 2 weeks
-- Prioritisation of Issues
-    Moscow labeling
-    - Must have: < 60% of total story points in iteration
-    - Should have: the rest
-    - Could have: 20% of total story points in iteration
-    - Won't have
-- Information Radiators
-    - GitHub Projects as Kanban Boards 
-        - Boards were created for the following:
-            - Set Up
-            - Sprint 1: to prepare for mid-project  Mentor session
-            - Sprint 2: to prepare for final Mentor session
-            - Sprint 3: to complete and submit project for assesment
-### User Stories
-- 3Cs: 
-    - Card
-        - User Story Template
-    - Conversation
-        - Tasks
-    - Confirmation
-        Acceptance Criterea
-
-
-
-#### XX
-
-#### XX
-
+User Stories generated were used to drive the UXD.
+In general there were 3 broad user stories:
+-  As a menber of my string section (Violin 1, Violin 2, Viola, Cello, Double Bass) I  can view project seating plans and related data so that I can  know when I am required to play, and be reasured that rota descissions are reasonable.
+- As a rota manager for my section (Violin 1, Violin 2, Viola, Cello, Double Bass) I can create and manage a rota and related data for each project so that I can publish this to my collegues.
+- As an member of the office, I can view and edit all rota data so that I can integrate this data into my office work flows.
 ### Scope
-#### Minimum Viable Product
-[Back to Top](#contents)
+The scope of the Minimum Viable Product can be seen in the Sprints in the Github repository.
+A snapshot of one Sprint is:
+![Sprint Snapshot](assets/images/sprint-1-scope-example.png)
 #### Features
-- Original code meets CI assessment criteria
-- Complete code presents a working version of the game connect 4
-- All external resources are clearly credited
+- User Login Landing Page, to preserve privacy, security and to allocate appropriate permissions.
+- Vew project seating plans and related data by a player's section
+- Create and manage seating plans and data for a rota manager's section
+- Office managers can view and edit all information.
 #### Future Development
 [Back to Top](#contents)
-
-Future versions of the game can include:
-
+Future versions may include integration with live RSNO data.
 ### Structure
 [Back to Top](#contents)
 #### Flow Chart
@@ -103,6 +74,29 @@ T
 [Back to Top](#contents)
 
 #### XX
+
+
+
+## Agile Development
+[Back to Top](#contents)
+The Agile design process was used to some for this limited project.
+- User stories were derivd from interviws with stakeholders. These user stories were refined from 'epic' to more specific userstories.
+- The was an element of Predicted Project Effort, with story points being allocated to some user stories. 
+- The GitHub platform was used to facilitate Agile Development:
+- A backlog was used to hold all user stories for processing and allocation. A Github Milestone was used as a backlog.
+- Spints were defined to define development tasks needed to bring the project to MMinimum Viable Product level. Other Github Milestones were used to hold user stories allocated to these sprints.
+- Issues were prioritised according to Moscow principles. Github Labels were used mark user stories accordingly.
+    - Must have: < 60% of total story points in iteration
+    - Should have: the rest
+    - Could have: 20% of total story points in iteration
+    - Won't have
+- Information Radiators were used to monitor the progress of the project development.
+    - GitHub Projects were used of rthis purpuse as Kanban Boards 
+    - Boards were created for the following:
+        - Backlog
+        - Set Up
+        - Sprint 1: to prepare for mid-project  Mentor session
+        - Sprint 2: to complete and submit project for assesment
 ## Database Design
 [Back to Top](#contents)
 ### Mission Statement
@@ -161,8 +155,6 @@ The entities for this project have the following relationships and attributes:
 #### Model Schemas
 The Models Schemas erds for this project are:
 ![String-Rota-erd-Schema](/assets/images/string-rota-erd-schema.png)
-
-[Back to Top](#contents)
 
 ## Technologies Used
 [Back to Top](#contents)
@@ -677,8 +669,25 @@ The project was deployed to the Heroku platform using the following steps:
 ## Acknowledgments
 [Back to Top](#contents)
 
-Grateful acknowledgment is given to the following
+Grateful acknowledgment is given to the following:
+- RSNO Interviewees:
+    - Patrick Curlett
+    - Ursula Heidecker-Allen
+    - Robin Wilson
+    - Sophie Lang
+    - Claire Dunn
+    - Rachel Lee
+    - Margarida Castro
+    - Emma Hunter
+    - Matthias van de Swaagh
+- RSNO Assistance:
+    - Ewen McKay
+    - Angela Moreland
+    - Tammo Schuelke
+
 - Mentor: Martina Terlevic for her amazing guidance and encouragement
 - Code Institute: for training materials, training environment and specific code
 - Very Academy: Django ORM | Case Study 1 https://www.youtube.com/watch?v=ycw8ZsT1ofw&t=1901s
 - Niroj: https://www.edureka.co/community/73739/django-script-access-model-objects-without-using-manage-shell
+- Stack Overflow https://stackoverflow.com/
+- Django Documentation https://docs.djangoproject.com/en/3.2/ref/models/fields/
