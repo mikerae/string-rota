@@ -36,7 +36,7 @@ The phases of design thinking were followed in the development of this project:
 
 
 The interview questions were:
-![String Rota Questions](/assets/images/string_rota_questions.png)
+![String Rota Questions](/readme_assets/images/string_rota_questions.png)
 ## UXD
 [Back to Top](#contents)
 ### Strategy
@@ -60,7 +60,7 @@ Future versions may include integration with live RSNO data.
 ### Structure
 [Back to Top](#contents)
 #### Flow Chart
-![xxx](//assets/images/#)
+![xxx](//readme_assets/images/#)
 
 
 ### Skeleton
@@ -132,7 +132,7 @@ The purpose of the string-rota database is to facilitate the creation, managemen
 3. Store and Calculate Natural Free Day allocations and totals based on Allocation for each porject.
 4. Store and Return Reserve player status for each project.
 ### Preliminary Field List
-![Preliminary Field List](/assets/images/preliminary-field-list.png)
+![Preliminary Field List](/readme_assets/images/preliminary-field-list.png)
 ### Resolution of Field and Table anomilies
 Inorder to resolve field and table anomilies, and in order to preserve data integrity the following process was followed:
 - The tables were flattened, and populated with data.
@@ -140,21 +140,21 @@ Inorder to resolve field and table anomilies, and in order to preserve data inte
 - The resulting fields and tables were compared with the characteristics of a sound field or table.
 
 Very Academy produced a helfull checklist to evaluate fields and tables (https://www.youtube.com/watch?v=ycw8ZsT1ofw&t=1901s):
-![Field and Table Checklist](/assets/images/field-and-table-checklist.png)
+![Field and Table Checklist](/readme_assets/images/field-and-table-checklist.png)
 
 When attempting to flatten the project table, the resulting table produced duplicate data, further need for flattening and some caluculated data:
-![Example of field and table problem resolution](/assets/images/example-of-field-table-problem-resolution-1.png)
+![Example of field and table problem resolution](/readme_assets/images/example-of-field-table-problem-resolution-1.png)
 
 The products table was amended to remove duplucate data, multi-data fields and calculated fields. At this point the checklists above were mostly saticefied.
 
-![Rationalisation of project table](/assets/images/rationalisation-of-product-table.png)
+![Rationalisation of project table](/readme_assets/images/rationalisation-of-product-table.png)
 
 #### Model Entity Relationship Diagram (EDR)
 The entities for this project have the following relationships and attributes:
-![String-Rota-Erd](/assets/images/string-roto-erd.png)
+![String-Rota-Erd](/readme_assets/images/string-roto-erd.png)
 #### Model Schemas
 The Models Schemas erds for this project are:
-![String-Rota-erd-Schema](/assets/images/string-rota-erd-schema.png)
+![String-Rota-erd-Schema](/readme_assets/images/string-rota-erd-schema.png)
 
 ## Technologies Used
 [Back to Top](#contents)
