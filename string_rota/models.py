@@ -79,7 +79,11 @@ class Session(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
-    player = models.ManyToManyField(Player, through='player_project')
+    players = models.ManyToManyField(
+        Player,
+        through='player_project',
+        through_fields=('project', 'player')
+        )
     repertoire_name = models.ManyToManyField(Repertoire)
     seating_plan = models.ManyToManyField(
         'Seating_Plan',

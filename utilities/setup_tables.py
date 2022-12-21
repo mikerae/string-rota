@@ -17,6 +17,10 @@ from string_rota.models import (
 def setup_tables():
 
     def setup_player_project():
+        """
+        Creates a player_project record for each project,
+        and each player.
+        """
         projects = Project.objects.all()
         players = Player.objects.all()
         for project in projects:
@@ -26,4 +30,4 @@ def setup_tables():
                     player=Player.objects.get(id=player.id)
                 )
 
-    setup_player_project()
+    # setup_player_project()  # Data already loaded!
