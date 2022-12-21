@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from string_rota.views import log_in
+from string_rota.views import log_in, error_404, player
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', log_in, name='log_in')
+    path('', log_in, name='log_in'),
+    path('404/', error_404, name='page_not_found'),
+    path('player/', player, name='player')
 ]
