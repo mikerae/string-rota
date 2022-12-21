@@ -17,6 +17,7 @@ class Repertoire(models.Model):
 
 class Section(models.Model):
     name = models.CharField(max_length=11, null=False, blank=False)
+    players = models.ManyToManyField('Player', related_name='stg_section')
 
     def __str__(self):
         return self.name
