@@ -13,5 +13,8 @@ if __name__ == '__main__':
         "DJANGO_SETTINGS_MODULE", "django_string_rota.settings"
         )
     django.setup()
-    from utilities.load_data_main import load_data_main
-    load_data_main()
+    from utilities.load_rsno_data import load_rsno_data
+    from utilities.setup_tables import setup_tables
+
+    load_rsno_data()
+    setup_tables()

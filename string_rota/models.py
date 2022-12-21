@@ -24,13 +24,12 @@ class Section(models.Model):
 
 
 class Player(models.Model):
-
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     is_contract = models.BooleanField(
         null=False, blank=False, default=True
         )
-    notes = models.TextField()
+    notes = models.TextField(null=True, blank=True)
     annual_nfd_quota = models.IntegerField(
         null=False, blank=False, default=0
         )
@@ -42,7 +41,9 @@ class Player(models.Model):
         )
     section = models.ForeignKey(Section,  on_delete=models.CASCADE)
     users_django = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True,
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True, blank=True,
         )
 
     def __str__(self):
@@ -143,7 +144,7 @@ class Player_Project(models.Model):
         null=False,
         blank=False,
         choices=PERFORMANCE_STATUS_CHOICES,
-        default='PL'
+        default='NA'
         )
     off_reduced_rep = models.BooleanField(
         null=False, default=False

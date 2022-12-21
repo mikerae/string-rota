@@ -16,7 +16,7 @@ from utilities.get_orch_data import (
     )
 
 
-def load_data_main():
+def load_rsno_data():
     # Open connection to google worksheet
     SHEET = connect_to_worksheet()
     # Import data from worksheet
@@ -48,7 +48,7 @@ def load_data_main():
         """
         Load session data into project database.
         Unfortunately, the time format for the imported data
-        is hr.mn and is given as a decimal! The following code translates
+        is 'hr.mn' and is given as a decimal! The following code translates
         time date into datetime.time format
         """
         for row in DATA:
