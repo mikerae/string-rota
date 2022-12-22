@@ -598,6 +598,27 @@ INSTALLED_APPS = [
 ]
 ```
 The build deployed  successfully, and the app opend with the default Django landing page.
+
+### Static Files not found on Heroku
+After initial deployment to Heroku, the admin section would not style on the Heroku site but would style on the local site.
+Fix: When DEBUG=False, Heroku can collect and read the static files.
+### Static Files not read when NiceAdmin templates were used.
+Static files were not found on either local or Heroku sites.
+The NiceAdmin templates referenced the assets folder using and absolute path.
+Fic: Django was set up to reference the files using a relative path. To fix this, the following steps were taken:
+- the static settings were confirmed to be correct: 
+```
+ STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'  # noqa E501
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+```
+- The static files were in the top project directory ( /static/assests/... )
+- The path to static files was changed: 
+```  <link href="assets/css/style.css" rel="stylesheet"> ```
+ was changed to ``` <link rel="stylesheet" href="{% static 'assets/css/style.css' %}"> ```, and all references to static files in the assets folder were also changed. The changes were made in the base.html file.
+- The django static variable was loaded at the top of basde.html:
+``` {% load static %}```
 ## Known Issues
 [Back to Top](#contents)
 
@@ -640,10 +661,10 @@ Before deployment, the imported libraries were frozen into the requirement.txt f
 pip3 freeze > requirements.txt
 ```
 This is the contents of the project requirements.txt file:
-```
+
 xx
 
-```
+
 ### Final Deployement
 The following additional steps were taken before final deployment
 - Django debug mode was set to FALSE
