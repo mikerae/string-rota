@@ -155,6 +155,14 @@ The entities for this project have the following relationships and attributes:
 #### Model Schemas
 The Models Schemas erds for this project are:
 ![String-Rota-erd-Schema](/readme_assets/images/string-rota-erd-schema.png)
+#### Model Cretation
+The models were created from least dependant (eg Repertoire) to most dependant.
+#### Initial data input
+Tables were poplulated starting from least dependant using utility function to import from a private google worksheet where RSNO data had been pre-cleaned manually.
+Where a reltionship exists between tables, both sides were populated first, then the connection was made manually in the project admin.
+Whilst automating this process is understood to be possible, it is beyond the scope of this project to implement for this release.
+The one case where a table was populated by script was the the Player_Project link table. Here a script was used to iterate over each player for each project.
+ 
 
 ## Technologies Used
 [Back to Top](#contents)
