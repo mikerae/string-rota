@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from string_rota.views import log_in, error_404, player
+from django.urls import path, include
+from string_rota.views import log_in, home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('home/', include('string_rota.urls'), name='string_rota_urls'),
     path('', log_in, name='log_in'),
-    path('404/', error_404, name='page_not_found'),
-    path('player/', player, name='player')
+
+    # path('accounts/', include('allauth.urls')),
 ]

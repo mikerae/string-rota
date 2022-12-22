@@ -372,7 +372,6 @@ h6 {
 --------------------------------------------------------------*/
 .logo {
   line-height: 1;
-  background-color: #ed3c0d;
 }
 
 @media (min-width: 1200px) {
@@ -389,7 +388,7 @@ h6 {
 .logo span {
   font-size: 26px;
   font-weight: 700;
-  color: #f9c6cf;
+  color: #012970;
   font-family: "Nunito", sans-serif;
 }
 

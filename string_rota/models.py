@@ -127,7 +127,7 @@ class Seating_Plan(models.Model):
         related_name='project_plan'
         )
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
-    player = models.ManyToManyField(
+    players = models.ManyToManyField(
         Player,
         through='Seating_Position',
         through_fields=('seating_plan', 'player')

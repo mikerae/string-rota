@@ -5,11 +5,11 @@
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Project</h1>
+    <h1>Project: {{current_project.name}}</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active">Project</li>
+        <li class="breadcrumb-item active">{{current_project.name}}</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
@@ -22,27 +22,25 @@
         <div class="row">
 
 
-
+          {% for plan in seating_plans %}
           <!-- Project Seating Plan -->
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Section : Project Titles</h5>
+                <h5 class="card-title">{{plan.section}}</h5>
                 <!-- Active Table -->
                 <table class="table table-borderless">
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
                       <th scope="col">Name</th>
                       <th scope="col">Position</th>
-                      <th scope="col">Age</th>
-                      <th scope="col">Start Date</th>
+                      <th scope="col">Guest</th>
+                      <th scope="col">Trialist</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">1</th>
-                      <td>Brandon Jacob</td>
+                      <td>okok</td>
                       <td>Designer</td>
                       <td>28</td>
                       <td>2016-05-25</td>
@@ -54,9 +52,10 @@
 
               </div>
             </div>
+
           </div><!-- End Project Seating Plan -->
 
-
+          {% endfor %}
 
 
         </div>
@@ -175,12 +174,7 @@
         </div><!-- End Customers Card -->
 
       </div>
-
     </div>
-    </div>
-
-
-
 
     </div><!-- End Right side columns -->
 
