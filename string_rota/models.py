@@ -78,7 +78,10 @@ class Session(models.Model):
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=200, null=False, blank=False)
+    name = models.CharField(
+        max_length=200, null=False, blank=False, unique=True
+        )
+    slug = models.SlugField(max_length=200, unique=True)
     players = models.ManyToManyField(
         Player,
         through='player_project',

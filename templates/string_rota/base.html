@@ -76,7 +76,7 @@
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         {% for project in projects %}
-                        <a href="#">
+                        <a href="{% url 'rota' project.slug %}">
                             <i class="bi bi-circle"></i><span>{{project.name}}</span>
                         </a>
                         {% endfor %}
