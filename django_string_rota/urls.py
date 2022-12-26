@@ -21,6 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('string_rota.urls'), name='string_rota_urls'),
     path('', log_in, name='log_in'),
-
-    # path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.urls')),
 ]

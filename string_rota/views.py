@@ -74,3 +74,35 @@ class Rota(Projects):
             'repertoire': repertoire
             }
         return render(request, 'string_rota/home.html', context)
+
+    def post(self, request, slug, *args, **kwargs):
+        projects = Project.objects.all()
+        project = get_object_or_404(projects, slug=slug)
+        comments = post.comments.filter(approved=True).order_by('created_on')
+
+        rota_form = RotaForm(data=request.POST)
+
+        if rota_form.is_valid():
+            rota_form.instance.email = request.user.email
+            rota_form.instance.name = request.user.username
+            # rota = rota_form.save(commit=False)
+            # Add relative field actions
+            #
+            # rota.save()
+            messages.success(
+                request, 'Your rota has been posted!'
+                )
+        else:
+            rota_form = RotaForm()
+
+        return render(
+            request,
+            'home.html',
+            {
+                # "post": post,
+                # "comments": comments,
+                # "commented": True,
+                # "liked": liked,
+                # "rota_form": CommentForm(),
+            },
+        )
