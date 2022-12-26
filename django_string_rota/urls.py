@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from string_rota.views import log_in, home
+from string_rota.views import log_in
 
 urlpatterns = [
     path('admin/', admin.site.urls),
