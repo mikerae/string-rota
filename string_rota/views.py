@@ -73,7 +73,9 @@ class Rota(Projects):
             off_reduced = red_ply.get().player
         not_available = players_in_project.filter(performance_status='NA')
         repertoire = project.repertoire_name.all()
-        print(request.user.groups.all())
+        rota_manager = request.user.groups.filter(name="Rota_Manager")
+        # section_member =
+        print(rota_manager)
 
         context = {
             'projects': projects,
@@ -84,7 +86,9 @@ class Rota(Projects):
             'reserve_player': reserve_player,
             'player_off_reduced_rep': off_reduced,
             'not_available': not_available,
-            'repertoire': repertoire
+            'repertoire': repertoire,
+            'rota_manager': rota_manager,
+            'section': section
             }
         return render(request, 'string_rota/home.html', context)
 
