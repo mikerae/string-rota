@@ -6,7 +6,7 @@ class SeatingPositionForm(forms.ModelForm):
     class Meta:
         model = Seating_Position
         fields = ('player',
-        'position_number',
+                  'position_number',
                   )
 
 
