@@ -5,8 +5,8 @@ from django import forms
 class SeatingPositionForm(forms.ModelForm):
     class Meta:
         model = Seating_Position
-        fields = ('position_number',
-                  'player',
+        fields = ('player',
+        'position_number',
                   )
 
 
@@ -22,6 +22,3 @@ class PlayerProjectForm(forms.ModelForm):
         fields = ('performance_status',
                   'off_reduced_rep',
                   )
-
-
-class RotaForm(SeatingPlanForm, SeatingPositionForm, PlayerProjectForm)
