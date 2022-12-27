@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from string_rota.views import log_in
+from string_rota.views import login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('string_rota.urls'), name='string_rota_urls'),
-    path('', log_in, name='log_in'),
+    path('', login, name='login'),
     path('accounts/', include('allauth.urls')),
 ]

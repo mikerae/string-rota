@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .models import (
     Project,
     Seating_Plan,
@@ -12,11 +14,15 @@ from .models import (
 
 # Create your views here.
 
-def log_in(request):
-    return render(request, 'string_rota/log_in.html')
+def login(request):
+    return render(request, 'account/login.html')
 
 
 class Projects(View):
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(Projects, self).dispatch(*args, **kwargs)
 
     def get(self, request):
         projects = Project.objects.all()
@@ -28,6 +34,10 @@ class Projects(View):
 
 
 class Rota(Projects):
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(Rota, self).dispatch(*args, **kwargs)
 
     def get(self, request, slug, *args, **kwargs):
         projects = Project.objects.all()
