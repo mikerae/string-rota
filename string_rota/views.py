@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User, Group
 from django.utils.decorators import method_decorator
 from .models import (
     Project,
@@ -43,7 +44,8 @@ class Rota(Projects):
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         sections = Section.objects.all()
-        section = get_object_or_404(Section.objects.all(), name='Violin 1')
+        player = get_object_or_404(Player, users_django=request.user.id)
+        section = player.section
         players_in_project = Player_Project.objects.filter(
             project=project
             ).filter(player__section=section)
@@ -71,6 +73,7 @@ class Rota(Projects):
             off_reduced = red_ply.get().player
         not_available = players_in_project.filter(performance_status='NA')
         repertoire = project.repertoire_name.all()
+        print(request.user.groups.all())
 
         context = {
             'projects': projects,
