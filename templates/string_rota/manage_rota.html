@@ -59,10 +59,11 @@
                 </thead>
                 <tbody>
                   {% for position in seating_positions %}
+                  <a href="{% url 'rota' position.id %}"></a>
                   <tr>
                     <td>{{position.player}}</td>
                     <td>{{position.position_number}}</td>
-                  </tr>
+                  </tr></a>
                   {% endfor %}
                 </tbody>
               </table>
@@ -85,7 +86,7 @@
                 <span class="col-md-4">{{seating_position_form | crispy }}</span>
                 <span class="col-md-4">{{player_project_form | crispy }}</span>
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Add Player to Plan</button>
               </form>
               <!-- End Rota Form -->
 

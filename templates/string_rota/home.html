@@ -1,5 +1,7 @@
 {% extends 'string_rota/base.html'  %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 <main id="main" class="main">
@@ -69,16 +71,33 @@
           </div>
         </div><!-- End Project Seating Plan -->
 
+        {% if user.is_authenticated %}
         {% if rota_manager %}
+
+        <!-- Rota Form Section-->
+
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <a href="manage_rota/">Click here to edit the {{seating_plan.section}} rota for
-                {{project.name}}</a>
+              <h5 class="card-title">Edit {{seating_plan.section}} Rota for Project: {{project}}</h5>
+
+              <!-- Rota Form -->
+              <form method="POST" class="row g-3">
+                <span class="col-md-4">{{seating_plan_form | crispy }}</span>
+                <span class="col-md-4">{{seating_position_form | crispy }}</span>
+                <span class="col-md-4">{{player_project_form | crispy }}</span>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Add New Player</button>
+              </form>
+              <!-- End Rota Form -->
+
             </div>
           </div>
         </div>
         {% endif  %}
+        {% endif %}
+        <!-- End Rota Form Section-->
+
       </div><!-- End Left side columns -->
 
       <!-- Right side columns -->
