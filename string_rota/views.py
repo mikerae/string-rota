@@ -180,9 +180,10 @@ class EditSeatingPosition(Rota):
         seating_position = get_object_or_404(
             Seating_Position, id=seating_position_id
             )
+        sp_player = seating_position.player
         player_project = get_object_or_404(
             Player_Project,
-            player=request.POST.get("player"),
+            player=sp_player,
             project=project
             )
 
