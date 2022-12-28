@@ -20,7 +20,7 @@ from string_rota.views import login
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
-    path('home/', include('string_rota.urls'), name='string_rota_urls'),
+    path('home/', include('string_rota.urls'), name='string_rota'),
     path('', login, name='login'),
     path('accounts/', include('allauth.urls')),
 ]

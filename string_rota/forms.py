@@ -10,15 +10,20 @@ class SeatingPositionForm(forms.ModelForm):
                   )
 
 
+class EditSeatingPlan(forms.ModelForm):
+    class Meta:
+        model = Seating_Position
+        fields = ('position_number',)
+
+
 class SeatingPlanForm(forms.ModelForm):
     class Meta:
         model = Seating_Plan
         fields = ('plan_status',)
 
 
-class PlayerProjectForm(forms.ModelForm):
+class PlayerProjectFormPL(forms.ModelForm):
+
     class Meta:
         model = Player_Project
-        fields = ('performance_status',
-                  'off_reduced_rep',
-                  )
+        fields = ('off_reduced_rep',)

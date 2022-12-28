@@ -4,8 +4,20 @@ from django.urls import path
 urlpatterns = [
     path('', views.Projects.as_view(), name='projects'),
     path('<slug:slug>/', views.Rota.as_view(), name='rota'),
-    path('editsp/<seating_position_id>/',
+    path('add_sp/<slug:slug>/<seating_plan_id>',
+         views.AddSeatingPosition.as_view(),
+         name='add_sp'
+         ),
+    path('edit_sp/<seating_position_id>/',
          views.EditSeatingPosition.as_view(),
-         name='editsp'
+         name='edit_sp'
+         ),
+    path('delete_sp/<seating_position_id>/',
+         views.DeleteSeatingPosition.as_view(),
+         name='delete_sp'
+         ),
+    path('change_plan_status/<slug:slug>/',
+         views.ChangePlanStatus.as_view(),
+         name='change_plan_status'
          )
 ]

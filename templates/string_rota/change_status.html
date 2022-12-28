@@ -7,11 +7,12 @@
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Project: {{project.name}}</h1>
+    <h1>Change Seating Plan Status: Project: {{project.name}}</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item active">{{project.name}}</li>
+        <li class="breadcrumb-item active">Change Plan Status</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
@@ -24,13 +25,11 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Edit Seating Position</h5>
+            <h5 class="card-title">Change Seating Plan Status</h5>
 
             <!-- Rota Form -->
             <form method="POST" class="row g-3">
               <span class="col-md-4">{{seating_plan_form | crispy }}</span>
-              <span class="col-md-4">{{seating_position_form | crispy }}</span>
-              <span class="col-md-4">{{player_project_form | crispy }}</span>
               {% csrf_token %}
               <div class="text-center">
                 <button type="submit" class="btn btn-success">Edit Position</button>

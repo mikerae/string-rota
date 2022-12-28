@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
-from .forms import SeatingPositionForm, SeatingPlanForm, PlayerProjectForm
+from .forms import SeatingPositionForm, SeatingPlanForm, PlayerProjectFormPL
 from .models import (
     Project,
     Seating_Plan,
@@ -77,10 +77,6 @@ class Rota(Projects):
         repertoire = project.repertoire_name.all()
         rota_manager = request.user.groups.filter(name="Rota_Manager")
 
-        seating_position_form = SeatingPositionForm()
-        seating_plan_form = SeatingPlanForm(instance=seating_plan)
-        player_project_form = PlayerProjectForm()
-
         context = {
             'projects': projects,
             'project': project,
@@ -93,51 +89,54 @@ class Rota(Projects):
             'repertoire': repertoire,
             'rota_manager': rota_manager,
             'section': section,
-            'seating_position_form': seating_position_form,
-            'seating_plan_form': seating_plan_form,
-            'player_project_form': player_project_form,
             }
         return render(request, 'string_rota/home.html', context)
 
-    def post(self, request, slug, *args, **kwargs):
+
+class AddSeatingPosition(Rota):
+
+    def get(self, request, slug, *args, **kwargs):
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
-        queryset = Seating_Plan.objects.filter(
-            project=project,
-            )
-        seating_plan = get_object_or_404(queryset, section=section.id)
 
+        seating_position_form = SeatingPositionForm()
+        player_project_form = PlayerProjectFormPL()
+
+        context = {
+                    'projects': projects,
+                    'project': project,
+                    'section': section,
+                    'seating_position_form': seating_position_form,
+                    'player_project_form': player_project_form,
+                    }
+
+        return render(request, 'string_rota/add_sp.html', context)
+
+    def post(self, request, slug, seating_plan_id, *args, **kwargs):
+        projects = Project.objects.all()
+        project = get_object_or_404(projects, slug=slug)
+        player = get_object_or_404(Player, users_django=request.user.id)
+        section = player.section
         seating_position_form = SeatingPositionForm(data=request.POST)
-        seating_plan_form = SeatingPlanForm(
-            data=request.POST, instance=seating_plan
-            )
         player_project = get_object_or_404(
             Player_Project,
             player=request.POST.get("player"),
             project=project
             )
-        player_project_form = PlayerProjectForm(
+        player_project_form = PlayerProjectFormPL(
             data=request.POST, instance=player_project
             )
+        seating_plan = get_object_or_404(Seating_Plan, id=seating_plan_id)
 
         if seating_position_form.is_valid():
             seating_position_form.instance.seating_plan = seating_plan
             seating_position_form.save()
-        else:
-            seating_position_form = SeatingPositionForm()
-
-        if seating_plan_form.is_valid():
-            seating_plan_form.save()
-        else:
-            seating_plan_form()
 
         if player_project_form.is_valid():
+            player_project.performance_status = 'PL'
             player_project_form.save()
-
-        else:
-            player_project_form = player_project_form()
 
         return HttpResponseRedirect(reverse('rota', args=[slug]))
 
@@ -202,3 +201,15 @@ class EditSeatingPosition(Rota):
             player_project_form.save()
 
         return HttpResponseRedirect(reverse('rota', args=[slug]))
+
+
+class DeleteSeatingPosition(View):
+
+    def get():
+        pass
+
+
+class ChangePlanStatus(View):
+
+    def get():
+        pass

@@ -48,7 +48,8 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">{{seating_plan.section}}</h5>
+              <h5 class="card-title">Seating Plan for {{seating_plan.section}} Section - Status:
+                {{seating_plan.get_plan_status_display}}</h5>
               <!-- Active Table -->
               <table class="table table-borderless">
                 <thead>
@@ -62,7 +63,7 @@
 
                   {% if rota_manager %}
                   <tr>
-                    <td><a class="bi" href="{% url 'editsp' position.id %}">{{position.player}}</a></td>
+                    <td><a class="bi" href="{% url 'edit_sp' position.id %}">{{position.player}}</a></td>
                     <td>{{position.position_number}}</td>
                   </tr>
                   {% else %}
@@ -79,31 +80,17 @@
             </div>
           </div>
         </div><!-- End Project Seating Plan -->
-
+        <!-- Rota Form Section-->
         {% if user.is_authenticated %}
         {% if rota_manager %}
+        <div class="col-4 text-center">
 
-        <!-- Rota Form Section-->
-
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Edit {{seating_plan.section}} Rota for Project: {{project}}</h5>
-
-              <!-- Rota Form -->
-              <form method="POST" class="row g-3">
-                <span class="col-md-4">{{seating_plan_form | crispy }}</span>
-                <span class="col-md-4">{{seating_position_form | crispy }}</span>
-                <span class="col-md-4">{{player_project_form | crispy }}</span>
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Add New Player</button>
-              </form>
-              <!-- End Rota Form -->
-
-            </div>
-          </div>
+          <a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add New Player to
+              Rota</button></a>
+          <a href="{% url 'change_plan_status' project.slug %}"><button
+              class="btn btn-success">Draft/Published</button></a>
         </div>
-        {% endif  %}
+        {% endif %}
         {% endif %}
         <!-- End Rota Form Section-->
 
