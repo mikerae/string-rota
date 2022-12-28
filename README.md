@@ -622,6 +622,44 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ## Known Issues
 [Back to Top](#contents)
 
+### MultipleObjectsReturned Disney Project
+When clicking on the Disney Project, it now throws a MultipleObjectsReturned error for get().
+```
+MultipleObjectsReturned at /home/recording-sessions-for-disney/
+get() returned more than one Player_Project -- it returned 2!
+Request Method:	GET
+Request URL:	http://localhost:8000/home/recording-sessions-for-disney/
+Django Version:	3.2.3
+Exception Type:	MultipleObjectsReturned
+Exception Value:	
+get() returned more than one Player_Project -- it returned 2!
+Exception Location:	/workspace/.pip-modules/lib/python3.8/site-packages/django/db/models/query.py, line 439, in get
+Python Executable:	/home/gitpod/.pyenv/versions/3.8.11/bin/python3
+Python Version:	3.8.11
+Python Path:	
+['/workspace/string-rota',
+ '/home/gitpod/.pyenv/versions/3.8.11/lib/python38.zip',
+ '/home/gitpod/.pyenv/versions/3.8.11/lib/python3.8',
+ '/home/gitpod/.pyenv/versions/3.8.11/lib/python3.8/lib-dynload',
+ '/workspace/.pip-modules/lib/python3.8/site-packages',
+ '/home/gitpod/.pyenv/versions/3.8.11/lib/python3.8/site-packages']
+Server time:	Wed, 28 Dec 2022 22:49:08 +0000
+```
+The other prjects work fine. In Admin,  have checked:
+- that all projects have unique slugs. 
+- that there are no duplicate player_project records
+- that there are not 2 Player_Project models
+
+I changed the post() method in EditSeatingPosition() view to ensure that the player was difined by the seating position being edited:
+```
+sp_player = seating_position.player
+        player_project = get_object_or_404(
+            Player_Project,
+            player=sp_player,
+            project=project
+            )
+```
+No fix as yet: I might need to delete the Disney Project and associated records, and rebuild it manually....
 
 ## Deployment
 [Back to Top](#contents)
