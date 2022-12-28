@@ -57,7 +57,7 @@ class Rota(Projects):
         seating_plan = get_object_or_404(queryset, section=section.id)
         seating_positions = Seating_Position.objects.filter(
             seating_plan=seating_plan
-            )
+            ).order_by('position_number')
         res_ply = players_in_project.filter(
             performance_status='RE'
             )
