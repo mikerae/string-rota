@@ -125,6 +125,7 @@ class AddSeatingPosition(Rota):
             player=request.POST.get("player"),
             project=project
             )
+
         player_project_form = PlayerProjectFormPL(
             data=request.POST, instance=player_project
             )
@@ -143,60 +144,58 @@ class AddSeatingPosition(Rota):
 
 class EditSeatingPosition(Rota):
 
-    def get(self, request, seating_position_id):
+    def get(self, request, slug, seating_position_id, *args, **kwargs):
+        projects = Project.objects.all()
+        project = get_object_or_404(projects, slug=slug)
+        player = get_object_or_404(Player, users_django=request.user.id)
+        section = player.section
         seating_position = get_object_or_404(
             Seating_Position, id=seating_position_id
             )
-        seating_plan = seating_position.seating_plan
-        project = seating_plan.project
-        slug = project.slug
+        sp_player = seating_position.player
         player_project = get_object_or_404(
-                Player_Project,
-                player=seating_position.player,
-                project=seating_plan.project
-                )
-        print(f'request.method is : {request.method}')
+            Player_Project,
+            player=sp_player,
+            project=project
+            )
 
         seating_position_form = SeatingPositionForm(instance=seating_position)
-        seating_plan_form = SeatingPlanForm(instance=seating_plan)
-        player_project_form = PlayerProjectForm(instance=player_project)
+        player_project_form = PlayerProjectFormPL(instance=player_project)
 
         context = {
-            'seating_position_form': seating_position_form,
-            'seating_plan_form': seating_plan_form,
-            'player_project_form': player_project_form,
-            }
+                    'projects': projects,
+                    'project': project,
+                    'section': section,
+                    'seating_position_form': seating_position_form,
+                    'player_project_form': player_project_form,
+                    }
 
-        return render(request, 'string_rota/edit.html', context)
+        return render(request, 'string_rota/edit_sp.html', context)
 
-    def post(self, request, seating_position_id):
+    def post(self, request, slug, seating_position_id, *args, **kwargs):
+        projects = Project.objects.all()
+        project = get_object_or_404(projects, slug=slug)
+        player = get_object_or_404(Player, users_django=request.user.id)
+        section = player.section
         seating_position = get_object_or_404(
             Seating_Position, id=seating_position_id
             )
-        seating_plan = seating_position.seating_plan
-        project = seating_plan.project
-        slug = project.slug
         player_project = get_object_or_404(
-                Player_Project,
-                player=seating_position.player,
-                project=seating_plan.project
-                )
-        print(f'request.method is : {request.method}')
+            Player_Project,
+            player=request.POST.get("player"),
+            project=project
+            )
 
         seating_position_form = SeatingPositionForm(
-            request.POST, instance=seating_position
+            data=request.POST, instance=seating_position
             )
-        seating_plan_form = SeatingPlanForm(
-            data=request.POST, instance=seating_plan
-            )
-        player_project_form = PlayerProjectForm(
+        player_project_form = PlayerProjectFormPL(
             data=request.POST, instance=player_project
             )
 
         if seating_position_form.is_valid():
             seating_position_form.save()
-        if seating_plan_form.is_valid():
-            seating_plan_form.save()
+
         if player_project_form.is_valid():
             player_project_form.save()
 

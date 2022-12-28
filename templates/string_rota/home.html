@@ -63,7 +63,7 @@
 
                   {% if rota_manager %}
                   <tr>
-                    <td><a class="bi" href="{% url 'edit_sp' position.id %}">{{position.player}}</a></td>
+                    <td><a class="bi" href="{% url 'edit_sp' project.slug position.id %}">{{position.player}}</a></td>
                     <td>{{position.position_number}}</td>
                   </tr>
                   {% else %}
