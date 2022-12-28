@@ -59,10 +59,19 @@
                 </thead>
                 <tbody>
                   {% for position in seating_positions %}
+
+                  {% if rota_manager %}
+                  <tr>
+                    <td><a class="bi" href="{% url 'editsp' position.id %}">{{position.player}}</a></td>
+                    <td>{{position.position_number}}</td>
+                  </tr>
+                  {% else %}
                   <tr>
                     <td>{{position.player}}</td>
                     <td>{{position.position_number}}</td>
                   </tr>
+                  {% endif %}
+
                   {% endfor %}
                 </tbody>
               </table>

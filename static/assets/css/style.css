@@ -497,6 +497,10 @@ h6 {
   max-height: 36px;
 }
 
+#profile-img {
+  background-color: #c0c3e3;
+}
+
 .header-nav .nav-profile span {
   font-size: 14px;
   font-weight: 600;
