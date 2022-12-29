@@ -27,3 +27,19 @@ class PlayerProjectFormPL(forms.ModelForm):
     class Meta:
         model = Player_Project
         fields = ('off_reduced_rep',)
+
+
+class EditPlayerProjectForm(forms.ModelForm):
+
+    class Meta:
+        model = Player_Project
+        fields = ('performance_status',)
+
+
+class ReserveReducedForm(forms.ModelForm):
+
+    class Meta:
+        model = Player_Project
+        fields = ('performance_status',
+                  'off_reduced_rep',
+                  )

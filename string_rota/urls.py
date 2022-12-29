@@ -12,6 +12,14 @@ urlpatterns = [
          views.EditSeatingPosition.as_view(),
          name='edit_sp'
          ),
+    path('edit_pp/<slug:slug>/<player_pp_id>',
+         views.EditPlayerProject.as_view(),
+         name='edit_pp'
+         ),
+    path('reserve_reduced/<slug:slug>',
+         views.ReserveReduced.as_view(),
+         name='reserve_reduced'
+         ),
     path('change_plan_status/<slug:slug>/',
          views.ChangePlanStatus.as_view(),
          name='change_plan_status'

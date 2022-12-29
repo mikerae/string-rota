@@ -83,12 +83,14 @@
         <!-- Rota Form Section-->
         {% if user.is_authenticated %}
         {% if rota_manager %}
-        <div class="col-4 text-center">
 
-          <a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add New Player to
-              Rota</button></a>
+        <div class="col-12 text-center ">
+          <span><a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add New
+                Player to Rota</button></a></span>
           <a href="{% url 'change_plan_status' project.slug %}"><button
               class="btn btn-success">Draft/Published</button></a>
+          <a href="{% url 'reserve_reduced' project.slug %}"><button
+              class="btn btn-primary">Reserved/Reduced-Rep</button></a>
         </div>
         {% endif %}
         {% endif %}
@@ -106,7 +108,13 @@
 
               <div class="d-flex align-items-center">
                 <div class="ps-3">
-                  <h6>{{reserve_player}}</h6>
+                  {% if rota_manager %}
+                  <a href="{% url 'edit_pp' project.slug reserve_player %}">
+                    <h6>{{reserve_player}}</h6>
+                  </a>
+                  {% else %}
+                  <h6>{{reserve_player.player}}</h6>
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -122,7 +130,13 @@
 
               <div class="d-flex align-items-center">
                 <div class="ps-3">
+                  {% if rota_manager %}
+                  <a href="{% url 'edit_pp' project.slug player_off_reduced_rep %}">
+                    <h6>{{player_off_reduced_rep.player}}</h6>
+                  </a>
+                  {% else %}
                   <h6>{{player_off_reduced_rep}}</h6>
+                  {% endif %}
                 </div>
               </div>
             </div>

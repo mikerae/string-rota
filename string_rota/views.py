@@ -4,7 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
-from .forms import SeatingPositionForm, SeatingPlanForm, PlayerProjectFormPL
+from .forms import (SeatingPositionForm,
+                    SeatingPlanForm,
+                    PlayerProjectFormPL,
+                    ReserveReducedForm
+                    )
 from .models import (
     Project,
     Seating_Plan,
@@ -64,7 +68,7 @@ class Rota(Projects):
         if not res_ply:
             reserve_player = "Not Allocated"
         else:
-            reserve_player = res_ply.get().player
+            reserve_player = res_ply.get()
 
         red_ply = players_in_project.filter(
             off_reduced_rep=True
@@ -72,10 +76,12 @@ class Rota(Projects):
         if not red_ply:
             off_reduced = "Not Allocated"
         else:
-            off_reduced = red_ply.get().player
+            off_reduced = red_ply.get()
         not_available = players_in_project.filter(performance_status='NA')
         repertoire = project.repertoire_name.all()
         rota_manager = request.user.groups.filter(name="Rota_Manager")
+        print(f'reserve_player: {reserve_player}')
+        print(f'off_reduced: {off_reduced}')
 
         context = {
             'projects': projects,
@@ -201,6 +207,100 @@ class EditSeatingPosition(Rota):
             player_project_form.save()
 
         return HttpResponseRedirect(reverse('rota', args=[slug]))
+
+
+class EditPlayerProject(Rota):
+
+    def get(self, request, slug, player_pp_id, *args, **kwargs):
+        projects = Project.objects.all()
+        project = get_object_or_404(projects, slug=slug)
+        player = get_object_or_404(Player, users_django=request.user.id)
+        section = player.section
+        player_pp = get_object_or_404(Player, id=player_pp_id)
+        player_project = get_object_or_404(
+            Player_Project,
+            player=player_pp,
+            project=project
+            )
+
+        player_project_form = EditPlayerProjectForm(instance=player_project)
+
+        context = {
+                    'projects': projects,
+                    'project': project,
+                    'player': sp_player,
+                    'section': section,
+                    'player_project_form': player_project_form,
+                    }
+
+        return render(request, 'string_rota/edit_pp.html', context)
+
+    def post(self, request, slug, player_pp_id, *args, **kwargs):
+        projects = Project.objects.all()
+        project = get_object_or_404(projects, slug=slug)
+        player = get_object_or_404(Player, users_django=request.user.id)
+        section = player.section
+        player_pp = get_object_or_404(Player, id=player_pp_id)
+        player_project = get_object_or_404(
+            Player_Project,
+            player=player_pp,
+            project=project
+            )
+
+        player_project_form = EditPlayerProjectForm(
+            data=request.POST, instance=player_project
+            )
+
+        if player_project_form.is_valid():
+            player_project_form.save()
+
+        return HttpResponseRedirect(reverse('rota', args=[slug]))
+
+
+class ReserveReduced(Rota):
+
+    def get(self, request, slug, *args, **kwargs):
+        projects = Project.objects.all()
+        project = get_object_or_404(projects, slug=slug)
+        player = get_object_or_404(Player, users_django=request.user.id)
+        section = player.section
+        players_project = Player_Project.objects.filter(
+            project=project).filter(player__section=section
+                                    )
+        print(f'players_project: {players_project}')
+        reserve_reduced_form = ReserveReducedForm()
+
+        context = {
+                    'projects': projects,
+                    'project': project,
+                    'section': section,
+                    'players_project': players_project,
+                    'reserve_reduced_form': reserve_reduced_form
+                    }
+
+        return render(request, 'string_rota/reserve_reduced.html', context)
+
+    # def post(self, request, *args, **kwargs):
+    #     projects = Project.objects.all()
+    #     project = get_object_or_404(projects, slug=slug)
+    #     player = get_object_or_404(Player, users_django=request.user.id)
+    #     section = player.section
+    #     player_pp = get_object_or_404(Player, id=player_pp_id)
+    #     player_project = get_object_or_404(
+    #         Player_Project,
+    #         player=player_pp,
+    #         project=project
+    #         )
+
+    #     reserve_reduced_form = ReserveReducedForm(
+    #         data=request.POST, instance=player_project
+    #         )
+
+    #     if player_project_form.is_valid():
+    #         # player_project_form.save()
+    #         pass
+
+    #     return HttpResponseRedirect(reverse('rota', args=[slug]))
 
 
 class DeleteSeatingPosition(View):
