@@ -305,7 +305,7 @@ class ReserveReduced(Rota):
 
 class DeleteSeatingPosition(View):
 
-    def def get(self, request, slug, seating_position_id, *args, **kwargs):
+    def get(self, request, slug, seating_position_id, *args, **kwargs):
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
