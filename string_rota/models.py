@@ -20,7 +20,7 @@ class Section(models.Model):
     players = models.ManyToManyField('Player', related_name='stg_section')
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Player(models.Model):
@@ -95,7 +95,7 @@ class Project(models.Model):
     sessions = models.ManyToManyField(Session, related_name='session')
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Seating_Position(models.Model):

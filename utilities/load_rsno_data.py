@@ -1,5 +1,8 @@
+""" A utility module for loading initial RSNO into models """
 from datetime import datetime, time
 from math import ceil
+from django.shortcuts import get_object_or_404
+from django.utils.text import slugify
 from string_rota.models import (
     Repertoire,
     Player,
@@ -29,7 +32,7 @@ def load_rsno_data():
         """ Load repertoire data into project database """
         for row in DATA:
             repertoire_row = Repertoire(
-                rep_name=row['Repertoire'],
+                name=row['Repertoire'],
                 instrumentation=row['Instrumentation']
                 )
             repertoire_row.save()
@@ -41,7 +44,7 @@ def load_rsno_data():
                 first_name=row['first_name'],
                 last_name=row['last_name'],
                 annual_nfd_quota=int(row['nd_alloc']),
-                section=Section.objects.get(name=row['section'])
+                section=get_object_or_404(Section, name=row['section'])
                 )
 
     def load_session_data(DATA):
@@ -69,25 +72,29 @@ def load_rsno_data():
             if end_time_md - int(end_time_md) > 0.005:
                 end_time_m = ceil(end_time_md)
             elif end_time_md - int(end_time_md) > 0.005:
-                end_time_m = int(end_time_md)
+                end_time_h = int(end_time_md)
             else:
                 end_time_m = int(end_time_md)
-
+            # data_project = row['project']
             Session.objects.create(
                 date=datetime.strptime(row['date'], "%a %d %b %y").date(),
                 start_time=time(start_time_h, start_time_m),
                 end_time=time(end_time_h, end_time_m),
-                session_type=row['session_type']
+                session_type=row['session_type'],
+                project=get_object_or_404(Project, name=row['project'])
                 )
 
     def load_project_data(DATA):
         """ Load project data into project database """
         for row in DATA:
+            project_name = row['project']
+            slug = slugify(project_name)
             Project.objects.create(
-                name=row['project'],
+                name=project_name,
+                slug=slug,
                 )
 
     # load_repertoire_data(REPERTOIRE_DATA)  # Data already loaded!
     # load_player_data(PLAYER_DATA)  # Data already loaded!
-    # load_session_data(SESSION_DATA)  # Data already loaded!
     # load_project_data(PROJECT_DATA)  # Data already loaded!
+    # load_session_data(SESSION_DATA)  # Data already loaded!
