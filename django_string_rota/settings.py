@@ -93,6 +93,8 @@ TEMPLATES = [
     },
 ]
 
+MESSAGES_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 WSGI_APPLICATION = 'django_string_rota.wsgi.application'
 
 
