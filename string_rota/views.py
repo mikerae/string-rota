@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
@@ -50,14 +51,28 @@ class Rota(Projects):
         projects = Project.objects.all()
         project = get_object_or_404(Project, slug=slug)
         sections = Section.objects.all()
-        player = get_object_or_404(Player, users_django=request.user.id)
+        # check if user is not a player, & is a manager
+        try:
+            player = get_object_or_404(Player, users_django=request.user.id)
+        except Exception as e:
+            print(f'You are not logged in as a player. {e}')
+            messages.warning(request, f'You are not logged in as a player. {e}')
+            return redirect(reverse('projects'))
+
         section = player.section
         players_in_project = Player_Project.objects.filter(
             project=project
             ).filter(player__section=section)
-        queryset = Seating_Plan.objects.filter(
-            project=project,
-            )
+        # no seating plan?
+        try:
+            queryset = Seating_Plan.objects.filter(
+                project=project,
+                )
+        except Exception as e:
+            print(f'There is no Seating Plan for the {project} project. {e}')
+            messages.warning(request, f'There is no Seating Plan for the {project} project. {e}')
+            return redirect(reverse('projects', args))
+        
         seating_plan = get_object_or_404(queryset, section=section.id)
         seating_positions = Seating_Position.objects.filter(
             seating_plan=seating_plan

@@ -1,3 +1,4 @@
+""" Admin Settings for string-rota """
 from django.contrib import admin
 from .models import (
     Repertoire,
