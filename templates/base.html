@@ -80,7 +80,7 @@
                                 <p></p><span>Member of {{section}} Section</span></p>
                                 {% endif %}
                                 {% if rota_manager %}
-                                <p><span>{{seating_plan.section}} Rota Manager</span></p>
+                                <p><span>{{section}} Rota Manager</span></p>
                                 {% endif %}
                             </li>
                             <li>
@@ -123,8 +123,16 @@
                             {% endfor %}
                         </li>
                     </ul>
-                </li><!-- End Projects Nav -->
-
+                </li>
+                <!-- End Projects Nav -->
+                {% if request.user.is_staff %}
+                <li class="">
+                    <a class="nav-link " href="../admin/">
+                        <i class="bi bi-menu-button-wide"></i><span>Admin</span><i
+                            class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
 
         </aside><!-- End Sidebar-->
