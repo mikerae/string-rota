@@ -61,22 +61,39 @@ class Rota(Projects):
             return redirect(reverse('projects'))
 
         section = player.section
-        players_in_project = Player_Project.objects.filter(
-            project=project
-            ).filter(player__section=section)
-        # no seating plan?
+        # no players_in_project record?
         try:
-            queryset = Seating_Plan.objects.filter(
-                project=project,
-                )
-            seating_plan = get_object_or_404(queryset, section=section.id)
-            print(f'seating_plan: {seating_plan}')
+            players_in_project = Player_Project.objects.filter(
+                project=project
+                ).filter(player__section=section)
         except Exception as e:
-            print(f'There is no Seating Plan for the {project} project. seating_plan: {seating_plan} {e}')
-            messages.warning(request, f'There is no Seating \
-                Plan for the {project} project.')
+            print(f'There is no players_in_project for the {project} project. \
+                players_in_project: {players_in_project} {e}')
+            messages.warning(request, f'There is no players_in_project \
+                record for the {project} project.')
             return redirect(reverse('projects'))
-          
+        
+        queryset = Seating_Plan.objects.filter(
+            project=project,
+            )  
+        if not queryset:  # no seating plan records for this project
+            print(f'queryset: {queryset} for seating plan, project: {project}')
+            print(f'There are no Seating Plans for the {project} project.')
+            messages.warning(request, f'There are no Seating \
+                Plans for the {project} project.')
+            return redirect(reverse('projects'))
+
+        print(f'queryset: {queryset} for seating plan, project: {project}')
+        try:
+            seating_plan = get_object_or_404(queryset, section=section.id)
+        except Exception as e:  # no seating plan record for user's section
+            print(f'There is no Seating Plan for the {section} section for \
+                the {project} project.')
+            messages.warning(request, f'There is no Seating \
+                Plan for the {section} section for the {project} project.')
+            return redirect(reverse('projects'))
+        print(f'seating plan: {seating_plan}')
+
         seating_positions = Seating_Position.objects.filter(
             seating_plan=seating_plan
             ).order_by('position_number')
