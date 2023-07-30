@@ -18,6 +18,7 @@ from .models import (
     Section,
     Player_Project
 )
+from .check_player_project import check_player_project
 
 
 # Create your views here.
@@ -35,6 +36,9 @@ class Projects(View):
     def get(self, request):
         projects = Project.objects.all()
 
+        # routine background record checks preventing crashes
+        check_player_project()
+
         context = {
             'projects': projects,
             }
@@ -51,6 +55,7 @@ class Rota(Projects):
         print('rota is called')
         projects = Project.objects.all()
         project = get_object_or_404(Project, slug=slug)
+
         sections = Section.objects.all()
         # check if user is not a player, & is a manager
         try:
@@ -61,13 +66,13 @@ class Rota(Projects):
             return redirect(reverse('projects'))
 
         section = player.section
-        # no players_in_project record?
+        # no player_in_project record?
         try:
             players_in_project = Player_Project.objects.filter(
                 project=project
                 ).filter(player__section=section)
         except Exception as e:
-            print(f'There is no players_in_project for the {project} project. \
+            print(f'There is no player_in_project for the {project} project. \
                 players_in_project: {players_in_project} {e}')
             messages.warning(request, f'There is no players_in_project \
                 record for the {project} project.')
