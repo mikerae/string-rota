@@ -70,6 +70,7 @@ class Rota(Projects):
                 project=project,
                 )
             seating_plan = get_object_or_404(queryset, section=section.id)
+            print(f'seating_plan: {seating_plan}')
         except Exception as e:
             print(f'There is no Seating Plan for the {project} project. seating_plan: {seating_plan} {e}')
             messages.warning(request, f'There is no Seating \
