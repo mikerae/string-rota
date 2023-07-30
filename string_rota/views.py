@@ -48,6 +48,7 @@ class Rota(Projects):
         return super(Rota, self).dispatch(*args, **kwargs)
 
     def get(self, request, slug, *args, **kwargs):
+        print('rota is called')
         projects = Project.objects.all()
         project = get_object_or_404(Project, slug=slug)
         sections = Section.objects.all()
@@ -56,7 +57,7 @@ class Rota(Projects):
             player = get_object_or_404(Player, users_django=request.user.id)
         except Exception as e:
             print(f'You are not logged in as a player. {e}')
-            messages.warning(request, f'You are not logged in as a player. {e}')
+            messages.warning(request, f'You are not logged in as a player.')
             return redirect(reverse('projects'))
 
         section = player.section
@@ -68,13 +69,13 @@ class Rota(Projects):
             queryset = Seating_Plan.objects.filter(
                 project=project,
                 )
+            seating_plan = get_object_or_404(queryset, section=section.id)
         except Exception as e:
             print(f'There is no Seating Plan for the {project} project. {e}')
             messages.warning(request, f'There is no Seating \
-                Plan for the {project} project. {e}')
+                Plan for the {project} project.')
             return redirect(reverse('projects'))
-        
-        seating_plan = get_object_or_404(queryset, section=section.id)
+          
         seating_positions = Seating_Position.objects.filter(
             seating_plan=seating_plan
             ).order_by('position_number')
