@@ -48,35 +48,43 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Seating Plan for {{seating_plan.section}} Section - Status:
-                {{seating_plan.get_plan_status_display}}</h5>
-              <!-- Active Table -->
-              <table class="table table-borderless">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for position in seating_positions %}
+              <h5 class="card-title">
+                Seating Plan for {{seating_plan.section}} Section
+                Status: {{seating_plan.get_plan_status_display}}
+              </h5>
+              {% if  not rota_manager %}
+              {% if seating_plan.get_plan_status_display == "Draft" %}
+              <h4>The Seating Plan for {{ project.name }} is not ready yet.</h4>
+                <h5>Please contact your Rota Manager</h5>
+                {% endif %}
+                {% endif %}
+                <!-- Active Table -->
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Position</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for position in seating_positions %}
 
-                  {% if rota_manager %}
-                  <tr>
-                    <td><a class="bi" href="{% url 'edit_sp' project.slug position.id %}">{{position.player}}</a></td>
-                    <td>{{position.position_number}}</td>
-                  </tr>
-                  {% else %}
-                  <tr>
-                    <td>{{position.player}}</td>
-                    <td>{{position.position_number}}</td>
-                  </tr>
-                  {% endif %}
+                    {% if rota_manager %}
+                    <tr>
+                      <td><a class="bi" href="{% url 'edit_sp' project.slug position.id %}">{{position.player}}</a></td>
+                      <td>{{position.position_number}}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                      <td>{{position.player}}</td>
+                      <td>{{position.position_number}}</td>
+                    </tr>
+                    {% endif %}
 
-                  {% endfor %}
-                </tbody>
-              </table>
-              <!-- End Section Player List -->
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <!-- End Section Player List -->
             </div>
           </div>
         </div><!-- End Project Seating Plan -->
@@ -85,7 +93,7 @@
         {% if rota_manager %}
 
         <div class="col-12 text-center ">
-          <span><a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add New
+          <span><a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add
                 Player to Rota</button></a></span>
           <a href="{% url 'change_plan_status' project.slug %}"><button
               class="btn btn-success">Draft/Published</button></a>
