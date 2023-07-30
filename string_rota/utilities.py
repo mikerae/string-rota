@@ -43,16 +43,13 @@ def check_seating_plan():
     sections = Section.objects.all()
     for project in projects:
         for section in sections:
-            print(f'section name : {section.name}')
-            if section.name != "No Section":
-                seating_plan = seating_plans.filter(
-                                                    project=project
-                                                    ).filter(
-                                                    section=section)
-                if not seating_plan:
-                    Seating_Plan.objects.create(
-                        project=project,
-                        section=section,
-                    )
-                    print(f'Seating Plan created for  {project} - {section}')
+            seating_plan = seating_plans.filter(
+                                                project=project
+                                                ).filter(
+                                                section=section)
+            if not seating_plan:
+                Seating_Plan.objects.create(
+                    project=project,
+                    section=section,
+                )
     print('check for seating plan records completed')
