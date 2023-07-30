@@ -24,5 +24,8 @@ def check_player_project():
                     player=player,
                 )
                 print(f'record created for  {project} - {player}')
+            elif player_in_project.count != 1:
+                print(f'found more than 1 records for {project} - {player}')
+
     print('check for player_project records completed')
     return

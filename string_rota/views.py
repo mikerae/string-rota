@@ -115,8 +115,8 @@ class Rota(Projects):
             )
         if not red_ply:
             off_reduced = "Not Allocated"
-        else:
-            off_reduced = red_ply.get()
+        # else:
+        #     off_reduced = red_ply.get()
         not_available = players_in_project.filter(performance_status='NA')
         repertoire = project.repertoire_name.all()
         rota_manager = request.user.groups.filter(name="Rota_Manager")
