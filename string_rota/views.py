@@ -1,15 +1,18 @@
+# pylint: disable=no-member
+""" Views for String Rota app """
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.models import User, Group
+# from django.contrib.auth.models import User, Group
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
-from .forms import (SeatingPositionForm,
-                    SeatingPlanForm,
-                    PlayerProjectFormPL,
-                    ReserveReducedForm
-                    )
+
+# from .forms import (SeatingPositionForm,
+#                     SeatingPlanForm,
+#                     PlayerProjectFormPL,
+#                     ReserveReducedForm
+#                     )
 from .models import (
     Project,
     Seating_Plan,
@@ -18,26 +21,28 @@ from .models import (
     Section,
     Player_Project
 )
-from .check_player_project import check_player_project
+from .utilities import check_player_project, check_seating_plan
 
-
-# Create your views here.
 
 def login(request):
+    """ Login View """
     return render(request, 'account/login.html')
 
 
 class Projects(View):
+    """ Home view loading projects in the sidebar """
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(Projects, self).dispatch(*args, **kwargs)
 
     def get(self, request):
+        """ Loads projects into sidebar """
         projects = Project.objects.all()
 
         # routine background record checks preventing crashes
         check_player_project()
+        check_seating_plan()
 
         context = {
             'projects': projects,
@@ -46,12 +51,14 @@ class Projects(View):
 
 
 class Rota(Projects):
+    """ Creates rota view for selected project """
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(Rota, self).dispatch(*args, **kwargs)
 
     def get(self, request, slug, *args, **kwargs):
+        """ Creates rota view for selected project """
         print('rota is called')
         projects = Project.objects.all()
         project = get_object_or_404(Project, slug=slug)
@@ -77,10 +84,10 @@ class Rota(Projects):
             messages.warning(request, f'There is no players_in_project \
                 record for the {project} project.')
             return redirect(reverse('projects'))
-        
+
         queryset = Seating_Plan.objects.filter(
             project=project,
-            )  
+            )
         if not queryset:  # no seating plan records for this project
             print(f'queryset: {queryset} for seating plan, project: {project}')
             print(f'There are no Seating Plans for the {project} project.')
@@ -88,7 +95,6 @@ class Rota(Projects):
                 Plans for the {project} project.')
             return redirect(reverse('projects'))
 
-        print(f'queryset: {queryset} for seating plan, project: {project}')
         try:
             seating_plan = get_object_or_404(queryset, section=section.id)
         except Exception as e:  # no seating plan record for user's section
@@ -102,6 +108,7 @@ class Rota(Projects):
         seating_positions = Seating_Position.objects.filter(
             seating_plan=seating_plan
             ).order_by('position_number')
+
         res_ply = players_in_project.filter(
             performance_status='RE'
             )
@@ -116,13 +123,12 @@ class Rota(Projects):
         if not red_ply:
             off_reduced = "Not Allocated"
         else:
-            off_reduced = "Bug Here"  # Bug in next line
-        #     off_reduced = red_ply.get()
+            off_reduced = red_ply.get()
         not_available = players_in_project.filter(performance_status='NA')
         repertoire = project.repertoire_name.all()
         rota_manager = request.user.groups.filter(name="Rota_Manager")
         print(f'reserve_player: {reserve_player}')
-        print(f'off_reduced: {off_reduced}')
+        print(f'player_off_reduced_rep: {off_reduced}')
 
         context = {
             'projects': projects,
@@ -131,7 +137,7 @@ class Rota(Projects):
             'seating_positions': seating_positions,
             'players': players_in_project,
             'reserve_player': reserve_player,
-            'player_off_reduced_rep': off_reduced,
+            'players_off_reduced_rep': off_reduced,
             'not_available': not_available,
             'repertoire': repertoire,
             'rota_manager': rota_manager,
@@ -141,6 +147,7 @@ class Rota(Projects):
 
 
 class AddSeatingPosition(Rota):
+    """ Add a player seqting position to a Seating Plan """
 
     def get(self, request, slug, *args, **kwargs):
         projects = Project.objects.all()
@@ -162,6 +169,7 @@ class AddSeatingPosition(Rota):
         return render(request, 'string_rota/add_sp.html', context)
 
     def post(self, request, slug, seating_plan_id, *args, **kwargs):
+        """ Add a Seating Position to a project seating plan """
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
@@ -190,6 +198,7 @@ class AddSeatingPosition(Rota):
 
 
 class EditSeatingPosition(Rota):
+    """ View and Edit the seating positions in a Seating Plan """
 
     def get(self, request, slug, seating_position_id, *args, **kwargs):
         projects = Project.objects.all()
@@ -220,6 +229,7 @@ class EditSeatingPosition(Rota):
         return render(request, 'string_rota/edit_sp.html', context)
 
     def post(self, request, slug, seating_position_id, *args, **kwargs):
+        """ Edit a seating position in a seating Plan """
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
@@ -251,6 +261,7 @@ class EditSeatingPosition(Rota):
 
 
 class EditPlayerProject(Rota):
+    """  View and edit the player details for a given project """
 
     def get(self, request, slug, player_pp_id, *args, **kwargs):
         projects = Project.objects.all()
@@ -277,6 +288,7 @@ class EditPlayerProject(Rota):
         return render(request, 'string_rota/edit_pp.html', context)
 
     def post(self, request, slug, player_pp_id, *args, **kwargs):
+        """ Edit the player details for a given project """
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
@@ -299,6 +311,7 @@ class EditPlayerProject(Rota):
 
 
 class ReserveReduced(Rota):
+    """ Set the Reserve and Reduced status for a plyer iin a project """
 
     def get(self, request, slug, *args, **kwargs):
         projects = Project.objects.all()
@@ -345,6 +358,7 @@ class ReserveReduced(Rota):
 
 
 class DeleteSeatingPosition(View):
+    """ Delete a seating position in a project """
 
     def get(self, request, slug, seating_position_id, *args, **kwargs):
         projects = Project.objects.all()
@@ -364,6 +378,7 @@ class DeleteSeatingPosition(View):
 
 
 class ChangePlanStatus(View):
+    """ Change the status of a seating plan """
 
     def get():
         pass

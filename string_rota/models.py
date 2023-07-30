@@ -154,11 +154,11 @@ class Player_Project(models.Model):
         default='NA'
         )
     off_reduced_rep = models.BooleanField(
-        null=False, default=False
+        null=False, blank=False, default=False
         )
     trialist = models.BooleanField(null=False, blank=False, default=False)
     guest_principal = models.BooleanField(
-        null=False, default=False
+        null=False, blank=False, default=False
         )
     project = models.ForeignKey(
         Project,  on_delete=models.CASCADE

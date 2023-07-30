@@ -108,12 +108,20 @@
 
               <div class="d-flex align-items-center">
                 <div class="ps-3">
-                  {% if rota_manager %}
-                  <a href="{% url 'edit_pp' project.slug reserve_player %}">
-                    <h6>{{reserve_player}}</h6>
-                  </a>
+                  {% if reserve_player == "Not Allocated" %}
+                  <span class="card-title">Not Allocated</span>
                   {% else %}
-                  <h6>{{reserve_player.player}}</h6>
+                  <ul>
+                    <li>
+                      {% if rota_manager %}
+                      <a href="{% url 'edit_pp' project.slug reserve_player %}">
+                        <span class="card-title">{{reserve_player.player}}</span>
+                      </a>
+                      {% else %}
+                      <span class="card-title">{{reserve_player.player}}</span>
+                      {% endif %}
+                    </li>
+                  </ul>
                   {% endif %}
                 </div>
               </div>
@@ -124,18 +132,23 @@
         <!-- Reduced Rep Player -->
         <div class="col-xxl-4 col-md-6">
           <div class="card info-card sales-card">
-
             <div class="card-body">
-              <h4 class="card-title">Reduced Rep Player<span></h4>
+              <h4 class="card-title">Reduced Rep Player(s)<span></h4>
 
               <div class="d-flex align-items-center">
                 <div class="ps-3">
+                  {% if players_off_reduced_rep == "Not Allocated" %}
+                  <span class="card-title">Not Allocated</span>
+                  {% else %}
+                  {% for player in players_off_reduced_rep %}
                   {% if rota_manager %}
                   <a href="{% url 'edit_pp' project.slug player_off_reduced_rep %}">
-                    <h6>{{player_off_reduced_rep.player}}</h6>
+                    <span class="card-title">{{player.player}}</span>
                   </a>
                   {% else %}
-                  <h6>{{player_off_reduced_rep}}</h6>
+                  <span class="card-title">{{player.player}}</span>
+                  {% endif %}
+                  {% endfor %}
                   {% endif %}
                 </div>
               </div>
