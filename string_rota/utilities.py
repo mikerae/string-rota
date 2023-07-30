@@ -48,10 +48,9 @@ def check_seating_plan():
                                                 ).filter(
                                                 section=section)
             if not seating_plan:
-                print(f'No  seating plan for  {project} - {section}')
-            else:
-                seating_plan = seating_plan.get()
-                print(f'Seating plan: {seating_plan}, \
-                    player: {seating_plan.players}')
-
+                Seating_Plan.objects.create(
+                    project=project,
+                    section=section,
+                )
+                print(f'Seating Plan created for  {project} - {section}')
     print('check for seating plan records completed')
