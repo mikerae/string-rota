@@ -43,7 +43,7 @@ def check_seating_plan():
     sections = Section.objects.all()
     for project in projects:
         for section in sections:
-            if not section == "No Section":
+            if section != "No Section":
                 seating_plan = seating_plans.filter(
                                                     project=project
                                                     ).filter(
