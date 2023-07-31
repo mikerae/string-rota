@@ -165,8 +165,9 @@ class AddSeatingPosition(Rota):
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
+        seating_plan = get_object_or_404(SeatingPlan, project=project, section=section)
 
-        seating_position_form = SeatingPositionForm()
+        seating_position_form = SeatingPositionForm(section, seating_plan)
         player_project_form = PlayerProjectForm()
 
         context = {
