@@ -18,7 +18,7 @@ def check_player_project():
         for player in players:
             player_in_project = PlayerProject.objects.filter(project=project
                                                              ).filter(
-                                                                player=player)
+                player=player)
             if not player_in_project:
                 PlayerProject.objects.create(
                     project=project,
@@ -44,12 +44,13 @@ def check_seating_plan():
     for project in projects:
         for section in sections:
             seating_plan = seating_plans.filter(
-                                                project=project
-                                                ).filter(
-                                                section=section)
+                project=project
+            ).filter(
+                section=section)
             if not seating_plan:
                 SeatingPlan.objects.create(
                     project=project,
                     section=section,
                 )
+                print(f'seating plan created for  {project} - {section}')
     print('check for seating plan records completed')

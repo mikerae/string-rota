@@ -7,7 +7,7 @@ class Repertoire(models.Model):
     """ Project Repertoire """
     name = models.CharField(
         max_length=200, null=False, blank=False
-        )
+    )
     instrumentation = models.CharField(max_length=14, null=False, blank=False)
 
     class Meta:
@@ -33,23 +33,23 @@ class Player(models.Model):
     last_name = models.CharField(max_length=50)
     is_contract = models.BooleanField(
         null=False, blank=False, default=True
-        )
+    )
     notes = models.TextField(null=True, blank=True)
     annual_nfd_quota = models.IntegerField(
         null=False, blank=False, default=0
-        )
+    )
     nfds_used_to_date = models.IntegerField(
         null=False, blank=False, default=0
-        )
+    )
     off_reduced_rep_tot = models.IntegerField(
         null=False, blank=False, default=0
-        )
+    )
     section = models.ForeignKey(Section,  on_delete=models.RESTRICT)
     users_django = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True, blank=True,
-        )
+    )
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -64,16 +64,16 @@ class Session(models.Model):
     ]
     date = models.DateField(
         auto_now=False, auto_now_add=False, null=False, blank=False
-        )
+    )
     start_time = models.TimeField(
         auto_now=False, auto_now_add=False, null=False, blank=False
-        )
+    )
     end_time = models.TimeField(
         auto_now=False, auto_now_add=False, null=False, blank=False
-        )
+    )
     session_type = models.CharField(
         max_length=3, choices=SESSION_TYPE_CHOICES, default='REH'
-        )
+    )
     repertoire = models.ManyToManyField(
         Repertoire,
         related_name="sessions")
@@ -89,22 +89,22 @@ class Project(models.Model):
     """ Orchestral Projects """
     name = models.CharField(
         max_length=200, null=False, blank=False, unique=True
-        )
+    )
     slug = models.SlugField(max_length=200, unique=True)
     players = models.ManyToManyField(
         Player,
         through='PlayerProject',
         through_fields=('project', 'player')
-        )
+    )
     repertoire_name = models.ManyToManyField(Repertoire,
                                              related_name="repertoire")
     seating_plan = models.ManyToManyField(
-                                          'SeatingPlan',
-                                          related_name='project_s_plan',
-                                          )
+        'SeatingPlan',
+        related_name='project_s_plan',
+    )
     sessions = models.ManyToManyField(
-                                      Session,
-                                      related_name='project_sessions')
+        Session,
+        related_name='project_sessions')
 
     def __str__(self):
         return str(self.name)
@@ -117,7 +117,7 @@ class SeatingPosition(models.Model):
         'SeatingPlan',
         null=True,
         on_delete=models.RESTRICT
-        )
+    )
     player = models.ForeignKey(Player, on_delete=models.RESTRICT)
 
     def __str__(self):
@@ -129,20 +129,20 @@ class SeatingPlan(models.Model):
     PLAN_STATUS_CHOICES = [
         ('D', 'Draft'),
         ('P', 'Published')
-        ]
+    ]
     plan_status = models.CharField(
         max_length=1,
         null=False,
         blank=False,
         choices=PLAN_STATUS_CHOICES,
         default='D'
-        )
+    )
     project = models.ForeignKey(
         Project,
         null=True,
         on_delete=models.CASCADE,
         related_name='s_plans_project'
-        )
+    )
     section = models.ForeignKey(Section, on_delete=models.RESTRICT)
     players = models.ManyToManyField(
         Player,
@@ -150,7 +150,7 @@ class SeatingPlan(models.Model):
         through='SeatingPosition',
         through_fields=('seating_plan', 'player'),
 
-        )
+    )
 
     def __str__(self):
         return f'{self.section} {self.project}'
@@ -169,20 +169,20 @@ class PlayerProject(models.Model):
         blank=False,
         choices=PERFORMANCE_STATUS_CHOICES,
         default='NA'
-        )
+    )
     off_reduced_rep = models.BooleanField(
         null=False, blank=False, default=False
-        )
+    )
     trialist = models.BooleanField(null=False, blank=False, default=False)
     guest_principal = models.BooleanField(
         null=False, blank=False, default=False
-        )
+    )
     project = models.ForeignKey(
         Project,  on_delete=models.RESTRICT
-        )
+    )
     player = models.ForeignKey(
         Player,  on_delete=models.RESTRICT
-        )
+    )
 
     def __str__(self):
         return f'{self.player} {self.project}'

@@ -10,14 +10,14 @@ from string_rota.models import (
     Section,
     Session,
     Project,
-    )
+)
 from utilities.get_orch_data import (
     connect_to_worksheet,
     get_repertoire,
     get_players,
     get_sessions,
     get_projects
-    )
+)
 
 
 def load_rsno_data():
@@ -36,7 +36,7 @@ def load_rsno_data():
             repertoire_row = Repertoire(
                 name=row['Repertoire'],
                 instrumentation=row['Instrumentation']
-                )
+            )
             repertoire_row.save()
 
     def load_player_data(DATA):
@@ -47,7 +47,7 @@ def load_rsno_data():
                 last_name=row['last_name'],
                 annual_nfd_quota=int(row['nd_alloc']),
                 section=get_object_or_404(Section, name=row['section'])
-                )
+            )
 
     def load_session_data(DATA):
         """
@@ -84,7 +84,7 @@ def load_rsno_data():
                 end_time=time(end_time_h, end_time_m),
                 session_type=row['session_type'],
                 project=get_object_or_404(Project, name=row['project'])
-                )
+            )
 
     def load_project_data(DATA):
         """ Load project data into project database """
@@ -94,7 +94,7 @@ def load_rsno_data():
             Project.objects.create(
                 name=project_name,
                 slug=slug,
-                )
+            )
 
     load_repertoire_data(REPERTOIRE_DATA)  # Data already loaded!
     load_player_data(PLAYER_DATA)  # Data already loaded!
