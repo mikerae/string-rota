@@ -1,14 +1,17 @@
+""" Models for string-rota app """
 from django.db import models
 from django.conf import settings
 
 
 class Repertoire(models.Model):
+    """ Project Repertoire """
     name = models.CharField(
         max_length=200, null=False, blank=False
         )
     instrumentation = models.CharField(max_length=14, null=False, blank=False)
 
     class Meta:
+        """ Customisation of Repertoire model """
         verbose_name_plural = "repertoire"
 
     def __str__(self):
@@ -16,14 +19,16 @@ class Repertoire(models.Model):
 
 
 class Section(models.Model):
+    """ Orchestral String Section model """
     name = models.CharField(max_length=11, null=False, blank=False)
-    players = models.ManyToManyField('Player', related_name='stg_section')
+    players = models.ManyToManyField('Player', related_name='sections')
 
     def __str__(self):
         return str(self.name)
 
 
 class Player(models.Model):
+    """ Orchestral Player model """
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     is_contract = models.BooleanField(
@@ -39,7 +44,7 @@ class Player(models.Model):
     off_reduced_rep_tot = models.IntegerField(
         null=False, blank=False, default=0
         )
-    section = models.ForeignKey(Section,  on_delete=models.CASCADE)
+    section = models.ForeignKey(Section,  on_delete=models.RESTRICT)
     users_django = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -51,6 +56,7 @@ class Player(models.Model):
 
 
 class Session(models.Model):
+    """ Session events for Project """
     SESSION_TYPE_CHOICES = [
         ('REH', 'Rehersal'),
         ('CON', 'Concert'),
@@ -69,49 +75,57 @@ class Session(models.Model):
         max_length=3, choices=SESSION_TYPE_CHOICES, default='REH'
         )
     repertoire = models.ManyToManyField(
-        Repertoire
-        )
-    project = models.ForeignKey('Project', null=True, on_delete=models.CASCADE)
+        Repertoire,
+        related_name="sessions")
+    project = models.ForeignKey('Project',
+                                null=True,
+                                on_delete=models.RESTRICT)
 
     def __str__(self):
         return f"{self.start_time} / {self.date} / {self.project}"
 
 
 class Project(models.Model):
+    """ Orchestral Projects """
     name = models.CharField(
         max_length=200, null=False, blank=False, unique=True
         )
     slug = models.SlugField(max_length=200, unique=True)
     players = models.ManyToManyField(
         Player,
-        through='player_project',
+        through='PlayerProject',
         through_fields=('project', 'player')
         )
-    repertoire_name = models.ManyToManyField(Repertoire)
+    repertoire_name = models.ManyToManyField(Repertoire,
+                                             related_name="repertoire")
     seating_plan = models.ManyToManyField(
-        'Seating_Plan',
-        related_name='plan_seating',
-        )
-    sessions = models.ManyToManyField(Session, related_name='session')
+                                          'SeatingPlan',
+                                          related_name='project_s_plan',
+                                          )
+    sessions = models.ManyToManyField(
+                                      Session,
+                                      related_name='project_sessions')
 
     def __str__(self):
         return str(self.name)
 
 
-class Seating_Position(models.Model):
+class SeatingPosition(models.Model):
+    """ A Players seating position in a Project """
     position_number = models.IntegerField()
     seating_plan = models.ForeignKey(
-        'Seating_Plan',
+        'SeatingPlan',
         null=True,
-        on_delete=models.CASCADE
+        on_delete=models.RESTRICT
         )
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.RESTRICT)
 
     def __str__(self):
         return f'{self.seating_plan} {self.player} {self.position_number}'
 
 
-class Seating_Plan(models.Model):
+class SeatingPlan(models.Model):
+    """ The seating plan for a Project """
     PLAN_STATUS_CHOICES = [
         ('D', 'Draft'),
         ('P', 'Published')
@@ -127,20 +141,23 @@ class Seating_Plan(models.Model):
         Project,
         null=True,
         on_delete=models.CASCADE,
-        related_name='project_plan'
+        related_name='s_plans_project'
         )
-    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.RESTRICT)
     players = models.ManyToManyField(
         Player,
-        through='Seating_Position',
-        through_fields=('seating_plan', 'player')
+        related_name="s_plans_players",
+        through='SeatingPosition',
+        through_fields=('seating_plan', 'player'),
+
         )
 
     def __str__(self):
         return f'{self.section} {self.project}'
 
 
-class Player_Project(models.Model):
+class PlayerProject(models.Model):
+    """ A historical record of a player's data for a particular project """
     PERFORMANCE_STATUS_CHOICES = [
         ('PL', 'Playing'),
         ('RE', 'Reserve'),
@@ -161,10 +178,10 @@ class Player_Project(models.Model):
         null=False, blank=False, default=False
         )
     project = models.ForeignKey(
-        Project,  on_delete=models.CASCADE
+        Project,  on_delete=models.RESTRICT
         )
     player = models.ForeignKey(
-        Player,  on_delete=models.CASCADE
+        Player,  on_delete=models.RESTRICT
         )
 
     def __str__(self):

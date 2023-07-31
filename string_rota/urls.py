@@ -1,5 +1,6 @@
-from . import views
+""" Urls for string-rota app """
 from django.urls import path
+from . import views
 
 urlpatterns = [
     path('', views.Projects.as_view(), name='projects'),

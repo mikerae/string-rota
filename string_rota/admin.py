@@ -6,9 +6,9 @@ from .models import (
     Player,
     Session,
     Project,
-    Seating_Position,
-    Seating_Plan,
-    Player_Project
+    SeatingPosition,
+    SeatingPlan,
+    PlayerProject
 )
 
 
@@ -18,6 +18,6 @@ admin.site.register(Section)
 admin.site.register(Player)
 admin.site.register(Session)
 admin.site.register(Project)
-admin.site.register(Seating_Position)
-admin.site.register(Seating_Plan)
-admin.site.register(Player_Project)
+admin.site.register(SeatingPosition)
+admin.site.register(SeatingPlan)
+admin.site.register(PlayerProject)

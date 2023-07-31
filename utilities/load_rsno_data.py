@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 """ A utility module for loading initial RSNO into models """
 from datetime import datetime, time
 from math import ceil
@@ -20,6 +21,7 @@ from utilities.get_orch_data import (
 
 
 def load_rsno_data():
+    """ Loads data  from remote Google Worksheet """
     # Open connection to google worksheet
     SHEET = connect_to_worksheet()
     # Import data from worksheet
@@ -94,7 +96,7 @@ def load_rsno_data():
                 slug=slug,
                 )
 
-    # load_repertoire_data(REPERTOIRE_DATA)  # Data already loaded!
-    # load_player_data(PLAYER_DATA)  # Data already loaded!
-    # load_project_data(PROJECT_DATA)  # Data already loaded!
-    # load_session_data(SESSION_DATA)  # Data already loaded!
+    load_repertoire_data(REPERTOIRE_DATA)  # Data already loaded!
+    load_player_data(PLAYER_DATA)  # Data already loaded!
+    load_project_data(PROJECT_DATA)  # Data already loaded!
+    load_session_data(SESSION_DATA)  # Data already loaded!

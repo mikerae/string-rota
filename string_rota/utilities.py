@@ -3,7 +3,7 @@
 Utilities to ensure correct background records exist, and to validate CRUD
 actions.
 """
-from .models import Player_Project, Player, Project, Seating_Plan, Section
+from .models import PlayerProject, Player, Project, SeatingPlan, Section
 
 
 def check_player_project():
@@ -16,11 +16,11 @@ def check_player_project():
     projects = Project.objects.all()
     for project in projects:
         for player in players:
-            player_in_project = Player_Project.objects.filter(project=project
-                                                              ).filter(
+            player_in_project = PlayerProject.objects.filter(project=project
+                                                             ).filter(
                                                                 player=player)
             if not player_in_project:
-                Player_Project.objects.create(
+                PlayerProject.objects.create(
                     project=project,
                     player=player,
                 )
@@ -39,7 +39,7 @@ def check_seating_plan():
     """
     print('checking check_seating_plan records...')
     projects = Project.objects.all()
-    seating_plans = Seating_Plan.objects.all()
+    seating_plans = SeatingPlan.objects.all()
     sections = Section.objects.all()
     for project in projects:
         for section in sections:
@@ -48,7 +48,7 @@ def check_seating_plan():
                                                 ).filter(
                                                 section=section)
             if not seating_plan:
-                Seating_Plan.objects.create(
+                SeatingPlan.objects.create(
                     project=project,
                     section=section,
                 )

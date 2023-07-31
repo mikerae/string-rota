@@ -15,11 +15,11 @@ from django.http import HttpResponseRedirect
 #                     )
 from .models import (
     Project,
-    Seating_Plan,
-    Seating_Position,
+    SeatingPlan,
+    SeatingPosition,
     Player,
     Section,
-    Player_Project
+    PlayerProject
 )
 from .utilities import check_player_project, check_seating_plan
 
@@ -67,15 +67,15 @@ class Rota(Projects):
         # check if user is not a player, & is a manager
         try:
             player = get_object_or_404(Player, users_django=request.user.id)
-        except Exception as e:
-            print(f'You are not logged in as a player. {e}')
-            messages.warning(request, f'You are not logged in as a player.')
+        except player.DoesNotExist as error:
+            print(f'You are not logged in as a player. {error}')
+            messages.warning(request, 'You are not logged in as a player.')
             return redirect(reverse('projects'))
 
         section = player.section
         # no player_in_project record?
         try:
-            players_in_project = Player_Project.objects.filter(
+            players_in_project = PlayerProject.objects.filter(
                 project=project
                 ).filter(player__section=section)
         except Exception as e:
@@ -85,7 +85,7 @@ class Rota(Projects):
                 record for the {project} project.')
             return redirect(reverse('projects'))
 
-        queryset = Seating_Plan.objects.filter(
+        queryset = SeatingPlan.objects.filter(
             project=project,
             )
         if not queryset:  # no seating plan records for this project
@@ -105,7 +105,7 @@ class Rota(Projects):
             return redirect(reverse('projects'))
         print(f'seating plan: {seating_plan}')
 
-        seating_positions = Seating_Position.objects.filter(
+        seating_positions = SeatingPosition.objects.filter(
             seating_plan=seating_plan
             ).order_by('position_number')
 
@@ -176,7 +176,7 @@ class AddSeatingPosition(Rota):
         section = player.section
         seating_position_form = SeatingPositionForm(data=request.POST)
         player_project = get_object_or_404(
-            Player_Project,
+            PlayerProject,
             player=request.POST.get("player"),
             project=project
             )
@@ -184,7 +184,7 @@ class AddSeatingPosition(Rota):
         player_project_form = PlayerProjectFormPL(
             data=request.POST, instance=player_project
             )
-        seating_plan = get_object_or_404(Seating_Plan, id=seating_plan_id)
+        seating_plan = get_object_or_404(SeatingPlan, id=seating_plan_id)
 
         if seating_position_form.is_valid():
             seating_position_form.instance.seating_plan = seating_plan
@@ -206,11 +206,11 @@ class EditSeatingPosition(Rota):
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
         seating_position = get_object_or_404(
-            Seating_Position, id=seating_position_id
+            SeatingPosition, id=seating_position_id
             )
         sp_player = seating_position.player
         player_project = get_object_or_404(
-            Player_Project,
+            PlayerProject,
             player=sp_player,
             project=project
             )
@@ -235,11 +235,11 @@ class EditSeatingPosition(Rota):
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
         seating_position = get_object_or_404(
-            Seating_Position, id=seating_position_id
+            SeatingPosition, id=seating_position_id
             )
         sp_player = seating_position.player
         player_project = get_object_or_404(
-            Player_Project,
+            PlayerProject,
             player=sp_player,
             project=project
             )
@@ -270,7 +270,7 @@ class EditPlayerProject(Rota):
         section = player.section
         player_pp = get_object_or_404(Player, id=player_pp_id)
         player_project = get_object_or_404(
-            Player_Project,
+            PlayerProject,
             player=player_pp,
             project=project
             )
@@ -295,7 +295,7 @@ class EditPlayerProject(Rota):
         section = player.section
         player_pp = get_object_or_404(Player, id=player_pp_id)
         player_project = get_object_or_404(
-            Player_Project,
+            PlayerProject,
             player=player_pp,
             project=project
             )
@@ -318,7 +318,7 @@ class ReserveReduced(Rota):
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
-        players_project = Player_Project.objects.filter(
+        players_project = PlayerProject.objects.filter(
             project=project).filter(player__section=section
                                     )
         print(f'players_project: {players_project}')
@@ -341,7 +341,7 @@ class ReserveReduced(Rota):
     #     section = player.section
     #     player_pp = get_object_or_404(Player, id=player_pp_id)
     #     player_project = get_object_or_404(
-    #         Player_Project,
+    #         PlayerProject,
     #         player=player_pp,
     #         project=project
     #         )
@@ -366,11 +366,11 @@ class DeleteSeatingPosition(View):
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
         seating_position = get_object_or_404(
-            Seating_Position, id=seating_position_id
+            SeatingPosition, id=seating_position_id
             )
         sp_player = seating_position.player
         player_project = get_object_or_404(
-            Player_Project,
+            PlayerProject,
             player=sp_player,
             project=project
             )
