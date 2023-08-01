@@ -1,7 +1,13 @@
 # pylint: disable=no-member
 """ Forms for string-rota """
 from django import forms
-from .models import SeatingPosition, SeatingPlan, PlayerProject, Player
+from .models import (
+    SeatingPosition,
+    SeatingPlan,
+    PlayerProject,
+    Player,
+    Section,
+)  # noqa E501
 
 
 class SeatingPositionForm(forms.ModelForm):
@@ -15,6 +21,8 @@ class SeatingPositionForm(forms.ModelForm):
             "player",
             "position_number",
         ]
+
+    def 
 
     def __init__(self, section, seating_plan, *args, **kwargs):
         """Populate player field with current section players"""

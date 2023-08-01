@@ -23,6 +23,9 @@ class Section(models.Model):
 
     name = models.CharField(max_length=11, null=False, blank=False)
     players = models.ManyToManyField("Player", related_name="sections")
+    default_strength = models.PositiveIntegerField(
+        blank=False, null=False, default=1
+    )  # noqa E501
 
     def __str__(self):
         return str(self.name)
@@ -107,7 +110,7 @@ class Project(models.Model):
 class SeatingPosition(models.Model):
     """A Players seating position in a Project"""
 
-    position_number = models.PositiveIntegerField()
+    position_number = models.PositiveIntegerField(blank=False, null=False)
     seating_plan = models.ForeignKey(
         "SeatingPlan", null=True, on_delete=models.RESTRICT
     )
@@ -141,6 +144,7 @@ class SeatingPlan(models.Model):
         through="SeatingPosition",
         through_fields=("seating_plan", "player"),
     )
+    custom_strength = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.section} {self.project}"
