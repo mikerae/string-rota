@@ -22,7 +22,6 @@ class SeatingPositionForm(forms.ModelForm):
         players = Player.objects.filter(section=section)
         allocated_players = seating_plan.players.all()
         available_players = players.exclude(pk__in=allocated_players)
-        print(f"available_players: {available_players}")
         self.fields["player"].queryset = available_players
 
 

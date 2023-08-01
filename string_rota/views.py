@@ -77,7 +77,9 @@ class Rota(Projects):
         section = player.section
         # no player_in_project record?
         try:
-            players_in_project = PlayerProject.objects.filter(project=project).filter(
+            players_in_project = PlayerProject.objects.filter(
+                project=project
+            ).filter(  # noqa E501
                 player__section=section
             )
         except Exception as e:
@@ -165,7 +167,9 @@ class AddSeatingPosition(Rota):
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
-        seating_plan = get_object_or_404(SeatingPlan, project=project, section=section)
+        seating_plan = get_object_or_404(
+            SeatingPlan, project=project, section=section
+        )  # noqa E501
 
         seating_position_form = SeatingPositionForm(section, seating_plan)
         player_project_form = PlayerProjectForm()
@@ -217,13 +221,17 @@ class EditSeatingPosition(Rota):
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
-        seating_position = get_object_or_404(SeatingPosition, id=seating_position_id)
+        seating_position = get_object_or_404(
+            SeatingPosition, id=seating_position_id
+        )  # noqa E501
         sp_player = seating_position.player
         player_project = get_object_or_404(
             PlayerProject, player=sp_player, project=project
         )
 
-        seating_position_form = SeatingPositionForm(instance=seating_position)
+        seating_position_form = SeatingPositionForm(
+            instance=seating_position
+        )  # noqa E501
         player_project_form = PlayerProjectForm(instance=player_project)
 
         context = {
@@ -242,7 +250,9 @@ class EditSeatingPosition(Rota):
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
-        seating_position = get_object_or_404(SeatingPosition, id=seating_position_id)
+        seating_position = get_object_or_404(
+            SeatingPosition, id=seating_position_id
+        )  # noqa E501
         sp_player = seating_position.player
         player_project = get_object_or_404(
             PlayerProject, player=sp_player, project=project
@@ -365,7 +375,9 @@ class DeleteSeatingPosition(View):
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
-        seating_position = get_object_or_404(SeatingPosition, id=seating_position_id)
+        seating_position = get_object_or_404(
+            SeatingPosition, id=seating_position_id
+        )  # noqa E501
         sp_player = seating_position.player
         player_project = get_object_or_404(
             PlayerProject, player=sp_player, project=project
