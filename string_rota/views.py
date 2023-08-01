@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.forms import ValidationError
 
 # from django.contrib.auth.models import User, Group
 from django.utils.decorators import method_decorator
@@ -136,7 +137,7 @@ class Rota(Projects):
         if not red_ply:
             off_reduced = "Not Allocated"
         else:
-            off_reduced = red_ply.get()
+            off_reduced = red_ply.all()
         not_available = players_in_project.filter(performance_status="NA")
         repertoire = project.repertoire_name.all()
         rota_manager = request.user.groups.filter(name="Rota_Manager")
@@ -211,19 +212,25 @@ class AddSeatingPosition(Rota):
         if seating_position_form.is_valid():
             seating_position_form.instance.seating_plan = seating_plan
             seating_position_form.save()
-
-            if player_project_form.is_valid():
-                player_project.performance_status = "PL"
-                player_project_form.save()
-            else:
-                messages.warning(
-                    request,
-                    "Your reduced \
-                    player choice is not valid",
-                )
         else:
-            messages.warning(request, "Your seating position is not valid")
+            messages.error(
+                request,
+                f"Your seating position is not \
+                    valid. {seating_position_form.errors}",
+            )
+            return HttpResponseRedirect(reverse("rota", args=[slug]))
 
+        if player_project_form.is_valid():
+            player_project.performance_status = "PL"
+            player_project_form.save()
+        else:
+            messages.error(
+                request,
+                f"Your reduced \
+                player choice is not valid. {player_project_form.errors}",
+            )
+            return HttpResponseRedirect(reverse("rota", args=[slug]))
+        messages.success(request, "Your seating position is added ")
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
