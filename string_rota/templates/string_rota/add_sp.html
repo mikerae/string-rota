@@ -28,6 +28,8 @@
             <!-- Rota Form -->
             <form method="POST" class="row g-3">
               {% csrf_token %}
+              <h4>{{form.field_errors}}
+                {{form.non_field_errors}}</h4>
               <span class="col-md-4">{{seating_position_form | crispy }}</span>
               <span class="col-md-4">{{player_project_form | crispy }}</span>
               <div class="text-center">

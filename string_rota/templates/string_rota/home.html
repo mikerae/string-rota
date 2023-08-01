@@ -44,6 +44,20 @@
             </div>
           </div><!-- End Repertoire -->
         </div>
+        <div class="row">
+          <div class="col-12">
+            {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                <span class="text-danger"><strong>{{ message }}</strong></span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </div>
         <!-- Project Seating Plan -->
         <div class="col-12">
           <div class="card">
@@ -52,6 +66,7 @@
                 Seating Plan for {{seating_plan.section}} Section
                 Status: {{seating_plan.get_plan_status_display}}
               </h5>
+              <p>This project needs <strong>{{ strength }}</strong> players.</p>
               {% if  not rota_manager %}
               {% if seating_plan.get_plan_status_display == "Draft" %}
               <h4>The Seating Plan for {{ project.name }} is not ready yet.</h4>

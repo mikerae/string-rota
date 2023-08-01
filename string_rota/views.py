@@ -142,6 +142,11 @@ class Rota(Projects):
         rota_manager = request.user.groups.filter(name="Rota_Manager")
         print(f"reserve_player: {reserve_player}")
         print(f"player_off_reduced_rep: {off_reduced}")
+        strength = section.default_strength
+        plan_custom_strength = seating_plan.custom_strength
+        if plan_custom_strength:
+            strength = plan_custom_strength
+        print(f"This Project needs {strength} players in the {section} section")
 
         context = {
             "projects": projects,
@@ -155,6 +160,7 @@ class Rota(Projects):
             "repertoire": repertoire,
             "rota_manager": rota_manager,
             "section": section,
+            "strength": strength,
         }
         return render(request, "string_rota/home.html", context)
 
@@ -206,9 +212,17 @@ class AddSeatingPosition(Rota):
             seating_position_form.instance.seating_plan = seating_plan
             seating_position_form.save()
 
-        if player_project_form.is_valid():
-            player_project.performance_status = "PL"
-            player_project_form.save()
+            if player_project_form.is_valid():
+                player_project.performance_status = "PL"
+                player_project_form.save()
+            else:
+                messages.warning(
+                    request,
+                    "Your reduced \
+                    player choice is not valid",
+                )
+        else:
+            messages.warning(request, "Your seating position is not valid")
 
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 

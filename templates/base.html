@@ -53,16 +53,6 @@
                 </a>
                 <i class="bi bi-list toggle-sidebar-btn"></i>
             </div><!-- End Logo -->
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-                    {{ message }}
-              </li>
-                    {% endfor %}
-            </ul>
-            {% endif %}
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
                     <li class="nav-item dropdown pe-3">
