@@ -22,8 +22,6 @@ class SeatingPositionForm(forms.ModelForm):
             "position_number",
         ]
 
-    def 
-
     def __init__(self, section, seating_plan, *args, **kwargs):
         """Populate player field with current section players"""
         super().__init__(*args, **kwargs)
