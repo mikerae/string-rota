@@ -4,7 +4,6 @@ from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.forms import ValidationError
 
 # from django.contrib.auth.models import User, Group
 from django.utils.decorators import method_decorator
@@ -12,7 +11,7 @@ from django.http import HttpResponseRedirect
 
 from .forms import (
     SeatingPositionForm,
-    SeatingPlanForm,
+    # EditSeatingPositionForm,
     PlayerProjectForm,
     ReserveReducedForm,
 )
@@ -177,11 +176,6 @@ class AddSeatingPosition(Rota):
         seating_plan = get_object_or_404(
             SeatingPlan, project=project, section=section
         )  # noqa E501
-        # projects = self.projects
-        # project = self.project
-        # player = self.player
-        # section = player.section
-        # seating_plan = self.seating_plan
 
         seating_position_form = SeatingPositionForm(section, seating_plan)
         player_project_form = PlayerProjectForm()
@@ -204,14 +198,7 @@ class AddSeatingPosition(Rota):
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
-        seating_plan = get_object_or_404(
-            SeatingPlan, project=project, section=section
-        )  # noqa E501
-        # projects = self.projects
-        # project = self.project
-        # player = self.player
-        # section = player.section
-        # seating_plan = self.seating_plan
+        seating_plan = get_object_or_404(SeatingPlan, pk=seating_plan_id)  # noqa E501
 
         seating_position_form = SeatingPositionForm(
             section, seating_plan, data=request.POST
@@ -270,13 +257,15 @@ class EditSeatingPosition(Rota):
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
         seating_position = get_object_or_404(
-            SeatingPosition, id=seating_position_id
+            SeatingPosition, pk=seating_position_id
         )  # noqa E501
         seating_plan = seating_position.seating_plan
         sp_player = seating_position.player
         player_project = get_object_or_404(
             PlayerProject, player=sp_player, project=project
         )
+        print(f"seating position : {seating_position}")
+        print(f"player : {sp_player}")
 
         seating_position_form = SeatingPositionForm(
             section, seating_plan, instance=seating_position
@@ -286,6 +275,7 @@ class EditSeatingPosition(Rota):
         template = "string_rota/edit_sp.html"
 
         context = {
+            "player": sp_player,
             "projects": projects,
             "project": project,
             "section": section,
@@ -297,6 +287,7 @@ class EditSeatingPosition(Rota):
 
     def post(self, request, slug, seating_position_id, *args, **kwargs):
         """Edit a seating position in a seating Plan"""
+
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
@@ -313,29 +304,43 @@ class EditSeatingPosition(Rota):
         seating_position_form = SeatingPositionForm(
             section, seating_plan, data=request.POST, instance=seating_position
         )
-        player_project_form = PlayerProjectForm(
-            data=request.POST, instance=player_project
-        )
+        player_project_form = PlayerProjectForm(instance=player_project)
 
         if seating_position_form.is_valid():
             seating_position_form.save()
+            print("edited seating plan is valid")
         else:
-            messages.error(
-                request,
-                f"Your seating position is not \
-                    valid. {seating_position_form.errors}",
-            )
-            return HttpResponseRedirect(reverse("rota", args=[slug]))
+            print("edited seating plan is not valid")
+            template = "string_rota/edit_sp.html"
+
+            context = {
+                "projects": projects,
+                "project": project,
+                "section": section,
+                "seating_position_form": seating_position_form,
+                "player_project_form": player_project_form,
+                "sp_form_errors": seating_position_form.errors,
+            }
+
+            return render(request, template, context)
 
         if player_project_form.is_valid():
+            print("player_project_form is valid")
             player_project_form.save()
         else:
-            messages.error(
-                request,
-                f"Your reduced \
-                player choice is not valid. {player_project_form.errors}",
-            )
-            return HttpResponseRedirect(reverse("rota", args=[slug]))
+            print("edited player_project_form not valid")
+            template = "string_rota/edit_sp.html"
+
+            context = {
+                "projects": projects,
+                "project": project,
+                "section": section,
+                "seating_position_form": seating_position_form,
+                "player_project_form": player_project_form,
+                "pp_form_errors": player_project_form.errors,
+            }
+
+            return render(request, template, context)
         messages.success(request, "Your seating position is updated ")
 
         return HttpResponseRedirect(reverse("rota", args=[slug]))
