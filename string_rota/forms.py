@@ -10,45 +10,6 @@ from .models import (
 )  # noqa E501
 
 
-def clean_position_number(self):
-    """
-    Validator for seating position number.
-    'strength' sets the upper position limit,
-
-    """
-    strength = self.section.default_strength
-    plan_custom_strength = self.seating_plan.custom_strength
-    allocated_positions = SeatingPosition.objects.filter(
-        seating_plan=self.seating_plan
-    ).all()  # noqa E501
-    allocated_positions_list = []
-    position_number = self.cleaned_data["position_number"]
-    for position in allocated_positions:
-        allocated_positions_list.append(position.position_number)
-    if plan_custom_strength:
-        strength = plan_custom_strength
-
-    if position_number < 1 or position_number > strength:
-        raise ValidationError(
-            (
-                f"This project has {strength} \
-                    seating positions. Please choose an approriate \
-                        seating position."
-            ),
-            code="range",
-        )
-
-    if position_number in allocated_positions_list:
-        raise ValidationError(
-            (
-                f" Seating Position {position_number} has already \
-                    been allocated. Please choose another position."
-            ),
-            code="NA",
-        )
-    return position_number
-
-
 class SeatingPositionForm(forms.ModelForm):
     """Form to edit Seating Position"""
 
@@ -74,7 +35,44 @@ class SeatingPositionForm(forms.ModelForm):
         self.section = section
         self.seating_plan = seating_plan
 
-        clean_position_number(self)
+    def clean_position_number(self):
+        """
+        Validator for seating position number.
+        'strength' sets the upper position limit,
+
+        """
+
+        strength = self.section.default_strength
+        plan_custom_strength = self.seating_plan.custom_strength
+        allocated_positions = SeatingPosition.objects.filter(
+            seating_plan=self.seating_plan
+        ).all()  # noqa E501
+        allocated_positions_list = []
+        position_number = self.cleaned_data["position_number"]
+        for position in allocated_positions:
+            allocated_positions_list.append(position.position_number)
+        if plan_custom_strength:
+            strength = plan_custom_strength
+
+        if position_number < 1 or position_number > strength:
+            raise ValidationError(
+                (
+                    f"This project has {strength} \
+                        seating positions. Please choose an approriate \
+                            seating position."
+                ),
+                code="range",
+            )
+
+        if position_number in allocated_positions_list:
+            raise ValidationError(
+                (
+                    f" Seating Position {position_number} has already \
+                        been allocated. Please choose another position."
+                ),
+                code="NA",
+            )
+        return position_number
 
 
 class EditSeatingPlanForm(forms.ModelForm):
@@ -86,13 +84,49 @@ class EditSeatingPlanForm(forms.ModelForm):
         model = SeatingPosition
         fields = ("position_number",)
 
-    def __init__(self, section, seating_plan, *args, **kwargs):
+    def __init__(self, section, seating_plan, instance, *args, **kwargs):
         """Provide access to current section and seating plan"""
         super().__init__(*args, **kwargs)
         self.section = section
         self.seating_plan = seating_plan
 
-        clean_position_number(self)
+    def clean_position_number(self):
+        """
+        Validator for seating position number.
+        'strength' sets the upper position limit,
+
+        """
+        strength = self.section.default_strength
+        plan_custom_strength = self.seating_plan.custom_strength
+        allocated_positions = SeatingPosition.objects.filter(
+            seating_plan=self.seating_plan
+        ).all()  # noqa E501
+        allocated_positions_list = []
+        position_number = self.cleaned_data["position_number"]
+        for position in allocated_positions:
+            allocated_positions_list.append(position.position_number)
+        if plan_custom_strength:
+            strength = plan_custom_strength
+
+        if position_number < 1 or position_number > strength:
+            raise ValidationError(
+                (
+                    f"This project has {strength} \
+                        seating positions. Please choose an approriate \
+                            seating position."
+                ),
+                code="range",
+            )
+
+        if position_number in allocated_positions_list:
+            raise ValidationError(
+                (
+                    f" Seating Position {position_number} has already \
+                        been allocated. Please choose another position."
+                ),
+                code="NA",
+            )
+        return position_number
 
 
 class SeatingPlanForm(forms.ModelForm):
