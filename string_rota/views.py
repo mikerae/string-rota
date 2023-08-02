@@ -279,6 +279,7 @@ class EditSeatingPosition(Rota):
             "projects": projects,
             "project": project,
             "section": section,
+            "position": seating_position,
             "seating_position_form": seating_position_form,
             "player_project_form": player_project_form,
         }
@@ -444,19 +445,27 @@ class ReserveReduced(Rota):
 class DeleteSeatingPosition(View):
     """Delete a seating position in a project"""
 
-    def get(self, request, slug, seating_position_id, *args, **kwargs):
-        projects = Project.objects.all()
-        project = get_object_or_404(projects, slug=slug)
-        player = get_object_or_404(Player, users_django=request.user.id)
-        section = player.section
+    def get(self, request, slug, position_id, *args, **kwargs):
         seating_position = get_object_or_404(
-            SeatingPosition, id=seating_position_id
+            SeatingPosition, id=position_id
         )  # noqa E501
-        sp_player = seating_position.player
+        player = seating_position.player
+        project = seating_position.seating_plan.project
         player_project = get_object_or_404(
-            PlayerProject, player=sp_player, project=project
-        )
-        print("DeleteSeatingPosition called")
+            PlayerProject, project=project, player=player
+        )  # noqa E501
+        seating_position.delete()
+        print(f"seating Position: {seating_position}")
+        player_project.performance_status = "NA"
+        player_project.off_reduced_rep = False
+        player_project.save(
+            update_fields=["performance_status", "off_reduced_rep"]
+        )  # noqa E501
+
+        messages.success(
+            request, f"{player.first_name} has been removed from this rota."
+        )  # noqa E501
+        return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
 class ChangePlanStatus(View):
