@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect
 
 from .forms import (
     SeatingPositionForm,
-    # EditSeatingPositionForm,
+    EditSeatingPositionForm,
     PlayerProjectForm,
     ReserveReducedForm,
 )
@@ -267,7 +267,7 @@ class EditSeatingPosition(Rota):
         print(f"seating position : {seating_position}")
         print(f"player : {sp_player}")
 
-        seating_position_form = SeatingPositionForm(
+        seating_position_form = EditSeatingPositionForm(
             section, seating_plan, instance=seating_position
         )  # noqa E501
         player_project_form = PlayerProjectForm(instance=player_project)
@@ -301,10 +301,12 @@ class EditSeatingPosition(Rota):
             PlayerProject, player=sp_player, project=project
         )
 
-        seating_position_form = SeatingPositionForm(
+        seating_position_form = EditSeatingPositionForm(
             section, seating_plan, data=request.POST, instance=seating_position
         )
-        player_project_form = PlayerProjectForm(instance=player_project)
+        player_project_form = PlayerProjectForm(
+            data=request.POST, instance=player_project
+        )
 
         if seating_position_form.is_valid():
             seating_position_form.save()
@@ -320,12 +322,12 @@ class EditSeatingPosition(Rota):
                 "seating_position_form": seating_position_form,
                 "player_project_form": player_project_form,
                 "sp_form_errors": seating_position_form.errors,
+                "pp_form_errors": player_project_form.errors,
             }
 
             return render(request, template, context)
 
         if player_project_form.is_valid():
-            print("player_project_form is valid")
             player_project_form.save()
         else:
             print("edited player_project_form not valid")

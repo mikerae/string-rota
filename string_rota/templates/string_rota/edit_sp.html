@@ -31,14 +31,13 @@
             <!-- Rota Form -->
             <form method="POST" class="row g-3">
               {% csrf_token %}
-              {{sp_form_errors}}
-              {{pp_form_errors}}
               <span class="col-md-4">{{seating_position_form | crispy }}</span>
               <span class="col-md-4">{{player_project_form | crispy }}</span>
               <div class="text-center">
                 <button type="submit" class="btn btn-success">Edit Position</button>
-                <a herf="#"></a><button type="cancel" class="btn btn-secondary">Cancel</button></a>
-                <a herf="{% url 'delete_sp' project.slug %}"></a><button type="delete"
+                <a href="{% url 'rota' project.slug %}" class="btn btn-secondary">
+                  Cancel</a>
+                <a href="{% url 'delete_sp' project.slug %}"></a><button type="delete"
                   class="btn btn-danger">Delete</button></a>
               </div>
             </form>

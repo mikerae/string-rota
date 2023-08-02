@@ -121,8 +121,8 @@
                 Player to Seating Plan</button></a></span>
           <a href="{% url 'change_plan_status' project.slug %}"><button
               class="btn btn-success">Draft/Published</button></a>
-          <a href="{% url 'reserve_reduced' project.slug %}"><button
-              class="btn btn-primary">Reserved/Reduced-Rep</button></a>
+          <a href="{% url 'reserve_reduced' project.slug %}"><button class="btn btn-primary">Allocate Reserved
+              Player</button></a>
         </div>
         {% endif %}
         {% endif %}
@@ -173,13 +173,9 @@
                   <span class="card-title">Not Allocated</span>
                   {% else %}
                   {% for player in players_off_reduced_rep %}
-                  {% if rota_manager %}
-                  <a href="">
-                    <span class="card-title">{{player.player}}</span>
-                  </a>
-                  {% else %}
-                  <span class="card-title">{{player.player}}</span>
-                  {% endif %}
+                  <ul>
+                    <li><span class="card-title">{{player.player}}</span></li>
+                  </ul>
                   {% endfor %}
                   {% endif %}
                 </div>
