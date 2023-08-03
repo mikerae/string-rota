@@ -20,7 +20,7 @@
     <div class="row">
 
       <!-- Left side columns -->
-      <div class="col-lg-8">
+      <div class="col-lg-7">
         <div class="row">
           <!-- Repertoire -->
           <div class="col-12">
@@ -121,7 +121,8 @@
                 Player to Seating Plan</button></a></span>
           <a href="{% url 'change_plan_status' project.slug %}"><button
               class="btn btn-success">Draft/Published</button></a>
-          <a href="{% url 'reserve_reduced' project.slug %}"><button class="btn btn-primary">Allocate Reserved
+          <a href=""><button class="btn btn-primary">Allocate
+              Reserved
               Player</button></a>
         </div>
         {% endif %}
@@ -131,9 +132,9 @@
       </div><!-- End Left side columns -->
 
       <!-- Right side columns -->
-      <div class="col-lg-4">
+      <div class="col-lg-5">
         <!-- Reserve Player -->
-        <div class="col-xxl-4 col-md-6">
+        <div class="col-xxl-6 col-md-6">
           <div class="card info-card sales-card">
             <div class="card-body">
               <h4 class="card-title">Reserve Player<span></h4>
@@ -162,7 +163,7 @@
           </div>
         </div><!-- End Reserve Player -->
         <!-- Reduced Rep Player -->
-        <div class="col-xxl-4 col-md-6">
+        <div class="col-xxl-5 col-md-6">
           <div class="card info-card sales-card">
             <div class="card-body">
               <h4 class="card-title">Reduced Rep Player(s)<span></h4>
@@ -185,7 +186,7 @@
           </div>
         </div><!-- End Reduced Rep Player -->
         <!-- Not Available -->
-        <div class="col-xxl-4 col-md-6">
+        <div class="col-xxl-5 col-md-6">
           <div class="card info-card sales-card">
             <div class="card-body">
               <h4 class="card-title">Players Not Available<span></h4>

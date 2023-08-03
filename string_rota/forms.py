@@ -4,7 +4,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 from .models import (
     SeatingPosition,
-    SeatingPlan,
     PlayerProject,
     Player,
 )  # noqa E501
@@ -40,10 +39,7 @@ class SeatingPositionForm(forms.ModelForm):
         """
         Validator for seating position number.
         'strength' sets the upper position limit,
-
         """
-
-        print("clean_positon_number has been called")
 
         strength = self.section.default_strength
         plan_custom_strength = self.seating_plan.custom_strength
@@ -107,8 +103,6 @@ class EditSeatingPositionForm(forms.ModelForm):
 
         """
 
-        print("clean_positon_number has been called")
-
         strength = self.section.default_strength
         plan_custom_strength = self.seating_plan.custom_strength
         allocated_positions = SeatingPosition.objects.filter(
@@ -153,54 +147,39 @@ class PlayerProjectForm(forms.ModelForm):
         fields = ("off_reduced_rep",)
 
 
-class EditSeatingPlanForm(forms.ModelForm):
-    """Form to edit Seating Plan"""
+class ReserveForm(forms.ModelForm):
+    """Form to allocate Reserve  player to a project"""
 
     class Meta:
-        """Customisation for EditSeatingplan form"""
-
-        model = SeatingPosition
-        fields = ("position_number",)
-
-
-class SeatingPlanForm(forms.ModelForm):
-    """Form to Create a Seating Plan"""
-
-    class Meta:
-        """Customisation for SeatingPlan form"""
-
-        model = SeatingPlan
-        fields = ("plan_status",)
-
-
-class PlayerProjectForm(forms.ModelForm):
-    """Form to create a PlayerProject record"""
-
-    class Meta:
-        """Customisation for PlayerProject form"""
+        """Customisation for Reduced form"""
 
         model = PlayerProject
-        fields = ("off_reduced_rep",)
+        fields = ("player",)
 
+    def __init__(self, section, seating_plan, *args, **kwargs):
+        """
+        Populate player field with Not available section players
+        """
+        super().__init__(*args, **kwargs)
+        players = Player.objects.filter(section=section)
+        allocated_players = seating_plan.players.all()
+        available_players = players.exclude(pk__in=allocated_players)
 
-class EditPlayerProjectForm(forms.ModelForm):
-    """Form to edit a PlayerProject record"""
+        self.fields["player"].queryset = available_players
+        self.performance_status = "RE"
 
-    class Meta:
-        """Customisation for  EditPlayerProjectForm"""
+    def clean_reserve(self):
+        """
+        Validator for reserve player.
+        There can only be one reserve player, for a project.
+        """
+        print("clean_reserve has been called")
 
-        model = PlayerProject
-        fields = ("performance_status",)
+        performance_status = self.cleaned_data["performance_status"]
+        print(f"status: {performance_status}")
 
+        queryset = PlayerProject.objects.filter(performance_status="RE")
+        if queryset:
+            print(f"queryset: {queryset}")
 
-class ReserveReducedForm(forms.ModelForm):
-    """Form to manage Reserve and Reduced status of a player for a project"""
-
-    class Meta:
-        """Customisation for ReserveReduced form"""
-
-        model = PlayerProject
-        fields = (
-            "performance_status",
-            "off_reduced_rep",
-        )
+        return performance_status
