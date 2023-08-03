@@ -165,12 +165,14 @@ def get_playing_in_playerproject(players, seating_plan, project):
     seating_plan and players
     """
     available_players = get_available_players(seating_plan, players)
+    print(f"available_players: {available_players}")
 
     playing_in_playerproject = PlayerProject.objects.filter(
         project=project
-    ).exclude(  # noqa E501
+    ).filter(  # noqa E501
         player__in=available_players
     )
+    print(f"playing_in_playerproject: {playing_in_playerproject}")
     return playing_in_playerproject
 
 
@@ -179,9 +181,7 @@ def get_all_playerproject(seating_plan, project):
     Returns player_project records  for  given project and
     seating_plan
     """
-    print(f"get_all_playerproject is called")
     section = seating_plan.section
-    print(f"section: {section}")
     players_in_section = get_players(section)
 
     all_playerproject = PlayerProject.objects.filter(
@@ -189,5 +189,4 @@ def get_all_playerproject(seating_plan, project):
     ).filter(  # noqa E501
         player__in=players_in_section
     )
-    print(f"all_playerproject: {all_playerproject}")
     return all_playerproject

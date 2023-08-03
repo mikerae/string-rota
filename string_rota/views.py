@@ -114,8 +114,8 @@ class Rota(Projects):
         seating_positions = get_seating_positions(seating_plan)
 
         res_ply = all_playerproject.filter(performance_status="RE")
-        print(f"all_playerproject: {all_playerproject}")
-        print(f"reserved players in all_playerproject {res_ply}")
+        # print(f"all_playerproject: {all_playerproject}")
+        # print(f"reserved players in all_playerproject {res_ply}")
         if not res_ply:
             reserve_player = "Not Allocated"
         else:
@@ -126,8 +126,6 @@ class Rota(Projects):
         )
 
         red_ply = playing_in_playerproject.filter(off_reduced_rep=True)
-        print(f"playing_in_playerproject: {playing_in_playerproject}")
-        print(f"reduced players in playing_in_playerproject: {red_ply}")
         if not red_ply:
             off_reduced = "Not Allocated"
         else:

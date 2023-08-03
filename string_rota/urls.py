@@ -15,12 +15,13 @@ urlpatterns = [
         views.EditSeatingPosition.as_view(),
         name="edit_sp",
     ),
-    #    path('make_reserve/<slug:slug>/<player_pp_id>',
-    #         views.Reserve.as_view(),
-    #         name='make_reserve'
-    #         ),
     path(
-        "reserve/<slug:slug>/<player_pp_id>",
+        "make_reserve/<slug:slug>/<reserve_player_id>",
+        views.Reserve.as_view(),
+        name="make_reserve",
+    ),
+    path(
+        "reserve/<slug:slug>/",
         views.Reserve.as_view(),
         name="reserve",
     ),

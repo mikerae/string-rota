@@ -121,7 +121,7 @@
                 Player to Seating Plan</button></a></span>
           <a href="{% url 'change_plan_status' project.slug %}"><button
               class="btn btn-success">Draft/Published</button></a>
-          <a href=""><button class="btn btn-primary">Allocate
+          <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate
               Reserved
               Player</button></a>
         </div>
@@ -134,7 +134,7 @@
       <!-- Right side columns -->
       <div class="col-lg-5">
         <!-- Reserve Player -->
-        <div class="col-xxl-6 col-md-6">
+        <div class="col-xxl-5 col-md-6">
           <div class="card info-card sales-card">
             <div class="card-body">
               <h4 class="card-title">Reserve Player<span></h4>
@@ -147,7 +147,7 @@
                   <ul>
                     <li>
                       {% if rota_manager %}
-                      <a href="{% url 'edit_pp' project.slug reserve_player %}">
+                      <a href="">
                         <span class="card-title">{{reserve_player.player}}</span>
                       </a>
                       {% else %}
