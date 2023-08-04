@@ -354,7 +354,6 @@ class Reserve(Rota):
             project,
             available_players,
         ) = get_reserve_vars(request, slug)
-        print(f"project slug: {project.slug}")
 
         reserve_form = ReserveForm(section, seating_plan)
 
@@ -373,6 +372,7 @@ class Reserve(Rota):
 
     def post(self, request, slug, *args, **kwargs):
         """Saves reserve status for player in project"""
+        print("Reserve POST is called")
         projects = Project.objects.all()
         project = get_project(slug)
         player = get_player(request)
@@ -387,11 +387,18 @@ class Reserve(Rota):
             section,
             seating_plan,
             data=request.POST,
-            # instance=players_in_project,  # noqa E501
         )
 
         if reserve_form.is_valid():
+            print("form is valid")
+            # set all performance status to NA
+            for player in playing_in_playerproject:
+                if player.performance_status == "RE":
+                    player.performance_status = "NA"
+                    player.save()
+            reserve_form.instance.project = project
             reserve_form.save()
+
         else:
             template = "string_rota/reserve.html"
 
@@ -400,14 +407,14 @@ class Reserve(Rota):
                 "projects": projects,
                 "project": project,
                 "section": section,
-                "available_players": available_players,
+                "available_players": playing_in_playerproject,
                 "reserve_form": reserve_form,
                 "reserve_form.errors": reserve_form.errors,
             }
 
             return render(request, template, context)
 
-        messages.success(request, "Your Reserve Player has been allocated")
+        messages.success(request, "Your Reserve Player choice has been made")
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 

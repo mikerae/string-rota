@@ -165,14 +165,14 @@ def get_playing_in_playerproject(players, seating_plan, project):
     seating_plan and players
     """
     available_players = get_available_players(seating_plan, players)
-    print(f"available_players: {available_players}")
+    # print(f"available_players: {available_players}")
 
     playing_in_playerproject = PlayerProject.objects.filter(
         project=project
     ).filter(  # noqa E501
         player__in=available_players
     )
-    print(f"playing_in_playerproject: {playing_in_playerproject}")
+    # print(f"playing_in_playerproject: {playing_in_playerproject}")
     return playing_in_playerproject
 
 

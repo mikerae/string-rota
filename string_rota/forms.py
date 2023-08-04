@@ -154,7 +154,7 @@ class ReserveForm(forms.ModelForm):
         """Customisation for Reduced form"""
 
         model = PlayerProject
-        fields = ("player",)
+        fields = ("player", "performance_status")
 
     def __init__(self, section, seating_plan, *args, **kwargs):
         """
@@ -166,20 +166,21 @@ class ReserveForm(forms.ModelForm):
         available_players = players.exclude(pk__in=allocated_players)
 
         self.fields["player"].queryset = available_players
-        self.performance_status = "RE"
 
-    def clean_reserve(self):
-        """
-        Validator for reserve player.
-        There can only be one reserve player, for a project.
-        """
-        print("clean_reserve has been called")
+    # def clean_reserve(self):
+    #     """
+    #     Validator for reserve player.
+    #     There can only be one reserve player, for a project.
+    #     """
+    #     print("clean_reserve has been called")
 
-        performance_status = self.cleaned_data["performance_status"]
-        print(f"status: {performance_status}")
+    #     performance_status = self.cleaned_data["performance_status"]
+    #     print(f"status- from clean_reserve: {performance_status}")
 
-        queryset = PlayerProject.objects.filter(performance_status="RE")
-        if queryset:
-            print(f"queryset: {queryset}")
+    #     queryset = PlayerProject.objects.filter(performance_status="RE")
+    #     if queryset:
+    #         print(f"queryset: {queryset}")
+    #     else:
+    #         print("no player is allocated reserve - from clean_reserve")
 
-        return performance_status
+    #     return performance_status
