@@ -394,15 +394,36 @@ class Reserve(Rota):
                 player=reserve_form.instance.player,  # noqa E501
             )
 
+            # set all execept form_player status to "NA"
+            for player_plpr in not_playing_in_playerproject:
+                plpr = get_object_or_404(
+                    PlayerProject,
+                    project=project,
+                    player=player_plpr.player,  # noqa E501
+                )
+                if plpr != plpr_from_form:
+                    if plpr.performance_status == "RE":
+                        plpr.performance_status = "NA"
+                        plpr.save()
+                        messages.success(
+                            request,
+                            f"{plpr.player} is no longer Reserve",  # noqa E501
+                        )
             # toggle performance status of selected player
             if plpr_from_form.performance_status == "RE":
                 # remove Reserve status
                 plpr_from_form.performance_status = "NA"
-                # reserve_form.instance.project = project
+                messages.success(
+                    request,
+                    f"{plpr_from_form.player} is no longer the Reserve player",  # noqa E501
+                )
             else:
                 # set status to Reserve
                 plpr_from_form.performance_status = "RE"
-                # reserve_form.instance.project = project
+                messages.success(
+                    request,
+                    f"{plpr_from_form.player} is now  the Reserve player",  # noqa E501
+                )
             plpr_from_form.save()
 
         else:
@@ -420,7 +441,6 @@ class Reserve(Rota):
 
             return render(request, template, context)
 
-        messages.success(request, "Your Reserve Player change has been made")
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
