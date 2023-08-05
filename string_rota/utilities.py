@@ -37,7 +37,7 @@ def check_player_project():
                 print(f"record created for  {project} - {player}")
             elif player_in_project.count() != 1:
                 print(
-                    f"found {player_in_project.count()} records \
+                    f"Error: found {player_in_project.count()} records \
                     for {project} - {player}"
                 )
 
@@ -152,20 +152,18 @@ def get_not_playing_in_playerproject(players, seating_plan, project):
     return not_playing_in_playerproject
 
 
-def get_playing_in_playerproject(players, seating_plan, project):
+def get_playing_in_playerproject(seating_plan, project):
     """
-    Returns player_project records  for  given project,
-    seating_plan and players
+    Returns player_project records  given section players
+    who are playing in tha given project
     """
-    not_available_players = get_not_available_players(seating_plan, players)
-    # print(f"available_players: {available_players}")
+    allocated_players = seating_plan.players.all()
 
     playing_in_playerproject = PlayerProject.objects.filter(
         project=project
-    ).exclude(  # noqa E501
-        player__in=not_available_players
+    ).filter(  # noqa E501
+        player__in=allocated_players
     )
-    # print(f"playing_in_playerproject: {playing_in_playerproject}")
     return playing_in_playerproject
 
 

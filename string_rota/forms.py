@@ -154,7 +154,7 @@ class ReserveForm(forms.ModelForm):
         """Customisation for Reduced form"""
 
         model = PlayerProject
-        fields = ("player", "performance_status")
+        fields = ("player",)
 
     def __init__(self, section, seating_plan, *args, **kwargs):
         """
