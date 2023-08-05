@@ -31,8 +31,8 @@ from .utilities import (
     get_player,
     get_section,
     get_seating_plan,
-    # get_available_in_playerproject,
     get_playing_in_playerproject,
+    # get_not_playing_in_playerproject,
     get_all_playerproject,
     get_seating_positions,
     get_reserve_vars,
@@ -131,7 +131,7 @@ class Rota(Projects):
         else:
             off_reduced = red_ply.all()
 
-        not_available = get_all_playerproject(seating_plan, project).filter(
+        performance_status_na = get_all_playerproject(seating_plan, project).filter(
             performance_status="NA"
         )
         repertoire = project.repertoire_name.all()
@@ -152,7 +152,7 @@ class Rota(Projects):
             # "players": players_in_project,
             "reserve_player": reserve_player,
             "players_off_reduced_rep": off_reduced,
-            "not_available": not_available,
+            "not_available": performance_status_na,
             "repertoire": repertoire,
             "rota_manager": rota_manager,
             "section": section,
@@ -323,7 +323,7 @@ class EditSeatingPosition(Rota):
         if player_project_form.is_valid():
             player_project_form.save()
         else:
-            print(f"player_project_form is not valid")
+            print("player_project_form is not valid")
             template = "string_rota/edit_sp.html"
 
             context = {
@@ -348,24 +348,24 @@ class Reserve(Rota):
         projects = Project.objects.all()
 
         (
-            playing_in_playerproject,
+            project,
             section,
             seating_plan,
-            project,
-            available_players,
+            not_playing_in_playerproject,
         ) = get_reserve_vars(request, slug)
+
+        print(f"not_playing_in_playerproject: {not_playing_in_playerproject}")
 
         reserve_form = ReserveForm(section, seating_plan)
 
         template = "string_rota/reserve.html"
 
         context = {
-            "playing_in_playerproject": playing_in_playerproject,
             "projects": projects,
             "project": project,
             "section": section,
-            "available_players": available_players,
             "reserve_form": reserve_form,
+            "not_playing_in_playerproject": not_playing_in_playerproject,
         }
 
         return render(request, template, context)
@@ -388,31 +388,31 @@ class Reserve(Rota):
             seating_plan,
             data=request.POST,
         )
-
+        print(f"playing_in_playerproject: {playing_in_playerproject}")
         if reserve_form.is_valid():
-            print("form is valid")
+            pass
             # set all performance status to NA
-            for player in playing_in_playerproject:
-                if player.performance_status == "RE":
-                    player.performance_status = "NA"
-                    player.save()
-            reserve_form.instance.project = project
-            reserve_form.save()
+            # for player in playing_in_playerproject:
+            #     if player.performance_status == "RE":
+            #         player.performance_status = "NA"
+            #         player.save()
+            # reserve_form.instance.project = project
+            # reserve_form.save()
 
-        else:
-            template = "string_rota/reserve.html"
+        # else:
+        #     template = "string_rota/reserve.html"
 
-            context = {
-                "players_in_project": playing_in_playerproject,
-                "projects": projects,
-                "project": project,
-                "section": section,
-                "available_players": playing_in_playerproject,
-                "reserve_form": reserve_form,
-                "reserve_form.errors": reserve_form.errors,
-            }
+        #     context = {
+        #         "players_in_project": playing_in_playerproject,
+        #         "projects": projects,
+        #         "project": project,
+        #         "section": section,
+        #         # "available_players": not_playing_in_playerproject,
+        #         "reserve_form": reserve_form,
+        #         "reserve_form.errors": reserve_form.errors,
+        #     }
 
-            return render(request, template, context)
+        #     return render(request, template, context)
 
         messages.success(request, "Your Reserve Player choice has been made")
         return HttpResponseRedirect(reverse("rota", args=[slug]))

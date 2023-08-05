@@ -78,17 +78,10 @@ def get_reserve_vars(request, slug):
     section = get_section(player)
     seating_plan = get_seating_plan(project, section)
     players = get_players(section)
-    available_players = get_available_players(seating_plan, players)
-    playing_in_playerproject = get_playing_in_playerproject(
+    not_playing_in_playerproject = get_not_playing_in_playerproject(
         players, seating_plan, project
     )
-    return (
-        playing_in_playerproject,
-        section,
-        seating_plan,
-        project,
-        available_players,
-    )  # noqa E501
+    return (project, section, seating_plan, not_playing_in_playerproject)  # noqa E501
 
 
 def get_project(slug):
@@ -123,14 +116,14 @@ def get_seating_plan(project, section):
     return seating_plan
 
 
-def get_available_players(seating_plan, players):
+def get_not_available_players(seating_plan, players):
     """
     Returns players in a project and section not
     allocated a seating position
     """
     allocated_players = seating_plan.players.all()
-    available_players = players.exclude(pk__in=allocated_players)
-    return available_players
+    not_available_players = players.exclude(pk__in=allocated_players)
+    return not_available_players
 
 
 def get_seating_positions(seating_plan):
@@ -144,19 +137,19 @@ def get_seating_positions(seating_plan):
     return seating_positions
 
 
-def get_available_in_playerproject(players, seating_plan, project):
+def get_not_playing_in_playerproject(players, seating_plan, project):
     """
     Returns player_project records  for  given project,
     seating_plan and players
     """
-    available_players = get_available_players(seating_plan, players)
+    not_available_players = get_not_available_players(seating_plan, players)
 
-    available_in_playerproject = PlayerProject.objects.filter(
+    not_playing_in_playerproject = PlayerProject.objects.filter(
         project=project
     ).filter(  # noqa E501
-        player__in=available_players
+        player__in=not_available_players
     )
-    return available_in_playerproject
+    return not_playing_in_playerproject
 
 
 def get_playing_in_playerproject(players, seating_plan, project):
@@ -164,13 +157,13 @@ def get_playing_in_playerproject(players, seating_plan, project):
     Returns player_project records  for  given project,
     seating_plan and players
     """
-    available_players = get_available_players(seating_plan, players)
+    not_available_players = get_not_available_players(seating_plan, players)
     # print(f"available_players: {available_players}")
 
     playing_in_playerproject = PlayerProject.objects.filter(
         project=project
-    ).filter(  # noqa E501
-        player__in=available_players
+    ).exclude(  # noqa E501
+        player__in=not_available_players
     )
     # print(f"playing_in_playerproject: {playing_in_playerproject}")
     return playing_in_playerproject

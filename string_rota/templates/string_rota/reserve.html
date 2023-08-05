@@ -36,7 +36,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for pp in playing_in_playerproject %}
+                  {% for pp in not_playing_in_playerproject %}
                   <tr>
                     <td class="bi">{{pp.player}}</td>
                     <td class="bi">{{pp.performance_status}}</td>

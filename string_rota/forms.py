@@ -158,29 +158,11 @@ class ReserveForm(forms.ModelForm):
 
     def __init__(self, section, seating_plan, *args, **kwargs):
         """
-        Populate player field with Not available section players
+        Populate player field with section members not playing in project.
         """
         super().__init__(*args, **kwargs)
         players = Player.objects.filter(section=section)
         allocated_players = seating_plan.players.all()
-        available_players = players.exclude(pk__in=allocated_players)
+        not_playing_players = players.exclude(pk__in=allocated_players)
 
-        self.fields["player"].queryset = available_players
-
-    # def clean_reserve(self):
-    #     """
-    #     Validator for reserve player.
-    #     There can only be one reserve player, for a project.
-    #     """
-    #     print("clean_reserve has been called")
-
-    #     performance_status = self.cleaned_data["performance_status"]
-    #     print(f"status- from clean_reserve: {performance_status}")
-
-    #     queryset = PlayerProject.objects.filter(performance_status="RE")
-    #     if queryset:
-    #         print(f"queryset: {queryset}")
-    #     else:
-    #         print("no player is allocated reserve - from clean_reserve")
-
-    #     return performance_status
+        self.fields["player"].queryset = not_playing_players
