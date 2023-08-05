@@ -16,23 +16,18 @@ urlpatterns = [
         name="edit_sp",
     ),
     path(
-        "make_reserve/<slug:slug>/<reserve_player_id>",
-        views.Reserve.as_view(),
-        name="make_reserve",
-    ),
-    path(
         "reserve/<slug:slug>/",
         views.Reserve.as_view(),
         name="reserve",
     ),
     path(
-        "change_plan_status/<slug:slug>/",
-        views.ChangePlanStatus.as_view(),
-        name="change_plan_status",
-    ),
-    path(
         "delete_sp/<slug:slug>/<position_id>/",
         views.DeleteSeatingPosition.as_view(),
         name="delete_sp",
+    ),
+    path(
+        "<slug:slug>/<seating_plan_id>/",
+        views.ToggleSeatingPlanStatus.as_view(),
+        name="toggle_seating_plan_status",
     ),
 ]

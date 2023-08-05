@@ -84,6 +84,8 @@ class Rota(Projects):
         project = get_project(slug)
         section = get_section(player)
         players = get_players(section)
+        user_groups = request.user.groups
+        print(f'user_groups: {user_groups}')
 
         # no seating_plan record?
         try:
@@ -471,8 +473,31 @@ class DeleteSeatingPosition(View):
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
-class ChangePlanStatus(View):
-    """Change the status of a seating plan"""
+class ToggleSeatingPlanStatus(Rota):
+    """ Toggle the status of a seating plan from draft to published """
 
-    def get():
-        pass
+    def get(self, request, slug, *args, **kwargs):
+        print('ToggleSeatingPlanStatus called')
+
+        project = get_project(slug)
+        player = get_player(request)
+        section = get_section(player)
+        seating_plan = get_seating_plan(project, section)
+
+        status = seating_plan.plan_status
+
+        if status == "D":
+            seating_plan.plan_status = "P"
+            seating_plan.save()
+            messages.success(request, f'The {section} section Rota for {project} is now Published')
+        else:
+            seating_plan.plan_status = "D"
+            seating_plan.save()
+            messages.success(request, f'The {section} section Rota for {project} is set to  Draft and is not viewable by players or office')
+
+        # print(f'seating plan status: {status}')
+        
+
+        return HttpResponseRedirect(reverse("rota", args=[slug]))
+
+

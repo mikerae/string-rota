@@ -82,8 +82,10 @@
                 <h5>Please contact your Rota Manager</h5>
                 {% endif %}
                 {% endif %}
+                
                 <!-- Active Table -->
-                <table class="table table-borderless">
+
+                <table class="rota table table-borderless">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
@@ -112,6 +114,7 @@
             </div>
           </div>
         </div><!-- End Project Seating Plan -->
+
         <!-- Rota Form Section-->
         {% if user.is_authenticated %}
         {% if rota_manager %}
@@ -119,7 +122,7 @@
         <div class="col-12 text-center ">
           <span><a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add
                 Player to Seating Plan</button></a></span>
-          <a href="{% url 'change_plan_status' project.slug %}"><button
+          <a href="{% url 'toggle_seating_plan_status' project.slug seating_plan.id %}"><button
               class="btn btn-success">Draft/Published</button></a>
           <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate
               Reserved
