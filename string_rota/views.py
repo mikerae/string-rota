@@ -119,7 +119,9 @@ class Rota(Projects):
         else:
             reserve_player = res_ply.get()
 
-        playing_in_playerproject = get_playing_in_playerproject(seating_plan, project)
+        playing_in_playerproject = get_playing_in_playerproject(
+            seating_plan, project
+        )  # noqa E501
 
         red_ply = playing_in_playerproject.filter(off_reduced_rep=True)
         if not red_ply:
@@ -127,7 +129,9 @@ class Rota(Projects):
         else:
             off_reduced = red_ply.all()
 
-        performance_status_na = get_all_playerproject(seating_plan, project).filter(
+        performance_status_na = get_all_playerproject(
+            seating_plan, project
+        ).filter(  # noqa E501
             performance_status="NA"
         )
         repertoire = project.repertoire_name.all()
@@ -348,7 +352,7 @@ class Reserve(Rota):
             not_playing_in_playerproject,
         ) = get_reserve_vars(request, slug)
 
-        # print(f"not_playing_in_playerproject: {not_playing_in_playerproject}")
+        # print(f"not_playing_in_playerproject: {not_playing_in_playerproject}")  # noqa E501
 
         reserve_form = ReserveForm(section, seating_plan)
 
@@ -448,6 +452,7 @@ class DeleteSeatingPosition(View):
     """Delete a seating position in a project"""
 
     def get(self, request, slug, position_id, *args, **kwargs):
+        """Logic for deleting a seating position"""
         seating_position = get_object_or_404(
             SeatingPosition, id=position_id
         )  # noqa E501
@@ -472,10 +477,10 @@ class DeleteSeatingPosition(View):
 
 
 class ToggleSeatingPlanStatus(Rota):
-    """ Toggle the status of a seating plan from draft to published """
+    """Toggle the status of a seating plan from draft to published"""
 
     def get(self, request, slug, *args, **kwargs):
-        print('ToggleSeatingPlanStatus called')
+        print("ToggleSeatingPlanStatus called")
 
         project = get_project(slug)
         player = get_player(request)
@@ -487,15 +492,18 @@ class ToggleSeatingPlanStatus(Rota):
         if status == "D":
             seating_plan.plan_status = "P"
             seating_plan.save()
-            messages.success(request, f'The {section} section Rota for {project} is now Published')
+            messages.success(
+                request,
+                f"The {section} section Rota for {project} is now Published",  # noqa E501
+            )  # noqa E501
         else:
             seating_plan.plan_status = "D"
             seating_plan.save()
-            messages.success(request, f'The {section} section Rota for {project} is set to  Draft and is not viewable by players or office')
+            messages.success(
+                request,
+                f"The {section} section Rota for {project} is set to  Draft and is not viewable by players or office",  # noqa E501
+            )  # noqa E501
 
         # print(f'seating plan status: {status}')
-        
 
         return HttpResponseRedirect(reverse("rota", args=[slug]))
-
-
