@@ -16,12 +16,12 @@ from utilities.get_orch_data import (
     get_repertoire,
     get_players,
     get_sessions,
-    get_projects
+    get_projects,
 )
 
 
 def load_rsno_data():
-    """ Loads data  from remote Google Worksheet """
+    """Loads data  from remote Google Worksheet"""
     # Open connection to google worksheet
     SHEET = connect_to_worksheet()
     # Import data from worksheet
@@ -31,22 +31,21 @@ def load_rsno_data():
     PROJECT_DATA = get_projects(SHEET)
 
     def load_repertoire_data(DATA):
-        """ Load repertoire data into project database """
+        """Load repertoire data into project database"""
         for row in DATA:
             repertoire_row = Repertoire(
-                name=row['Repertoire'],
-                instrumentation=row['Instrumentation']
+                name=row["Repertoire"], instrumentation=row["Instrumentation"]
             )
             repertoire_row.save()
 
     def load_player_data(DATA):
-        """ Load player data into project database """
+        """Load player data into project database"""
         for row in DATA:
             Player.objects.create(
-                first_name=row['first_name'],
-                last_name=row['last_name'],
-                annual_nfd_quota=int(row['nd_alloc']),
-                section=get_object_or_404(Section, name=row['section'])
+                first_name=row["first_name"],
+                last_name=row["last_name"],
+                annual_nfd_quota=int(row["nd_alloc"]),
+                section=get_object_or_404(Section, name=row["section"]),
             )
 
     def load_session_data(DATA):
@@ -57,10 +56,9 @@ def load_rsno_data():
         time date into datetime.time format
         """
         for row in DATA:
+            start_time_h = int(row["start_time"])
 
-            start_time_h = int(row['start_time'])
-
-            start_time_md = (row['start_time'] - int(row['start_time'])) * 100
+            start_time_md = (row["start_time"] - int(row["start_time"])) * 100
             if start_time_md - int(start_time_md) > 0.005:
                 start_time_m = ceil(start_time_md)
             elif start_time_md - int(start_time_md) > 0.005:
@@ -68,28 +66,28 @@ def load_rsno_data():
             else:
                 start_time_m = int(start_time_md)
 
-            end_time_h = int(row['end_time'])
+            end_time_h = int(row["end_time"])
 
-            end_time_md = (row['end_time'] - int(row['end_time'])) * 100
+            end_time_md = (row["end_time"] - int(row["end_time"])) * 100
             if end_time_md - int(end_time_md) > 0.005:
                 end_time_m = ceil(end_time_md)
             elif end_time_md - int(end_time_md) > 0.005:
                 end_time_h = int(end_time_md)
             else:
                 end_time_m = int(end_time_md)
-            # data_project = row['project']
+
             Session.objects.create(
-                date=datetime.strptime(row['date'], "%a %d %b %y").date(),
+                date=datetime.strptime(row["date"], "%a %d %b %y").date(),
                 start_time=time(start_time_h, start_time_m),
                 end_time=time(end_time_h, end_time_m),
-                session_type=row['session_type'],
-                project=get_object_or_404(Project, name=row['project'])
+                session_type=row["session_type"],
+                project=get_object_or_404(Project, name=row["project"]),
             )
 
     def load_project_data(DATA):
-        """ Load project data into project database """
+        """Load project data into project database"""
         for row in DATA:
-            project_name = row['project']
+            project_name = row["project"]
             slug = slugify(project_name)
             Project.objects.create(
                 name=project_name,

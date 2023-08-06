@@ -51,7 +51,7 @@ class Projects(View):
     def dispatch(self, *args, **kwargs):
         return super(Projects, self).dispatch(*args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         """Loads projects into sidebar"""
         projects = Project.objects.all()
 
@@ -72,7 +72,7 @@ class Rota(Projects):
     def dispatch(self, *args, **kwargs):
         return super(Rota, self).dispatch(*args, **kwargs)
 
-    def get(self, request, slug, *args, **kwargs):
+    def get(self, request, slug):
         """Creates rota view for selected project"""
 
         try:
@@ -83,7 +83,6 @@ class Rota(Projects):
         projects = Project.objects.all()
         project = get_project(slug)
         section = get_section(player)
-        players = get_players(section)
 
         # no seating_plan record?
         try:
@@ -103,7 +102,7 @@ class Rota(Projects):
             all_playerproject = get_all_playerproject(
                 seating_plan, project
             )  # noqa E501
-        except Exception:
+        except all_playerproject.DoesNotExist():
             messages.warning(
                 request,
                 f"There are no all_playerproject \
@@ -162,7 +161,7 @@ class Rota(Projects):
 class AddSeatingPosition(Rota):
     """Add a player seating position to a Seating Plan"""
 
-    def get(self, request, slug, *args, **kwargs):
+    def get(self, request, slug):
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
@@ -186,7 +185,7 @@ class AddSeatingPosition(Rota):
 
         return render(request, template, context)
 
-    def post(self, request, slug, seating_plan_id, *args, **kwargs):
+    def post(self, request, slug, seating_plan_id):
         """Add a Seating Position to a seating plan"""
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
@@ -245,7 +244,7 @@ class AddSeatingPosition(Rota):
 class EditSeatingPosition(Rota):
     """View and Edit the seating positions in a Seating Plan"""
 
-    def get(self, request, slug, seating_position_id, *args, **kwargs):
+    def get(self, request, slug, seating_position_id):
         projects = Project.objects.all()
         project = get_project(slug)
         player = get_player(request)
@@ -278,7 +277,7 @@ class EditSeatingPosition(Rota):
 
         return render(request, template, context)
 
-    def post(self, request, slug, seating_position_id, *args, **kwargs):
+    def post(self, request, slug, seating_position_id):
         """Edit a seating position in a seating Plan"""
 
         projects = Project.objects.all()
@@ -342,7 +341,7 @@ class EditSeatingPosition(Rota):
 class Reserve(Rota):
     """Set the Reserve and Reduced status for a plyer iin a project"""
 
-    def get(self, request, slug, *args, **kwargs):
+    def get(self, request, slug):
         projects = Project.objects.all()
 
         (
@@ -351,8 +350,6 @@ class Reserve(Rota):
             seating_plan,
             not_playing_in_playerproject,
         ) = get_reserve_vars(request, slug)
-
-        # print(f"not_playing_in_playerproject: {not_playing_in_playerproject}")  # noqa E501
 
         reserve_form = ReserveForm(section, seating_plan)
 
@@ -368,7 +365,7 @@ class Reserve(Rota):
 
         return render(request, template, context)
 
-    def post(self, request, slug, *args, **kwargs):
+    def post(self, request, slug):
         """Saves reserve status for player in project"""
         print("Reserve POST is called")
 
@@ -378,9 +375,6 @@ class Reserve(Rota):
         section = get_section(player)
         players = get_players(section)
         seating_plan = get_seating_plan(project, section)
-        playing_in_playerproject = get_playing_in_playerproject(
-            seating_plan, project
-        )  # noqa E501
         not_playing_in_playerproject = get_not_playing_in_playerproject(
             players, seating_plan, project
         )  # noqa E501
@@ -451,7 +445,7 @@ class Reserve(Rota):
 class DeleteSeatingPosition(View):
     """Delete a seating position in a project"""
 
-    def get(self, request, slug, position_id, *args, **kwargs):
+    def get(self, request, slug, position_id):
         """Logic for deleting a seating position"""
         seating_position = get_object_or_404(
             SeatingPosition, id=position_id
@@ -479,7 +473,7 @@ class DeleteSeatingPosition(View):
 class ToggleSeatingPlanStatus(Rota):
     """Toggle the status of a seating plan from draft to published"""
 
-    def get(self, request, slug, *args, **kwargs):
+    def get(self, request, slug):
         print("ToggleSeatingPlanStatus called")
 
         project = get_project(slug)
@@ -503,7 +497,5 @@ class ToggleSeatingPlanStatus(Rota):
                 request,
                 f"The {section} section Rota for {project} is set to  Draft and is not viewable by players or office",  # noqa E501
             )  # noqa E501
-
-        # print(f'seating plan status: {status}')
 
         return HttpResponseRedirect(reverse("rota", args=[slug]))

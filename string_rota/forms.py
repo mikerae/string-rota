@@ -57,7 +57,7 @@ class SeatingPositionForm(forms.ModelForm):
             raise ValidationError(
                 (
                     f"This project has {strength} \
-                        seating positions. Please choose an approriate \
+                        seating positions. Please choose an appropriate \
                             seating position."
                 ),
                 code="range",
