@@ -12,7 +12,7 @@ from string_rota.models import (
     Player,
     Project,
     PlayerProject,
-    )
+)
 
 
 def setup_tables():
@@ -31,7 +31,7 @@ def setup_tables():
             for player in players:
                 PlayerProject.objects.create(
                     project=Project.objects.get(id=project.id),
-                    player=Player.objects.get(id=player.id)
+                    player=Player.objects.get(id=player.id),
                 )
 
     setup_player_project()  # Data already loaded!
