@@ -84,8 +84,6 @@ class Rota(Projects):
         project = get_project(slug)
         section = get_section(player)
         players = get_players(section)
-        user_groups = request.user.groups
-        print(f'user_groups: {user_groups}')
 
         # no seating_plan record?
         try:
