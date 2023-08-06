@@ -68,9 +68,11 @@ A snapshot of one Sprint is:
 ![Messaging](/readme_assets/images/messaging.png)
 #### Future Development
 [Back to Top](#contents)
+
 Future versions may include integration with live RSNO data.
 ### Structure
 [Back to Top](#contents)
+
 A user selects a program and the rota details are displayed for that program, if they are published.
 #### Boostrapmade
 It was decided to use [Bootstrapmade](https://bootstrapmade.com/) boilerplate templates to quickly create an effective front end.
@@ -188,8 +190,8 @@ The one case where a table was populated by script was the the Player_Project li
 - CSS
 - Javascript (potentially)
 
-The development environment used was GitPod
-### Virtual Environment
+### The development environment used was GitPod
+#### Virtual Environment
 - A virtual environment was used to ensure compatibility in deployment. A template containing all standard project requirements was prepared by the Code Institute.
 - The environment was updated with additional requirements by downloading them into the environment via the terminal, and the requirements.txt file was updated using the following code:
 ```
@@ -497,13 +499,8 @@ The worksheets were separated into separate sheets reflecting the structure of t
 
 The worksheet data was imported incrementally into the database using a script run from the terminal.  Niroj in https://www.edureka.co/community/73739/django-script-access-model-objects-without-using-manage-shell, and the Django documentation provided a solution to access the project models for this purpose, since specific Django setup code was needed for stand-alone scripts.
 
-
-
-
-### XX
-
-### Full development of Minimum Viable Product
-The Minimum Viable Product as defined in stage one of the development scope above was developed and deployed before progressing to stage two and beyond.
+### Development of Minimum Viable Product
+The Minimum Viable Product as defined in stage one of the development scope above reduced in scope. Basic Create Read Update Delete functionality was implemented.
 
 
 # Testing
@@ -534,7 +531,7 @@ The state of the currently deployed python code shows minor issues:
 
 ### JavaScript
 The project currently uses no custom javascript, mainly because it was interfering with BootstrapMade javascript and it was difficult to isolate the code without causing problems. Toasts, and very simple jquery toggle display scripts were omitted for this reason. It is intended to remove the Boostrapmade components and reinstall jquery and boostrap for future versions, allowing proper control of the code.
-JSHint showed multiple javascript errors, all of which originated in BoostrapMade code. There was not time before the submission of this MVP to investigate and correct these issues.
+JSHint showed multiple javascript errors, all of which originated in BoostrapMade code. There was not time before the resubmission of this MVP to investigate and correct these issues.
 - [JSHint](/readme_assets/images/jshint.png)
 ### HTML
 The W3C NU html validator was used. 1 information element originating in allauth code was exposed. Otherwise the code passed without issue.
@@ -648,8 +645,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
  was changed to ``` <link rel="stylesheet" href="{% static 'assets/css/style.css' %}"> ```, and all references to static files in the assets folder were also changed. The changes were made in the base.html file.
 - The django static variable was loaded at the top of base.html:
 ``` {% load static %}```
-## Known Issues
-[Back to Top](#contents)
 
 ### MultipleObjectsReturned Disney Project
 When clicking on the Disney Project, it now throws a MultipleObjectsReturned error for get().
@@ -688,7 +683,16 @@ sp_player = seating_position.player
             project=project
             )
 ```
-No fix as yet: I might need to delete the Disney Project and associated records, and rebuild it manually....
+This issue was fixed by ensuring that PlayerProject objects were not confussed with SeatingPosition objects. Clear renaming of variables, and using utility functions to populate them helped to control the data flow.
+## Known Issues
+[Back to Top](#contents)
+
+- Draft rotas are not hidden to section members and office managers.
+- Office Manager cannot yet view rotas
+- Jquery is not functionaly
+- Toasts are not implemented.
+- There is a small misalignment of the background colour in mobile view on the index.html page.
+
 
 ## Deployment
 [Back to Top](#contents)
