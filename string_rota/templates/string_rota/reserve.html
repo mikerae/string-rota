@@ -39,7 +39,7 @@
                   {% for pp in not_playing_in_playerproject %}
                   <tr>
                     <td class="bi">{{pp.player}}</td>
-                    <td class="bi">{{pp.performance_status}}</td>
+                    <td class="bi">{{pp.get_performance_status_display}}</td>
                   </tr>
                   {% endfor %}
                 </tbody>
