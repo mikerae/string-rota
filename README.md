@@ -387,7 +387,7 @@ The changes to the Django database were migrated, using the following command:
 ```
 gitpod /workspace/string-rota (main) $ python3 manage.py migrate
 ```
-
+We will 
 #### Create app on Heroku
 The app "string-rota" was created on Heroku by:
 - Logging into Heroku
@@ -464,6 +464,27 @@ gitpod /workspace/string-rota (main) $ python3 manage.py migrate
         - DATABASE_URL
         - SECRET_KEY
         - PORT 8000
+
+####  data to Django db.sql and ElephantSql
+##### Initial Data Loading
+Initial data was imported into the project using set_up.py and associated utilities. This data was available from a spreadsheet stored in googledocs. set_up.py securely logged into the sreadsheet and retrieved the required data, then loaded the data into the models in the correct order.
+#### Subsequent Data Loading
+Once a credible starting data set was established, this data set was dumped into a db.json file in the fixtures dir using the following command.
+
+```
+python manage.py dumpdata --exclude auth.permission --exclude contenttypes --indent 4 > db.json
+```
+When the local  database needed to be reset:
+- The db.sql file was deleted
+- Migrations were run
+- The db.json file was loaded using Loaddata
+
+When the remote database needed to be reset:
+- The database dashboard was accessed from the ElephantSql site
+- The database was reset
+- DEVEPLOPMENT variable was commented out in  env.py 
+- Migrations were run
+- The db.json file was loaded using Loaddata
 #### Add Cloudinary Environment Variable
 - In created Cloudinary Account
     - Copy 
