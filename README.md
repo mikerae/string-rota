@@ -4,21 +4,16 @@ Code Institute Milestone Project 4
 
 Written in python, developed on GitPod and Git Hub and deployed via Heroku.
 ## You can view a live version [here](https://string-rota.herokuapp.com/)
-Please be aware that the site simulates internal management of string rotas for the RSNO. Only bona fide members of the RSNO may access the site. If you would like to access the site, please contact Mike Rae [mikerae@me.com]. Thank you for your understanding.
+Please be aware that the site simulates internal management of string rotas for the RSNO. Only bona fide members of the RSNO may access the site. If you would like to access the site, please contact mikerae@me.com. Thank you for your understanding.
 ## Contents
 + [Project Summary](#project-summary)
 + [Design Thinking](#design-thinking)
 + [UXD](#uxd)
-    + [Strategy](#strategy)
-    + [Scope](#scope)
-    + [Structure](#structure)
-    + [Skeleton](#skeleton)
-    + [Surface](#surface)
 + [Agile Development](#agile-development)
 + [Database Design](#database-design)
 + [Technologies Used](#technologies-used)
-+ [Testing](#Testing)
-+ [Validation](#Validation)
++ [Testing](#testing)
++ [Validation](#validation)
 + [Resources](#resources)
 + [Development](#development)
 + [Bugs and Fixes](#bugs-and-fixes)
@@ -31,15 +26,14 @@ This app facilitates members of the string sections of the RSNO to view seating 
 A sample set of RSNO project data was used to simulate connection to RSNO the server.
 ## Design Thinking
 The phases of design thinking were followed in the development of this project:
-- Empathise: Recorded, 15 minute interviews were conducted with stakeholders using a questions template. The stakeholders were from the RSNO were:
+- Empathise: Short 15 minute recorded interviews were conducted with stakeholders using a questions template. The stakeholders were from the RSNO were:
     - Rota Managers from each of the 5 String Sections
     - A player from each of the 5 String Sections 
     - 2 Office managers: one who fixes guest players, and manages seating positions, and one who manages time off permissions.
 - The remaining phase (Define, Ideate, Prototype and Test) were achieved through the Agile development process described below.
 
 
-The interview questions were:
-![String Rota Questions](/readme_assets/images/string_rota_questions.png)
+- The interview questions can be viewed [here](/readme_assets/images/string_rota_questions.png)
 ## UXD
 [Back to Top](#contents)
 ### Strategy
@@ -50,38 +44,49 @@ In general there were 3 broad user stories:
 - As an member of the office, I can view and edit all rota data so that I can integrate this data into my office work flows.
 ### Scope
 The scope of the Minimum Viable Product can be seen in the Sprints in the Github repository.
-A snapshot of one Sprint is:
-![Sprint Snapshot](/readme_assets/images/sprint-1-scope-example.png)
+- [View an example of a sprint](/readme_assets/images/sprint-1-scope-example.png):
+
 #### Features
 - User Login Landing Page, to preserve privacy, security and to allocate appropriate permissions.
-![Landing Page](/readme_assets/images/landing-page.png)
+    - [View the Landing Page](/readme_assets/images/landing-page.png)
+- Orchestral project are selectable:
+    - [View list of orchestra projects](/readme_assets/images/projects.png)
 - View project seating plans and related data by a player's section
-![Section Player Rota](/readme_assets/images/sm-published.png)
-- Create and manage seating plans and data for a rota manager's section
-![Rota Manager](/readme_assets/images/rm-edit-sp.png)
-- Office managers can view and edit all information via the admin section of the site, and in future versions will have access to all rotas. Currently, the Office Manager functionality is not properly implemented.
-- When a user logs in, the information displayed to them is relevant to their particular section only.
-- A Rota Manager for a particular section may create, edit and delete rota information.
-- A user's section and role are displayed
-![User Details][(/readme_assets/images/rm-profile.png)]
+    - [View the Section Player Rota](/readme_assets/images/sm-published.png)
+- Create and manage seating plans and data for a rota manager's section. A Rota Manager for a particular section may create, edit and delete rota information.
+    - [View as Rota Manager](/readme_assets/images/rm-edit-sp.png)
+- Orchestral managers may view and edit all information via the admin section of the site, and in future versions will have access to all rotas. Currently, the Office Manager functionality is not properly implemented.
+    - [View as Orchestra Manager](/readme_assets/images/office-manager.png  )
+- When a user logs in, the information displayed to them is relevant to their particular section only. A user's section and role are displayed
+    - [View User Login Details](/readme_assets/images/rm-profile.png)
 - Messaging was used to provide the user with feedback on their actions
-![Messaging](/readme_assets/images/messaging.png)
+    - [View example of Messaging](/readme_assets/images/messaging.png)
+- A user may login as admin with superuser permissions:
+    - [View as admin](/readme_assets/images/admin.png)
+
 #### Future Development
 [Back to Top](#contents)
 
-Future versions may include integration with live RSNO data.
+Future versions may include integration with live RSNO data via an api.
 ### Structure
 [Back to Top](#contents)
 
 A user selects a program and the rota details are displayed for that program, if they are published.
-#### Boostrapmade
+#### Boostrapmade Template: NiceAdmin
 It was decided to use [Bootstrapmade](https://bootstrapmade.com/) boilerplate templates to quickly create an effective front end.
-Whilst these templates are very versatile, and of high quality in many ways, the decision to use them turned out to be problematic.
-- The minimum viable product for this project has very simple requirements for the front end. The code supplied with boostrapmade is full of unused features, with large sections of code unused in this project.
+Whilst the Niceadmin template is very versatile, and of high quality in many ways, the decision to use it turned out to be problematic.
+- The minimum viable product for this project has very simple requirements for the front end. The code supplied with the NiceAdmin template is full of features, with large sections of code unused for this project.
 - A significant amount of the Bootstrapmade code does not pass validation (see below).
-- CSS files prevented Heroku from building a deployed app in debug mode (although the deployed app was only required to be in debug mode for very short periods of time for specific troubleshooting). This problem was only appreciated shortly before the project was first submitted, and prevented the progress of resubmission work until a solution was found.
-- Custom javascript use was inhibited by complex unknown scripts for Bootstrapmade.
-- Future versions will be reworked without the use of BootstrapMade templates.
+- CSS files supplied by Bootsrap made prevented Heroku from building a deployed app in debug mode (although the deployed app was only required to be in debug mode for very short periods of time for specific troubleshooting).
+- Custom javascript use was inhibited by complex unknown scripts supllied by Bootstrapmade.
+#### Project Structure
+The MVP project structure is very simple:
+- A user logs in, the the user's role (String Section Member, Rota Manager, Orchestral Manager) is recognised.
+- The user selects an orchestral project to examine.
+- The name of the project and the repertoire to be played is diplayed.
+- The published rota for that section is displayed
+- If the user is the section Rota Manager, the draft version of the section rota is displayed and full CRUD functionality is availavle, facilitating the creation and managment of a rota.
+- If the user is an Orchestral Manager, all the published rotas for a particular project will (eventually) be viewable.
 ### Skeleton
 [Back to Top](#contents)
 
@@ -93,27 +98,42 @@ Boostrapmade presented an approximated solution.
 - [Office Project](/readme_assets/images/office-project.png)
 - [Office Player Data](/readme_assets/images/ofice-player-data.png)
 
+
+### Surface
+[Back to Top](#contents)
+The NiceAdmn Boostrap template provided a good choice of fonts, images and colours.
 ## Agile Development
 [Back to Top](#contents)
 
 The Agile design process was used to some for this limited project.
-- User stories were derived from interviews with stakeholders. These user stories were refined from 'epic' to more specific user-stories.
-- The was an element of Predicted Project Effort, with story points being allocated to some user stories. 
-- The GitHub platform was used to facilitate Agile Development:
-- A backlog was used to hold all user stories for processing and allocation. A Github Milestone was used as a backlog.
-- Sprints were defined to define development tasks needed to bring the project to Minimum Viable Product level. Other Github Milestones were used to hold user stories allocated to these sprints.
+### Platform
+The GitHub platform was used to facilitate Agile Development:
+### User Stories - Github Issues
+- User stories were derived from interviews with stakeholders and notated as Github [issues](https://github.com/mikerae/string-rota/issues) These user stories were refined from 'epic' to more specific user-stories.
+- For some user stories, Predicted Project Effort was defined, with story points being allocated to some user stories. 
 - Issues were prioritised according to Moscow principles. Github Labels were used mark user stories accordingly.
     - Must have: < 60% of total story points in iteration
     - Should have: the rest
     - Could have: 20% of total story points in iteration
     - Won't have
-- Information Radiators were used to monitor the progress of the project development.
-    - GitHub Projects were used of this purpose as Kanban Boards 
-    - Boards were created for the following:
-        - Backlog
-        - Set Up
-        - Sprint 1: to prepare for mid-project  Mentor session
-        - Sprint 2: to complete and submit project for assessment
+#### Bugs
+Bugs were recorded as issues, and the progress towards resolution of these issues was tracked.
+#### Tests
+Tests were recorded as issues, and their results were tracked.
+### Information Radiators
+Information Radiators were used to monitor the progress of the project development.
+- A Github [Project](https://github.com/users/mikerae/projects/9/views/1)  was used to hold all user stories for processing and allocation in a Kanban Board. User stories were allocated to the Project and their progress tracked through the following stages:
+    - New Issue
+    - Backlog
+    - Ready
+    - In Progress
+    - In Review
+    - Done
+- Github [Milestones]((https://github.com/mikerae/string-rota/milestones)) were used to define sprint content.
+### Backlog
+The GitHub [Project](https://github.com/users/mikerae/projects/9/views/1) was used to hold user stories and other issues which were not allocated to the current sprint.
+### Sprints - Github Milestones
+- [Sprints](https://github.com/mikerae/string-rota/milestones) were defined to define development tasks needed to bring the project to Minimum Viable Product level. Other Github Milestones were used to hold user stories allocated to these sprints.
 ## Database Design
 [Back to Top](#contents)
 ### Mission Statement
@@ -149,7 +169,7 @@ The purpose of the string-rota database is to facilitate the creation, managemen
 3. Store and Calculate Natural Free Day allocations and totals based on Allocation for each project.
 4. Store and Return Reserve player status for each project.
 ### Preliminary Field List
-![Preliminary Field List](/readme_assets/images/preliminary-field-list.png)
+- [View the Preliminary Field List](/readme_assets/images/preliminary-field-list.png)
 ### Resolution of Field and Table anomalies
 In order to resolve field and table anomalies, and in order to preserve data integrity the following process was followed:
 - The tables were flattened, and populated with data.
@@ -157,21 +177,21 @@ In order to resolve field and table anomalies, and in order to preserve data int
 - The resulting fields and tables were compared with the characteristics of a sound field or table.
 
 Very Academy produced a helpful checklist to evaluate fields and tables (https://www.youtube.com/watch?v=ycw8ZsT1ofw&t=1901s):
-![Field and Table Checklist](/readme_assets/images/field-and-table-checklist.png)
+- [View a Field and Table Checklist](/readme_assets/images/field-and-table-checklist.png)
 
 When attempting to flatten the project table, the resulting table produced duplicate data, further need for flattening and some calculated data:
-![Example of field and table problem resolution](/readme_assets/images/example-of-field-table-problem-resolution-1.png)
+- [View an Example of field and table problem resolution](/readme_assets/images/example-of-field-table-problem-resolution-1.png)
 
 The products table was amended to remove duplicate data, multi-data fields and calculated fields. At this point the checklists above were mostly satisfied.
 
-![Rationalisation of project table](/readme_assets/images/rationalisation-of-product-table.png)
+- [View Rationalisation of project table](/readme_assets/images/rationalisation-of-product-table.png)
 
 #### Model Entity Relationship Diagram (EDR)
 The entities for this project have the following relationships and attributes:
-![String-Rota-Erd](/readme_assets/images/string-roto-erd.png)
+- [View String-Rota-Erd](/readme_assets/images/string-roto-erd.png)
 #### Model Schemas
 The Models Schemas erds for this project are:
-![String-Rota-erd-Schema](/readme_assets/images/string-rota-erd-schema.png)
+- [View String-Rota-erd-Schema](/readme_assets/images/string-rota-erd-schema.png)
 #### Model Creation
 The models were created from least dependant (eg Repertoire) to most dependant.
 #### Initial data input
@@ -190,7 +210,7 @@ The one case where a table was populated by script was the the Player_Project li
 - CSS
 - Javascript (potentially)
 
-### The development environment used was GitPod
+### Development Environment: GitPod
 #### Virtual Environment
 - A virtual environment was used to ensure compatibility in deployment. A template containing all standard project requirements was prepared by the Code Institute.
 - The environment was updated with additional requirements by downloading them into the environment via the terminal, and the requirements.txt file was updated using the following code:
@@ -202,27 +222,76 @@ Git was used for version control
 ### GitHub
 GitHub was used for external project code storage and display
 ### Libraries
-The following libraries were used:
-#### psycopg2-2.9.5
-#### Django-4.1.3
+The following external libraries were used:
+- psycopg2-2.9.5
+- Django-3.2.3
+- gspread google-auth
+- pandas numpy pyjanitor
 
-#### gspread google-auth
+# Testing
+[Back to Top](#contents)
+### Automatic Testing
+No automatic testing was used for the MVP.
+Future versions will have full django unit and integration testing.
+### Manual Testing
+The following manual tests were made:
+- [Test Log 1](/readme_assets/images/test-log-1.png)
+- [Test Log 2](/readme_assets/images/test-log-2.png)
+- [Test Log 3](/readme_assets/images/test-log-3.png)
+#### Human Testing
+No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 
-#### pandas numpy pyjanitor
+### Incremental Function Testing
+As each feature was added, it was tested manually to ensure that it behaved as desired.
+# Validation
+[Back to Top](#contents)
+### Python PEP8CI 
+Python code
+The code was tested using PEP8CI online http:# and passed without issue.
+- [CI Python Linter](/readme_assets/images/ci-python-linter.png)
+### Pylint VSCODE linter
+The pylint linter was used throughout development to ensure that problematic code was corrected as early as possible.
 
-#### Python Libraries
-The following internal python libraries were used:
-- 
-## Resources
+A number of the lines in the settings.py file were raising a linting error because they were too long for standard use in a terminal. Since these settings were not going to be visible in a terminal, the errors were suppressed by adding the following to the end of the long line:
+```
+  # noqa E501
+```
+
+There were several instances where the VSCode Pylint identifie that some objects had no members associated with them. These objects were, in fact, populated and accessable. This error message was disables by placing the following code at the the top of a file which generated this error.
+```
+# pylint: disable=no-member
+```
+
+The state of the currently deployed python code shows minor issues:
+- [Pylint Output](/readme_assets/images/pylint-output.png)
+
+### JavaScript
+The project currently uses no custom javascript, mainly because it was interfering with BootstrapMade javascript and it was difficult to isolate the code without causing problems. Toasts, and very simple jquery toggle display scripts were omitted for this reason. It is intended to remove the Boostrapmade components and reinstall jquery and boostrap for future versions, allowing proper control of the code.
+JSHint showed multiple javascript errors, all of which originated in BoostrapMade code. There was not time before the resubmission of this MVP to investigate and correct these issues.
+- [JSHint](/readme_assets/images/jshint.png)
+### HTML
+The W3C NU html validator was used. 1 information element originating in allauth code was exposed. Otherwise the code passed without issue.
+- [W3C HTML Validator 1](/readme_assets/images/nu-html-checker-1.png)
+- [W3C HTML Validator 2](/readme_assets/images/nu-html-checker-2.png)
+- [W3C HTML Validator 3](/readme_assets/images/nu-html-checker-3.png)
+- [W3C HTML Validator 4](/readme_assets/images/nu-html-checker-4.png)
+- [W3C HTML Validator 5](/readme_assets/images/nu-html-checker-5.png)
+
+### CSS
+The W3C CSS Validator was used. There were multiple issues presented, all of which were caused by BootstrapMade css.
+Bootstrapmade will not be used in future projects.
+- [W3C CSS Validator](/readme_assets/images/wc3-css.png)
+# Resources
 [Back to Top](#contents)
 
 The following resources were used:
 + Code Institute Training Material
-+ Python Documentation
++ Python Documentation: 
 + Django Documentation: https://docs.djangoproject.com/en/3.2/ref/
 + Stack Overflow: https://stackoverflow.com/
 + Wikapedia: https://en.wikipedia.org/wiki/Main_Page
-## Development
+
+# Development
 [Back to Top](#contents)
 
 ### Setting Up Development Environment
@@ -243,7 +312,7 @@ The details of the currently installed libraries were stored in the file require
 ```
 pip3 freeze --local > requirements.txt
 ```
-This stored the following requirements:
+The current requirements used are:
 ```
 asgiref==3.3.4
 cachetools==5.2.0
@@ -267,7 +336,9 @@ httplib2==0.21.0
 lazy_loader==0.1rc2
 multipledispatch==0.6.0
 natsort==8.2.0
+numpy==1.24.4
 oauthlib==3.1.1
+pandas==2.0.3
 pandas-flavor==0.3.0
 protobuf==4.21.10
 psycopg2==2.8.6
@@ -282,7 +353,10 @@ scipy==1.9.3
 sqlparse==0.4.1
 tabulate==0.9.0
 tqdm==4.64.1
+tzdata==2023.3
+uritemplate==4.1.1
 xarray==2022.12.0
+urllib3==1.26.15
 ```
 
 A Django project was created:
@@ -307,11 +381,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'string_rota',
 ]
-```
-
-A number of the lines in the settings.py file were raising a linting error because they were too long for standard use in a terminal. Since these settings were not going to be visible in a terminal, the errors were suppressed by adding the following to the end of the long line:
-```
-  # noqa E501
 ```
 
 The changes to the Django database were migrated, using the following command:
@@ -503,49 +572,6 @@ The worksheet data was imported incrementally into the database using a script r
 The Minimum Viable Product as defined in stage one of the development scope above reduced in scope. Basic Create Read Update Delete functionality was implemented.
 
 
-# Testing
-[Back to Top](#contents)
-### Automatic Testing
-No automatic testing was used for the MVP.
-Future versions will have full django unit and integration testing.
-### Manual Testing
-The following manual tests were made:
-- [Test Log 1](/readme_assets/images/test-log-1.png)
-- [Test Log 2](/readme_assets/images/test-log-2.png)
-- [Test Log 3](/readme_assets/images/test-log-3.png)
-#### Human Testing
-No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
-
-### Incremental Function Testing
-As each feature was added, it was tested manually to ensure that it behaved as desired.
-# Validation
-[Back to Top](#contents)
-### Python PEP8CI 
-Python code
-The code was tested using PEP8CI online http:# and passed without issue.
-- [CI Python Linter](/readme_assets/images/ci-python-linter.png)
-### Pylint VSCODE linter
-The pylint linter was used throughout development to ensure that problematic code was corrected as early as possible.
-The state of the currently deployed python code shows minor issues:
-- [Pylint Output](/readme_assets/images/pylint-output.png)
-
-### JavaScript
-The project currently uses no custom javascript, mainly because it was interfering with BootstrapMade javascript and it was difficult to isolate the code without causing problems. Toasts, and very simple jquery toggle display scripts were omitted for this reason. It is intended to remove the Boostrapmade components and reinstall jquery and boostrap for future versions, allowing proper control of the code.
-JSHint showed multiple javascript errors, all of which originated in BoostrapMade code. There was not time before the resubmission of this MVP to investigate and correct these issues.
-- [JSHint](/readme_assets/images/jshint.png)
-### HTML
-The W3C NU html validator was used. 1 information element originating in allauth code was exposed. Otherwise the code passed without issue.
-- [W3C HTML Validator 1](/readme_assets/images/nu-html-checker-1.png)
-- [W3C HTML Validator 2](/readme_assets/images/nu-html-checker-2.png)
-- [W3C HTML Validator 3](/readme_assets/images/nu-html-checker-3.png)
-- [W3C HTML Validator 4](/readme_assets/images/nu-html-checker-4.png)
-- [W3C HTML Validator 5](/readme_assets/images/nu-html-checker-5.png)
-
-### CSS
-The W3C CSS Validator was used. There were multiple issues presented, all of which were caused by BootstrapMade css.
-Bootstrapmade will not be used in future projects.
-- [W3C CSS Validator](/readme_assets/images/wc3-css.png)
-
 ## Bugs and Fixes
 [Back to Top](#contents)
 
@@ -706,9 +732,7 @@ ElephantSql was used for data storage
 
 ### Cloud Static File Storage: Cloudinary
 Cloudinary was used to serve static files to the Django project.
-
-# !!!!! Review and update all of the following!!!!!
-
+#### Deployment Process
 The project was deployed to the Heroku platform using the following steps:
 - Delete unused resources/libraries
 - Add \n to input line
@@ -738,52 +762,6 @@ Before deployment, the imported libraries were frozen into the requirement.txt f
 ```
 pip3 freeze > requirements.txt
 ```
-This is the contents of the project requirements.txt file:
-
-asgiref==3.3.4
-cachetools==5.2.0
-cloudinary==1.25.0
-cryptography==3.4.8
-dj-database-url==0.5.0
-dj3-cloudinary-storage==0.0.5
-Django==3.2.3
-django-allauth==0.44.0
-django-crispy-forms==1.11.2
-django-summernote==0.8.11.6
-google-api-core==2.11.0
-google-api-python-client==2.68.0
-google-auth==2.15.0
-google-auth-httplib2==0.1.0
-google-auth-oauthlib==0.7.1
-googleapis-common-protos==1.57.0
-gspread==5.7.2
-gunicorn==20.1.0
-httplib2==0.21.0
-lazy_loader==0.1rc2
-multipledispatch==0.6.0
-natsort==8.2.0
-numpy==1.24.4
-oauthlib==3.1.1
-pandas==2.0.3
-pandas-flavor==0.3.0
-protobuf==4.21.10
-psycopg2==2.8.6
-pyasn1==0.4.8
-pyasn1-modules==0.2.8
-PyJWT==2.1.0
-python3-openid==3.2.0
-pytz==2021.1
-requests-oauthlib==1.3.0
-rsa==4.9
-scipy==1.9.3
-sqlparse==0.4.1
-tabulate==0.9.0
-tqdm==4.64.1
-tzdata==2023.3
-uritemplate==4.1.1
-xarray==2022.12.0
-urllib3==1.26.15
-
 ### Final Deployment
 The following additional steps were taken before final deployment
 - The GitHub Repository was made public
