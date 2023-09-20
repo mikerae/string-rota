@@ -5,7 +5,6 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-# from django.contrib.auth.models import User, Group
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 
@@ -20,7 +19,6 @@ from .models import (
     SeatingPlan,
     SeatingPosition,
     Player,
-    # Section,
     PlayerProject,
 )
 from .utilities import (
@@ -161,14 +159,12 @@ class Rota(Projects):
 class AddSeatingPosition(Rota):
     """Add a player seating position to a Seating Plan"""
 
-    def get(self, request, slug):
+    def get(self, request, slug, seating_plan_id):
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
-        seating_plan = get_object_or_404(
-            SeatingPlan, project=project, section=section
-        )  # noqa E501
+        seating_plan = get_object_or_404(SeatingPlan, pk=seating_plan_id)
 
         seating_position_form = SeatingPositionForm(section, seating_plan)
         player_project_form = PlayerProjectForm()
