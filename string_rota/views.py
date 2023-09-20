@@ -281,7 +281,7 @@ class EditSeatingPosition(Rota):
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
         seating_position = get_object_or_404(
-            SeatingPosition, id=seating_position_id
+            SeatingPosition, pk=seating_position_id
         )  # noqa E501
         seating_plan = seating_position.seating_plan
         sp_player = seating_position.player
@@ -305,6 +305,7 @@ class EditSeatingPosition(Rota):
                 "projects": projects,
                 "project": project,
                 "section": section,
+                "position": seating_position,
                 "seating_position_form": seating_position_form,
                 "player_project_form": player_project_form,
                 "seating_position_form_errors": seating_position_form.errors,
