@@ -240,6 +240,8 @@ The following manual tests were made:
 - [Test Log 3](/readme_assets/images/test-log-3.png)
 - [Bug Fix #129 Testing](/readme_assets/images/testing-issue129.png)
     - [see issue #129 here](https://github.com/mikerae/string-rota/issues/129)
+- [Bug Fix #130 Testing](/readme_assets/images/testing-issue130.png)
+    - [see issue #130 here](https://github.com/mikerae/string-rota/issues/130)
 - [Bug Fix #154 Testing](/readme_assets/images/testing-issue154.png)
     - [see issue #154 here](https://github.com/mikerae/string-rota/issues/154)
 #### Human Testing
