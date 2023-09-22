@@ -470,7 +470,7 @@ class DeleteSeatingPosition(View):
 class ToggleSeatingPlanStatus(Rota):
     """Toggle the status of a seating plan from draft to published"""
 
-    def get(self, request, slug):
+    def get(self, request, slug, seating_plan_id):
         print("ToggleSeatingPlanStatus called")
 
         project = get_project(slug)
