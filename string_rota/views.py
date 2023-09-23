@@ -5,7 +5,6 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-# from django.contrib.auth.models import User, Group
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 
@@ -20,7 +19,6 @@ from .models import (
     SeatingPlan,
     SeatingPosition,
     Player,
-    # Section,
     PlayerProject,
 )
 from .utilities import (
@@ -161,14 +159,12 @@ class Rota(Projects):
 class AddSeatingPosition(Rota):
     """Add a player seating position to a Seating Plan"""
 
-    def get(self, request, slug):
+    def get(self, request, slug, seating_plan_id):
         projects = Project.objects.all()
         project = get_object_or_404(projects, slug=slug)
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
-        seating_plan = get_object_or_404(
-            SeatingPlan, project=project, section=section
-        )  # noqa E501
+        seating_plan = get_object_or_404(SeatingPlan, pk=seating_plan_id)
 
         seating_position_form = SeatingPositionForm(section, seating_plan)
         player_project_form = PlayerProjectForm()
@@ -285,7 +281,7 @@ class EditSeatingPosition(Rota):
         player = get_object_or_404(Player, users_django=request.user.id)
         section = player.section
         seating_position = get_object_or_404(
-            SeatingPosition, id=seating_position_id
+            SeatingPosition, pk=seating_position_id
         )  # noqa E501
         seating_plan = seating_position.seating_plan
         sp_player = seating_position.player
@@ -309,6 +305,7 @@ class EditSeatingPosition(Rota):
                 "projects": projects,
                 "project": project,
                 "section": section,
+                "position": seating_position,
                 "seating_position_form": seating_position_form,
                 "player_project_form": player_project_form,
                 "seating_position_form_errors": seating_position_form.errors,
@@ -473,7 +470,7 @@ class DeleteSeatingPosition(View):
 class ToggleSeatingPlanStatus(Rota):
     """Toggle the status of a seating plan from draft to published"""
 
-    def get(self, request, slug):
+    def get(self, request, slug, seating_plan_id):
         print("ToggleSeatingPlanStatus called")
 
         project = get_project(slug)
