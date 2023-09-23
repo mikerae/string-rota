@@ -99,6 +99,8 @@
 
             <ul class="sidebar-nav" id="sidebar-nav">
 
+                {% if request.user.is_staff %}
+                {% else %}
                 <!-- Projects Nav -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -116,6 +118,7 @@
                     </ul>
                 </li>
                 <!-- End Projects Nav -->
+                {% endif %}
                 {% if request.user.is_staff %}
                 <li class="">
                     <a class="nav-link " href="../admin/">
