@@ -248,6 +248,10 @@ The following manual tests were made:
     - [see issue #128 here](https://github.com/mikerae/string-rota/issues/128)
 - [Bug Fix #127 Testing](/readme_assets/images/testing-issue127.png)
     - [see issue #127 here](https://github.com/mikerae/string-rota/issues/127)
+- [HTML Validaton #143 Testing](/readme_assets/images/testing-issue143.png)
+    - [see issue #143 here](https://github.com/mikerae/string-rota/issues/143)
+- [Unused HTML Template #150 Testing](/readme_assets/images/testing-issue150.png)
+    - [see issue #143 here](https://github.com/mikerae/string-rota/issues/150)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 
@@ -280,12 +284,26 @@ The project currently uses no custom javascript, mainly because it was interferi
 JSHint showed multiple javascript errors, all of which originated in BoostrapMade code. There was not time before the resubmission of this MVP to investigate and correct these issues.
 - [JSHint](/readme_assets/images/jshint.png)
 ### HTML
-The W3C NU html validator was used. 1 information element originating in allauth code was exposed. Otherwise the code passed without issue.
+The W3C NU html validator was used.
+1 validation issue originating in allauth code was exposed. Input tags were closed using ```/>```.
+[See the summary validator response here](/readme_assets/images/validation/html/fail/home(string-rota).png)
+[See the code detail for the validator response here](/readme_assets/images/validation/html/fail/home(string-rota)-detail.png)
+
+Otherwise the code for Project 4 resubmission passed without issue.
 - [W3C HTML Validator 1](/readme_assets/images/nu-html-checker-1.png)
 - [W3C HTML Validator 2](/readme_assets/images/nu-html-checker-2.png)
 - [W3C HTML Validator 3](/readme_assets/images/nu-html-checker-3.png)
 - [W3C HTML Validator 4](/readme_assets/images/nu-html-checker-4.png)
 - [W3C HTML Validator 5](/readme_assets/images/nu-html-checker-5.png)
+
+However, the assesment for Project 4 resubmission 1 showed [significant html validation issues](https://github.com/mikerae/string-rota/issues/124).
+It must be assumed that these issues were related to [server errors](https://github.com/mikerae/string-rota/issues/123) introduced by 'code cleaning' imediately prior to the project resubmission. 
+
+[See issue #143 for html validation here](https://github.com/mikerae/string-rota/issues/143)
+
+For the Project 4 second resubmission,  the ```/``` was removed.
+
+Once this change was made, all html passed validation without issue.
 
 ### CSS
 The W3C CSS Validator was used. There were multiple issues presented, all of which were caused by BootstrapMade css.
