@@ -248,6 +248,13 @@ The following manual tests were made:
     - [see issue #128 here](https://github.com/mikerae/string-rota/issues/128)
 - [Bug Fix #127 Testing](/readme_assets/images/testing-issue127.png)
     - [see issue #127 here](https://github.com/mikerae/string-rota/issues/127)
+- [HTML Validaton #143 Testing](/readme_assets/images/testing-issue143.png)
+    - [see issue #143 here](https://github.com/mikerae/string-rota/issues/143)
+- [Delete Unused HTML Template #150 Testing](/readme_assets/images/testing-issue150.png)
+    - [see issue #150 here](https://github.com/mikerae/string-rota/issues/150)
+- [Python and JS post-validation Testing #145 #156](/readme_assets/images/testing-issue145-146.png)
+    - [see issue #145 here](https://github.com/mikerae/string-rota/issues/145)
+    - [see issue #146 here](https://github.com/mikerae/string-rota/issues/146)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 
@@ -257,8 +264,32 @@ As each feature was added, it was tested manually to ensure that it behaved as d
 [Back to Top](#contents)
 ### Python PEP8CI 
 Python code
-The code was tested using PEP8CI online http:# and passed without issue.
+The code was tested using [PEP8CI online](https://pep8ci.herokuapp.com/)  and passed without issue.
 - [CI Python Linter](/readme_assets/images/ci-python-linter.png)
+
+#### PEP8CI Validation for Project resubmission 2
+The code was tested using [PEP8CI online](https://pep8ci.herokuapp.com/) and passed without issue.
+The results are shown here:
+    - django_string_rota/
+        - ![asgi](/readme_assets/images/validation/python/dsr-asgi.png)
+        - ![settings](/readme_assets/images/validation/python/dsr-settings.png)
+        - ![urls](/readme_assets/images/validation/python/sr-urls.png)
+    - ![manage](/readme_assets/images/validation/python/manage.png)
+    - ![setup](/readme_assets/images/validation/python/setup.png)
+    - string_rota/
+        - ![admin](/readme_assets/images/validation/python/sr-admin.png)
+        - ![apps](/readme_assets/images/validation/python/sr-apps.png)
+        - ![forms](/readme_assets/images/validation/python/sr-forms.png)
+        - ![models](/readme_assets/images/validation/python/sr-models.png)
+        - ![tests](/readme_assets/images/validation/python/sr-tests.png)
+        - ![urls](/readme_assets/images/validation/python/sr-urls.png)
+        - ![utilities](/readme_assets/images/validation/python/sr-utilities.png)
+        - ![views](/readme_assets/images/validation/python/sr-views.png)
+        string_rota/utilities/
+            - ![get_orch_data](/readme_assets/images/validation/python/sr-utilities-get-orch-data.png)
+            - ![load_rsno_data](/readme_assets/images/validation/python/sr-utilities-load-rsno-data.png)
+            - ![setp_tables](/readme_assets/images/validation/python/sr-utilities-setup-tables.png)
+
 ### Pylint VSCODE linter
 The pylint linter was used throughout development to ensure that problematic code was corrected as early as possible.
 
@@ -275,17 +306,39 @@ There were several instances where the VSCode Pylint identifie that some objects
 The state of the currently deployed python code shows minor issues:
 - [Pylint Output](/readme_assets/images/pylint-output.png)
 
+
+
 ### JavaScript
 The project currently uses no custom javascript, mainly because it was interfering with BootstrapMade javascript and it was difficult to isolate the code without causing problems. Toasts, and very simple jquery toggle display scripts were omitted for this reason. It is intended to remove the Boostrapmade components and reinstall jquery and boostrap for future versions, allowing proper control of the code.
 JSHint showed multiple javascript errors, all of which originated in BoostrapMade code. There was not time before the resubmission of this MVP to investigate and correct these issues.
-- [JSHint](/readme_assets/images/jshint.png)
+- [JSHint Issues for Project resubmission 1](/readme_assets/images/jshint.png)
+
+#### Project Resubmission 2 [JS Validation: Issue 146](https://github.com/mikerae/string-rota/issues/146)
+The third party BootstrapMade templates used in this project used main.js.
+JSHint identified multiple missing semi-colons, which were added to main.js.
+The remaining warnings may be viewd [here](/readme_assets/images/validation/js/main.png).
+These warnings were left unaddressed since they were considered beyond the scope of this project.
 ### HTML
-The W3C NU html validator was used. 1 information element originating in allauth code was exposed. Otherwise the code passed without issue.
+The W3C NU html validator was used.
+1 validation issue originating in allauth code was exposed. Input tags were closed using ```/>```.
+[See the summary validator response here](/readme_assets/images/validation/html/fail/home(string-rota).png)
+[See the code detail for the validator response here](/readme_assets/images/validation/html/fail/home(string-rota)-detail.png)
+
+Otherwise the code for Project 4 resubmission passed without issue.
 - [W3C HTML Validator 1](/readme_assets/images/nu-html-checker-1.png)
 - [W3C HTML Validator 2](/readme_assets/images/nu-html-checker-2.png)
 - [W3C HTML Validator 3](/readme_assets/images/nu-html-checker-3.png)
 - [W3C HTML Validator 4](/readme_assets/images/nu-html-checker-4.png)
 - [W3C HTML Validator 5](/readme_assets/images/nu-html-checker-5.png)
+
+However, the assesment for Project 4 resubmission 1 showed [significant html validation issues](https://github.com/mikerae/string-rota/issues/124).
+It must be assumed that these issues were related to [server errors](https://github.com/mikerae/string-rota/issues/123) introduced by 'code cleaning' imediately prior to the project resubmission. 
+
+[See issue #143 for html validation here](https://github.com/mikerae/string-rota/issues/143)
+
+For the Project 4 second resubmission,  the ```/``` was removed.
+
+Once this change was made, all html passed validation without issue.
 
 ### CSS
 The W3C CSS Validator was used. There were multiple issues presented, all of which were caused by BootstrapMade css.

@@ -1,5 +1,5 @@
 # pylint: disable=no-member
-""" A utility module for loading initial RSNO into models """
+""" A utility module for loading initial RSNO data into models """
 from datetime import datetime, time
 from math import ceil
 from django.shortcuts import get_object_or_404
