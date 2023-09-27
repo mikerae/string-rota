@@ -252,6 +252,9 @@ The following manual tests were made:
     - [see issue #143 here](https://github.com/mikerae/string-rota/issues/143)
 - [Delete Unused HTML Template #150 Testing](/readme_assets/images/testing-issue150.png)
     - [see issue #150 here](https://github.com/mikerae/string-rota/issues/150)
+- [Python and JS post-validation Testing #145 #156](/readme_assets/images/testing-issue145-146.png)
+    - [see issue #145 here](https://github.com/mikerae/string-rota/issues/145)
+    - [see issue #146 here](https://github.com/mikerae/string-rota/issues/146)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 
@@ -308,7 +311,13 @@ The state of the currently deployed python code shows minor issues:
 ### JavaScript
 The project currently uses no custom javascript, mainly because it was interfering with BootstrapMade javascript and it was difficult to isolate the code without causing problems. Toasts, and very simple jquery toggle display scripts were omitted for this reason. It is intended to remove the Boostrapmade components and reinstall jquery and boostrap for future versions, allowing proper control of the code.
 JSHint showed multiple javascript errors, all of which originated in BoostrapMade code. There was not time before the resubmission of this MVP to investigate and correct these issues.
-- [JSHint](/readme_assets/images/jshint.png)
+- [JSHint Issues for Project resubmission 1](/readme_assets/images/jshint.png)
+
+#### Project Resubmission 2 [JS Validation: Issue 146](https://github.com/mikerae/string-rota/issues/146)
+The third party BootstrapMade templates used in this project used main.js.
+JSHint identified multiple missing semi-colons, which were added to main.js.
+The remaining warnings may be viewd [here](/readme_assets/images/validation/js/main.png).
+These warnings were left unaddressed since they were considered beyond the scope of this project.
 ### HTML
 The W3C NU html validator was used.
 1 validation issue originating in allauth code was exposed. Input tags were closed using ```/>```.

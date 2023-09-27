@@ -33,6 +33,7 @@ DEBUG = "DEVELOPMENT" in os.environ
 ALLOWED_HOSTS = [
     "8000-mikerae-stringrota-srhpnofzijg.ws-eu102.gitpod.io",
     "8000-mikerae-stringrota-srhpnofzijg.ws-eu104.gitpod.io",
+    "8000-mikerae-stringrota-srhpnofzijg.ws-eu105.gitpod.io",
     "string-rota.herokuapp.com",
     "localhost",
 ]
