@@ -324,12 +324,14 @@ h6 {
 .breadcrumb {
   font-size: 14px;
   font-family: "Nunito", sans-serif;
-  color: #899bbd;
+  /* color: #899bbd; */
+  color: #2f4a7b;
   font-weight: 600;
 }
 
 .breadcrumb a {
-  color: #899bbd;
+  /* color: #899bbd; */
+  color: #2f4a7b;
   transition: 0.3s;
 }
 

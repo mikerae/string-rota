@@ -27,7 +27,7 @@
             <div class="card info-card sales-card">
 
               <div class="card-body">
-                <h4 class="card-title">Repertoire<span></h4>
+                <h2 class="card-title">Repertoire<span></h2>
 
                 <div class="d-flex align-items-center">
                   <div class="ps-3">
@@ -71,14 +71,14 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">
+              <h2 class="card-title">
                 Seating Plan for {{seating_plan.section}} Section
                 Status: {{seating_plan.get_plan_status_display}}
-              </h5>
+              </h2>
               <p>This project needs <strong>{{ strength }}</strong> players.</p>
               {% if  not rota_manager %}
               {% if seating_plan.get_plan_status_display == "Draft" %}
-              <h4>The Seating Plan for {{ project.name }} is not ready yet.</h4>
+              <h3>The Seating Plan for {{ project.name }} is not ready yet.</h3>
                 <h5>Please contact your Rota Manager</h5>
                 {% endif %}
                 {% endif %}
@@ -140,7 +140,7 @@
         <div class="col-xxl-5 col-md-6">
           <div class="card info-card sales-card">
             <div class="card-body">
-              <h4 class="card-title">Reserve Player<span></h4>
+              <h2 class="card-title">Reserve Player<span></h2>
 
               <div class="d-flex align-items-center">
                 <div class="ps-3">
@@ -169,7 +169,7 @@
         <div class="col-xxl-5 col-md-6">
           <div class="card info-card sales-card">
             <div class="card-body">
-              <h4 class="card-title">Reduced Rep Player(s)<span></h4>
+              <h2 class="card-title">Reduced Rep Player(s)<span></h2>
 
               <div class="d-flex align-items-center">
                 <div class="ps-3">
@@ -192,7 +192,7 @@
         <div class="col-xxl-5 col-md-6">
           <div class="card info-card sales-card">
             <div class="card-body">
-              <h4 class="card-title">Players Not Available<span></h4>
+              <h2 class="card-title">Players Not Available<span></h2>
               <div class="d-flex align-items-center">
                 <div class="ps-3">
                   <ul>
