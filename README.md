@@ -349,6 +349,7 @@ Bootstrapmade will not be used in future projects.
 ### Accessibility: Lighthouse
 The Chrome Developer Tools Lighthouse was used to validate the accessibility of each page. Each page scored 100%.
 - [The String-Rota Page scored 100%](/readme_assets/images/validation/lighthouse/string-rota.png)
+- [The Add Seating Position Page scored 100%](/readme_assets/images/validation/lighthouse/add-sp.png)
 # Resources
 [Back to Top](#contents)
 
