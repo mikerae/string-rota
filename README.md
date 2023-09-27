@@ -351,6 +351,7 @@ The Chrome Developer Tools Lighthouse was used to validate the accessibility of 
 - [The String-Rota Page scored 100%](/readme_assets/images/validation/lighthouse/string-rota.png)
 - [The Add Seating Position Page scored 100%](/readme_assets/images/validation/lighthouse/add-sp.png)
 - [The Edit Seating Position Page scored 100%](/readme_assets/images/validation/lighthouse/edit-sp.png)
+- [The Reserve Player Page scored 100%](/readme_assets/images/validation/lighthouse/reserve.png)
 # Resources
 [Back to Top](#contents)
 
