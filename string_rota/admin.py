@@ -8,9 +8,8 @@ from .models import (
     Project,
     SeatingPosition,
     SeatingPlan,
-    PlayerProject
+    PlayerProject,
 )
-
 
 # Register your models here.
 admin.site.register(Repertoire)
