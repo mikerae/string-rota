@@ -352,6 +352,7 @@ The Chrome Developer Tools Lighthouse was used to validate the accessibility of 
 - [The Add Seating Position Page scored 100%](/readme_assets/images/validation/lighthouse/add-sp.png)
 - [The Edit Seating Position Page scored 100%](/readme_assets/images/validation/lighthouse/edit-sp.png)
 - [The Reserve Player Page scored 100%](/readme_assets/images/validation/lighthouse/reserve.png)
+- [The Logout Page scored 100%](/readme_assets/images/validation/lighthouse/logout.png)
 # Resources
 [Back to Top](#contents)
 
