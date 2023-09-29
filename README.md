@@ -256,6 +256,8 @@ The following manual tests were made:
     - [see issue #146 here](https://github.com/mikerae/string-rota/issues/146)
 - [Upgrade Django to 3.2.5 #147 Testing](/readme_assets/images/testing-issue147.png)
     - [see issue #147 here](https://github.com/mikerae/string-rota/issues/147)
+- [Add welcome screen, links #131 Testing](/readme_assets/images/testing-issue131.png)
+    - [see issue #131 here](https://github.com/mikerae/string-rota/issues/131)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 
@@ -271,25 +273,25 @@ The code was tested using [PEP8CI online](https://pep8ci.herokuapp.com/)  and pa
 #### PEP8CI Validation for Project resubmission 2
 The code was tested using [PEP8CI online](https://pep8ci.herokuapp.com/) and passed without issue.
 The results are shown here:
-    - django_string_rota/
-        - ![asgi](/readme_assets/images/validation/python/dsr-asgi.png)
-        - ![settings](/readme_assets/images/validation/python/dsr-settings.png)
-        - ![urls](/readme_assets/images/validation/python/sr-urls.png)
-    - ![manage](/readme_assets/images/validation/python/manage.png)
-    - ![setup](/readme_assets/images/validation/python/setup.png)
-    - string_rota/
-        - ![admin](/readme_assets/images/validation/python/sr-admin.png)
-        - ![apps](/readme_assets/images/validation/python/sr-apps.png)
-        - ![forms](/readme_assets/images/validation/python/sr-forms.png)
-        - ![models](/readme_assets/images/validation/python/sr-models.png)
-        - ![tests](/readme_assets/images/validation/python/sr-tests.png)
-        - ![urls](/readme_assets/images/validation/python/sr-urls.png)
-        - ![utilities](/readme_assets/images/validation/python/sr-utilities.png)
-        - ![views](/readme_assets/images/validation/python/sr-views.png)
-        string_rota/utilities/
-            - ![get_orch_data](/readme_assets/images/validation/python/sr-utilities-get-orch-data.png)
-            - ![load_rsno_data](/readme_assets/images/validation/python/sr-utilities-load-rsno-data.png)
-            - ![setp_tables](/readme_assets/images/validation/python/sr-utilities-setup-tables.png)
+- django_string_rota/
+    - [asgi](/readme_assets/images/validation/python/dsr-asgi.png)
+    - [settings](/readme_assets/images/validation/python/dsr-settings.png)
+    - [urls](/readme_assets/images/validation/python/sr-urls.png)
+    - [manage](/readme_assets/images/validation/python/manage.png)
+    - [setup](/readme_assets/images/validation/python/setup.png)
+- string_rota/
+    - [admin](/readme_assets/images/validation/python/sr-admin.png)
+    - [apps](/readme_assets/images/validation/python/sr-apps.png)
+    - [forms](/readme_assets/images/validation/python/sr-forms.png)
+    - [models](/readme_assets/images/validation/python/sr-models.png)
+    - [tests](/readme_assets/images/validation/python/sr-tests.png)
+    - [urls](/readme_assets/images/validation/python/sr-urls.png)
+    - [utilities](/readme_assets/images/validation/python/sr-utilities.png)
+    - [views](/readme_assets/images/validation/python/sr-views.png)
+- string_rota/utilities/
+    - [get_orch_data](/readme_assets/images/validation/python/sr-utilities-get-orch-data.png)
+    - [load_rsno_data](/readme_assets/images/validation/python/sr-utilities-load-rsno-data.png)
+    - [setp_tables](/readme_assets/images/validation/python/sr-utilities-setup-tables.png)
 
 ### Pylint VSCODE linter
 The pylint linter was used throughout development to ensure that problematic code was corrected as early as possible.
