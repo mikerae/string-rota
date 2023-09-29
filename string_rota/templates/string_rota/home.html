@@ -3,47 +3,35 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
 <main id="main" class="main">
-
   <div class="pagetitle">
-    <h1>Project: {{project.name}}</h1>
+    <h1>RSNO String Rota {% if section %} for the <strong>{{ section }} section. {% endif %}</strong></h1>
+    <h2>Welcome {{user.first_name}}!</h2>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active">{{project.name}}</li>
       </ol>
     </nav>
-  </div><!-- End Page Title -->
-
+  </div>
   <section class="section dashboard">
     <div class="row">
-
       <!-- Left side columns -->
-      <div class="col-lg-7">
+      <div class="col-12">
         <div class="row">
-          <!-- Repertoire -->
+          <!-- Project Info -->
           <div class="col-12">
-            <div class="card info-card sales-card">
-
+            <div class="card">
               <div class="card-body">
-                <h2 class="card-title">Repertoire<span></h2>
+                <h2 class="card-title">Select a Project<span></h2>
 
-                <div class="d-flex align-items-center">
-                  <div class="ps-3">
-                    <ul>
-                      {% for rep in repertoire %}
-                      <li>
-                        {{rep}}
-                      </li>
-                      {% endfor %}
-                    </ul>
-                  </div>
+                <div class="ps-3">
+                  <p>Choose a project from the list of projects in the side menu to view a rota for that project.</p>
                 </div>
               </div>
             </div>
-          </div><!-- End Repertoire -->
+          </div>
         </div>
+        <!-- Messages -->
         <div class="row">
           <div class="col-12">
             {% if messages %}
@@ -67,154 +55,22 @@
             {% endif %}
           </div>
         </div>
-        <!-- Project Seating Plan -->
+        <!-- Player Info -->
+        {% if rota_manager %}
         <div class="col-12">
           <div class="card">
             <div class="card-body">
               <h2 class="card-title">
-                Seating Plan for {{seating_plan.section}} Section
-                Status: {{seating_plan.get_plan_status_display}}
+                Register a Player
               </h2>
-              <p>This project needs <strong>{{ strength }}</strong> players.</p>
-              {% if  not rota_manager %}
-              {% if seating_plan.get_plan_status_display == "Draft" %}
-              <h3>The Seating Plan for {{ project.name }} is not ready yet.</h3>
-                <h5>Please contact your Rota Manager</h5>
-                {% endif %}
-                {% endif %}
-
-                <!-- Active Table -->
-
-                <table class="rota table table-borderless">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Position</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for position in seating_positions %}
-
-                    {% if rota_manager %}
-                    <tr>
-                      <td><a class="bi" href="{% url 'edit_sp' project.slug position.id %}">{{position.player}}</a></td>
-                      <td>{{position.position_number}}</td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                      <td>{{position.player}}</td>
-                      <td>{{position.position_number}}</td>
-                    </tr>
-                    {% endif %}
-
-                    {% endfor %}
-                  </tbody>
-                </table>
-                <!-- End Section Player List -->
+              <p class="ps-3">To enable an existing member the {{section}} section to access this app, please choose
+                "Register a Player" from the side menu.</p>
             </div>
           </div>
-        </div><!-- End Project Seating Plan -->
-
-        <!-- Rota Form Section-->
-        {% if user.is_authenticated %}
-        {% if rota_manager %}
-
-        <div class="col-12 text-center ">
-          <span><a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add
-                Player to Seating Plan</button></a></span>
-          <a href="{% url 'toggle_seating_plan_status' project.slug seating_plan.id %}"><button
-              class="btn btn-success">Draft/Published</button></a>
-          <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate
-              Reserved
-              Player</button></a>
         </div>
         {% endif %}
-        {% endif %}
-        <!-- End Rota Form Section-->
-
-      </div><!-- End Left side columns -->
-
-      <!-- Right side columns -->
-      <div class="col-lg-5">
-        <!-- Reserve Player -->
-        <div class="col-xxl-5 col-md-6">
-          <div class="card info-card sales-card">
-            <div class="card-body">
-              <h2 class="card-title">Reserve Player<span></h2>
-
-              <div class="d-flex align-items-center">
-                <div class="ps-3">
-                  {% if reserve_player == "Not Allocated" %}
-                  <span class="card-title">Not Allocated</span>
-                  {% else %}
-                  <ul>
-                    <li>
-                      {% if rota_manager %}
-                      <a href="">
-                        <span class="card-title">{{reserve_player.player}}</span>
-                      </a>
-                      {% else %}
-                      <span class="card-title">{{reserve_player.player}}</span>
-                      {% endif %}
-                    </li>
-                  </ul>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div><!-- End Reserve Player -->
-        <!-- Reduced Rep Player -->
-        <div class="col-xxl-5 col-md-6">
-          <div class="card info-card sales-card">
-            <div class="card-body">
-              <h2 class="card-title">Reduced Rep Player(s)<span></h2>
-
-              <div class="d-flex align-items-center">
-                <div class="ps-3">
-                  {% if players_off_reduced_rep == "Not Allocated" %}
-                  <span class="card-title">Not Allocated</span>
-                  {% else %}
-                  {% for player in players_off_reduced_rep %}
-                  <ul>
-                    <li><span class="card-title">{{player.player}}</span></li>
-                  </ul>
-                  {% endfor %}
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div><!-- End Reduced Rep Player -->
-        <!-- Not Available -->
-        <div class="col-xxl-5 col-md-6">
-          <div class="card info-card sales-card">
-            <div class="card-body">
-              <h2 class="card-title">Players Not Available<span></h2>
-              <div class="d-flex align-items-center">
-                <div class="ps-3">
-                  <ul>
-                    {% for player in not_available %}
-                    <li>
-                      {{player.player}}
-                    </li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div><!-- End Not Available -->
       </div>
     </div>
-    </div><!-- End Right side columns -->
-
-    </div>
   </section>
-
-</main><!-- End #main -->
-
-
+</main>
 {% endblock %}

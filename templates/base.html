@@ -62,7 +62,7 @@
                             <img src="{% static 'assets/img/profile-img.png' %}" alt="Profile" class="rounded-circle"
                                 id="profile-img">
                             <span class="d-none d-md-block dropdown-toggle ps-2">{{user.username}}</span>
-                        </a><!-- End Profile Iamge Icon -->
+                        </a><!-- End Profile Image Icon -->
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
@@ -119,11 +119,17 @@
                 </li>
                 <!-- End Projects Nav -->
                 {% endif %}
+                {% if rota_manager %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#">
+                        <i class="bi bi-menu-button-wide"></i><span>Register a Player</span>
+                    </a>
+                </li>
+                {% endif %}
                 {% if request.user.is_staff %}
-                <li class="">
-                    <a class="nav-link " href="../admin/">
-                        <i class="bi bi-menu-button-wide"></i><span>Admin</span><i
-                            class="bi bi-chevron-down ms-auto"></i>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="../admin/">
+                        <i class="bi bi-menu-button-wide"></i><span>Admin</span>
                     </a>
                 </li>
                 {% endif %}

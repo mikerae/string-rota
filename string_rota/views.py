@@ -42,16 +42,21 @@ def login(request):
     return render(request, "account/login.html")
 
 
-class Projects(View):
-    """Home view loading projects in the sidebar"""
+class Home(View):
+    """Home view presents a welcome landing page,
+    and populates the sidebar menu with  projects and user
+    appropriate options"""
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(Projects, self).dispatch(*args, **kwargs)
+        return super(Home, self).dispatch(*args, **kwargs)
 
     def get(self, request):
-        """Loads projects into sidebar"""
+        """Load projects into sidebar"""
         projects = Project.objects.all()
+        player = get_player(request)
+        section = get_section(player)
+        rota_manager = request.user.groups.filter(name="Rota_Manager")
 
         # routine background record checks preventing crashes
         check_player_project()
@@ -59,11 +64,13 @@ class Projects(View):
 
         context = {
             "projects": projects,
+            "section": section,
+            "rota_manager": rota_manager,
         }
         return render(request, "string_rota/home.html", context)
 
 
-class Rota(Projects):
+class Rota(View):
     """Creates rota view for selected project"""
 
     @method_decorator(login_required)
@@ -77,7 +84,7 @@ class Rota(Projects):
             player = get_object_or_404(Player, users_django=request.user.id)
         except player.DoesNotExist:
             messages.warning(request, "You are not logged in as a player.")
-            return redirect(reverse("projects"))
+            return redirect(reverse("home"))
         projects = Project.objects.all()
         project = get_project(slug)
         section = get_section(player)
