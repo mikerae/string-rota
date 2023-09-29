@@ -256,6 +256,8 @@ The following manual tests were made:
     - [see issue #146 here](https://github.com/mikerae/string-rota/issues/146)
 - [Upgrade Django to 3.2.5 #147 Testing](/readme_assets/images/testing-issue147.png)
     - [see issue #147 here](https://github.com/mikerae/string-rota/issues/147)
+- [Add welcome screen, links #131 Testing](/readme_assets/images/testing-issue131.png)
+    - [see issue #131 here](https://github.com/mikerae/string-rota/issues/131)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 

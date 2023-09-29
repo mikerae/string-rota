@@ -54,9 +54,12 @@ class Home(View):
     def get(self, request):
         """Load projects into sidebar"""
         projects = Project.objects.all()
-        player = get_player(request)
-        section = get_section(player)
+        office = request.user.groups.filter(name="Office")
         rota_manager = request.user.groups.filter(name="Rota_Manager")
+        section = False
+        if not office:
+            player = get_player(request)
+            section = get_section(player)
 
         # routine background record checks preventing crashes
         check_player_project()
@@ -66,6 +69,7 @@ class Home(View):
             "projects": projects,
             "section": section,
             "rota_manager": rota_manager,
+            "office": office,
         }
         return render(request, "string_rota/home.html", context)
 
@@ -100,7 +104,7 @@ class Rota(View):
                 f"There is no Seating \
                 Plan for the {section} section for the {project} project.",
             )
-            return redirect(reverse("projects"))
+            return redirect(reverse("home"))
         all_playerproject = get_all_playerproject(seating_plan, project)
         # no player_in_project record?
         try:
@@ -111,9 +115,9 @@ class Rota(View):
             messages.warning(
                 request,
                 f"There are no all_playerproject \
-                records for the {project} project.",
+                records for the {project} project. Please contact a manager",
             )
-            return redirect(reverse("projects"))
+            return redirect(reverse("rota"))
 
         seating_positions = get_seating_positions(seating_plan)
 
@@ -140,12 +144,13 @@ class Rota(View):
         )
         repertoire = project.repertoire_name.all()
         rota_manager = request.user.groups.filter(name="Rota_Manager")
+        office = request.user.groups.filter(name="Office")
         strength = section.default_strength
         plan_custom_strength = seating_plan.custom_strength
         if plan_custom_strength:
             strength = plan_custom_strength
 
-        template = "string_rota/home.html"
+        template = "string_rota/rota.html"
 
         context = {
             "projects": projects,
@@ -157,6 +162,7 @@ class Rota(View):
             "not_available": performance_status_na,
             "repertoire": repertoire,
             "rota_manager": rota_manager,
+            "office": office,
             "section": section,
             "strength": strength,
         }
@@ -371,7 +377,6 @@ class Reserve(Rota):
 
     def post(self, request, slug):
         """Saves reserve status for player in project"""
-        print("Reserve POST is called")
 
         projects = Project.objects.all()
         project = get_project(slug)

@@ -9,7 +9,7 @@
     <h2>Welcome {{user.first_name}}!</h2>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
       </ol>
     </nav>
   </div>
@@ -17,6 +17,8 @@
     <div class="row">
       <!-- Left side columns -->
       <div class="col-12">
+        {% if office %}
+        {% else %}
         <div class="row">
           <!-- Project Info -->
           <div class="col-12">
@@ -31,6 +33,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
         <!-- Messages -->
         <div class="row">
           <div class="col-12">
