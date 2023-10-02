@@ -1,0 +1,35 @@
+{% extends 'base.html'  %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Register a player in the <strong>{{section}} Section</strong></h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item">Register a player</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Rota Form Section-->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">Register A Player</h1>
+                        <p>By registering a player, you allow that player to login to and use the String Rota App.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+{% endblock %}
