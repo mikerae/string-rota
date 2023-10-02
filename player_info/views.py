@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 
 from django.utils.decorators import method_decorator
 
+from string_rota.models import Project
+
 from string_rota.utilities import (
     get_player,
     get_section,
@@ -37,6 +39,7 @@ class Register(View):
         section = get_section(player)
         office = request.user.groups.filter(name="Office")
         rota_manager = request.user.groups.filter(name="Rota_Manager")
+        projects = Project.objects.all()
 
         template = "player_info/register.html"
 
@@ -44,6 +47,7 @@ class Register(View):
             "section": section,
             "office": office,
             "rota_manager": rota_manager,
+            "projects": projects,
         }
 
         return render(request, template, context)
