@@ -3,14 +3,16 @@
 from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.decorators import login_required
-
 from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404, reverse
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 
-from string_rota.models import Project
-
+from string_rota.models import Project, Player
 from string_rota.utilities import (
     get_player,
     get_section,
+    get_players,
 )
 
 
@@ -40,6 +42,11 @@ class Register(View):
         office = request.user.groups.filter(name="Office")
         rota_manager = request.user.groups.filter(name="Rota_Manager")
         projects = Project.objects.all()
+        section_players = get_players(section)
+
+        unregistered_players = section_players.filter(
+            users_django__isnull=True
+        )  # noqa E501
 
         template = "player_info/register.html"
 
@@ -48,6 +55,23 @@ class Register(View):
             "office": office,
             "rota_manager": rota_manager,
             "projects": projects,
+            "unregistered_players": unregistered_players,
         }
 
         return render(request, template, context)
+
+    def post(
+        self,
+        request,
+    ):
+        """Create user and link user to Player record"""
+
+        player_id = request.POST["player_id"]
+        registered_player = get_object_or_404(Player, id=player_id)
+
+        messages.success(request, f"{registered_player} has been registered ")
+        return HttpResponseRedirect(
+            reverse(
+                "home",
+            )
+        )

@@ -2,6 +2,8 @@
 
 {% load crispy_forms_tags %}
 
+{% load i18n %}
+
 {% block content %}
 
 <main id="main" class="main">
@@ -22,15 +24,31 @@
             <div class="col-lg-7">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="card-title">Register A Player</h1>
+                        <h1 class="card-title">Choose A Player to Register</h1>
                         <div class="ps-3">
-                            <p>By registering a player, you allow that player to login to and use the String Rota App.
+                            <p>
+                                By registering a player, you allow that player to login to and use the String Rota App.
                             </p>
                         </div>
+                        <!-- Select Unregistered Player -->
+                        <form method="POST" action="/player_info/" class="row g-3">
+                            {% csrf_token %}
+                            <div class="ps-3">
+                                <select name="player_id" id="player_id">
+                                    {% for player in unregistered_players %}
+                                    <option value="{{player.id}}">{{player}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success">Register Player</button>
+                                <a href="{% url 'home' %}" class="btn btn-secondary">
+                                    Cancel</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 </main>
