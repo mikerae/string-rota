@@ -46,7 +46,7 @@ class Player(models.Model):
     section = models.ForeignKey(Section, on_delete=models.RESTRICT)
     users_django = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         null=True,
         blank=True,
     )
