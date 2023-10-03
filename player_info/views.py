@@ -8,7 +8,6 @@ from django.shortcuts import get_object_or_404, reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 
 from string_rota.models import Project, Player
