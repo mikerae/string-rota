@@ -1,0 +1,58 @@
+{% extends 'base.html'  %}
+
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Register a player in the <strong>{{section}} Section</strong></h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item">Register a player</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Rota Form Section-->
+            <div class="col-lg-7">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">Choose A Player from the {{section}} section to Register</h1>
+                        <div class="col-md-4 ps-3">
+                            <p>
+                                By registering a player, you allow that player to login to and use the String Rota App.
+                            </p>
+                        </div>
+                        <!-- Select Unregistered Player -->
+                        <form method="POST" action="/player_info/" class="row g-3">
+                            {% csrf_token %}
+                            <div class="col-md-4 ps-3">
+                                <select name="player_id" id="player_id">
+                                    {% for player in unregistered_players %}
+                                    <option value="{{player.id}}">{{player}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span>{{create_user_form|crispy }}</span>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success">Register Player</button>
+                                <a href="{% url 'home' %}" class="btn btn-secondary">
+                                    Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

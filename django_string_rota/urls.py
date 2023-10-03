@@ -10,4 +10,5 @@ urlpatterns = [
     path("string_rota/", include("string_rota.urls")),
     path("", login, name="login"),
     path("accounts/", include("allauth.urls")),
+    path("player_info/", include("player_info.urls")),
 ]
