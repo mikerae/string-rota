@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.contrib.auth.forms import UserCreationForm
 
 from string_rota.models import Project, Player
 from string_rota.utilities import (
@@ -44,9 +45,9 @@ class Register(View):
         projects = Project.objects.all()
         section_players = get_players(section)
 
-        unregistered_players = section_players.filter(
-            users_django__isnull=True
-        )  # noqa E501
+        unregistered_players = section_players.filter(users_django__isnull=True)  # noqa
+
+        create_user_form = UserCreationForm()
 
         template = "player_info/register.html"
 
@@ -56,6 +57,7 @@ class Register(View):
             "rota_manager": rota_manager,
             "projects": projects,
             "unregistered_players": unregistered_players,
+            "create_user_form": create_user_form,
         }
 
         return render(request, template, context)
