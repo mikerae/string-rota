@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 class="card-title">Choose A Player from the {{section}} section to Register</h1>
-                        <div class="ps-3">
+                        <div class="col-md-4 ps-3">
                             <p>
                                 By registering a player, you allow that player to login to and use the String Rota App.
                             </p>
@@ -33,14 +33,15 @@
                         <!-- Select Unregistered Player -->
                         <form method="POST" action="/player_info/" class="row g-3">
                             {% csrf_token %}
-                            <div class="ps-3">
+                            <div class="col-md-4 ps-3">
                                 <select name="player_id" id="player_id">
                                     {% for player in unregistered_players %}
                                     <option value="{{player.id}}">{{player}}</option>
                                     {% endfor %}
                                 </select>
+                                <span>{{create_user_form|crispy }}</span>
                             </div>
-                            <span class="col-md-4">{{create_user_form|crispy }}</span>
+
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success">Register Player</button>
                                 <a href="{% url 'home' %}" class="btn btn-secondary">
