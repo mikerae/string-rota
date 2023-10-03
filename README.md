@@ -258,6 +258,8 @@ The following manual tests were made:
     - [see issue #147 here](https://github.com/mikerae/string-rota/issues/147)
 - [Add welcome screen, links #131 Testing](/readme_assets/images/testing-issue131.png)
     - [see issue #131 here](https://github.com/mikerae/string-rota/issues/131)
+- [Register #138 Testing](/readme_assets/images/testing-issue138.png)
+    - [see issue #138 here](https://github.com/mikerae/string-rota/issues/138)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 
@@ -279,6 +281,9 @@ The results are shown here:
     - [urls](/readme_assets/images/validation/python/sr-urls.png)
     - [manage](/readme_assets/images/validation/python/manage.png)
     - [setup](/readme_assets/images/validation/python/setup.png)
+- player_info/
+    - [views](/readme_assets/images/validation/python/pi-views.png)
+    - [urls](/readme_assets/images/validation/python/pi-urls.png)
 - string_rota/
     - [admin](/readme_assets/images/validation/python/sr-admin.png)
     - [apps](/readme_assets/images/validation/python/sr-apps.png)
@@ -333,6 +338,7 @@ Otherwise the code for Project 4 resubmission passed without issue.
 - [W3C HTML Validator 3](/readme_assets/images/nu-html-checker-3.png)
 - [W3C HTML Validator 4](/readme_assets/images/nu-html-checker-4.png)
 - [W3C HTML Validator 5](/readme_assets/images/nu-html-checker-5.png)
+- [W3C HTML Validator Register](/readme_assets/images/validation/html/register.png)
 
 However, the assesment for Project 4 resubmission 1 showed [significant html validation issues](https://github.com/mikerae/string-rota/issues/124).
 It must be assumed that these issues were related to [server errors](https://github.com/mikerae/string-rota/issues/123) introduced by 'code cleaning' imediately prior to the project resubmission. 
@@ -356,6 +362,7 @@ The Chrome Developer Tools Lighthouse was used to validate the accessibility of 
 - [The Reserve Player Page scored 100%](/readme_assets/images/validation/lighthouse/reserve.png)
 - [The Logout Page scored 100%](/readme_assets/images/validation/lighthouse/logout.png)
 - [The Landing Page scored 100%](/readme_assets/images/validation/lighthouse/index.png)
+- [The Register Page scored 100%](/readme_assets/images/validation/lighthouse/register.png)
 # Resources
 [Back to Top](#contents)
 
