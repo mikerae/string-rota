@@ -278,6 +278,11 @@ h6 {
   font-size: 20px;
 }
 
+/* Button Margin */
+.btn {
+  margin-bottom: 1rem;
+}
+
 /* Close Button */
 .btn-close {
   background-size: 25%;
@@ -987,7 +992,6 @@ h6 {
 
 #login_out {
   background-color: #a0c7f6;
-  width: 100vw;
 }
 
 /*--------------------------------------------------------------
