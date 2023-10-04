@@ -46,21 +46,31 @@ class Register(View):
         projects = Project.objects.all()
         section_players = get_players(section)
         unregistered_players = section_players.filter(users_django__isnull=True)  # noqa
+        if unregistered_players:
+            create_user_form = UserCreationForm()
 
-        create_user_form = UserCreationForm()
+            template = "player_info/register.html"
 
-        template = "player_info/register.html"
+            context = {
+                "section": section,
+                "office": office,
+                "rota_manager": rota_manager,
+                "projects": projects,
+                "unregistered_players": unregistered_players,
+                "create_user_form": create_user_form,
+            }
 
-        context = {
-            "section": section,
-            "office": office,
-            "rota_manager": rota_manager,
-            "projects": projects,
-            "unregistered_players": unregistered_players,
-            "create_user_form": create_user_form,
-        }
-
-        return render(request, template, context)
+            return render(request, template, context)
+        else:
+            messages.info(
+                request,
+                f"All players in the  {section} section are registered and have access to the String Rota app",  # noqa
+            )
+            return HttpResponseRedirect(
+                reverse(
+                    "home",
+                )
+            )
 
     def post(
         self,
