@@ -17,6 +17,8 @@ body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
   color: #444444;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 a {
@@ -276,6 +278,11 @@ h6 {
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   font-size: 20px;
+}
+
+/* Button Margin */
+.btn {
+  margin-bottom: 1rem;
 }
 
 /* Close Button */
@@ -987,7 +994,6 @@ h6 {
 
 #login_out {
   background-color: #a0c7f6;
-  width: 100vw;
 }
 
 /*--------------------------------------------------------------
