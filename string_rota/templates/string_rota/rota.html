@@ -73,19 +73,24 @@
             <div class="card-body">
               <h2 class="card-title">
                 Seating Plan for {{seating_plan.section}} Section
-                Status: {{seating_plan.get_plan_status_display}}
+                <span {% if not rota_manager %}class="d-none"
+                  {% elif rota_manager and seating_plan.plan_status == "D"%}class="text-danger"
+                  {% elif rota_manager and seating_plan.plan_status == "P"%}class="text-success" {% endif %}>Status:
+                  {{seating_plan.get_plan_status_display}}</span>
               </h2>
-              <p>This project needs <strong>{{ strength }}</strong> players.</p>
+              <p {% if not rota_manager %}class="d-none" {% endif %}>This project
+                needs <strong>{{ strength }}</strong> players.</p>
               {% if  not rota_manager %}
               {% if seating_plan.get_plan_status_display == "Draft" %}
-              <h3>The Seating Plan for {{ project.name }} is not ready yet.</h3>
-                <h5>Please contact your Rota Manager</h5>
+              <h3 class="text-danger">The Seating Plan for {{ project.name }} is not ready yet.</h3>
+                <h5 class="text-info">Please contact your Rota Manager</h5>
                 {% endif %}
                 {% endif %}
 
                 <!-- Active Table -->
 
-                <table class="rota table table-borderless">
+                <table
+                  class="rota table table-borderless {% if seating_plan.plan_status == 'D' and not rota_manager %}d-none {% endif %}">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
@@ -137,7 +142,8 @@
       <!-- Right side columns -->
       <div class="col-lg-5">
         <!-- Reserve Player -->
-        <div class="col-xxl-5 col-md-6">
+        <div class="col-xxl-5 col-md-6 {% if seating_plan.plan_status == 'D' and not rota_manager %}d-none
+        {% endif %}">
           <div class="card info-card sales-card">
             <div class="card-body">
               <h2 class="card-title">Reserve Player<span></h2>
@@ -166,7 +172,8 @@
           </div>
         </div><!-- End Reserve Player -->
         <!-- Reduced Rep Player -->
-        <div class="col-xxl-5 col-md-6">
+        <div class="col-xxl-5 col-md-6 {% if seating_plan.plan_status == 'D' and not rota_manager %}d-none
+        {% endif %}">
           <div class="card info-card sales-card">
             <div class="card-body">
               <h2 class="card-title">Reduced Rep Player(s)<span></h2>
@@ -189,7 +196,8 @@
           </div>
         </div><!-- End Reduced Rep Player -->
         <!-- Not Available -->
-        <div class="col-xxl-5 col-md-6">
+        <div class="col-xxl-5 col-md-6 {% if seating_plan.plan_status == 'D' and not rota_manager %}d-none
+        {% endif %}">
           <div class="card info-card sales-card">
             <div class="card-body">
               <h2 class="card-title">Players Not Available<span></h2>
