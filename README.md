@@ -264,6 +264,8 @@ The following manual tests were made:
     - [see issue #138 here](https://github.com/mikerae/string-rota/issues/138)
 - [External BoostrapMade link #157 Testing](/readme_assets/images/testing-issue157.png)
     - [see issue #157 here](https://github.com/mikerae/string-rota/issues/157)
+- [Display Draft/Published rota data #159 Testing](/readme_assets/images/testing-issue159.png)
+    - [see issue #159 here](https://github.com/mikerae/string-rota/issues/159)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 
