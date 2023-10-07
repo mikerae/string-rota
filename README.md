@@ -266,6 +266,12 @@ The following manual tests were made:
     - [see issue #157 here](https://github.com/mikerae/string-rota/issues/157)
 - [Display Draft/Published rota data #159 Testing](/readme_assets/images/testing-issue159.png)
     - [see issue #159 here](https://github.com/mikerae/string-rota/issues/159)
+- [Change Password #166 Testing](/readme_assets/images/testing-issue166-1.png)
+    - [see issue #166 here](https://github.com/mikerae/string-rota/issues/166)
+- [Add Email #166 Testing](/readme_assets/images/testing-issue166-2.png)
+    - [see issue #166 here](https://github.com/mikerae/string-rota/issues/166)
+- [Enable Email Server #166 Testing](/readme_assets/images/testing-issue166-3.png)
+    - [see issue #166 here](https://github.com/mikerae/string-rota/issues/166)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 
