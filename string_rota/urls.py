@@ -15,6 +15,11 @@ urlpatterns = [
         name="add_sp",
     ),
     path(
+        "add_sp/<slug:slug>/<seating_plan_id>/<section_id>/",
+        views.AddSeatingPosition.as_view(),
+        name="add_sp_office",
+    ),
+    path(
         "edit_sp/<slug:slug>/<seating_position_id>/",
         views.EditSeatingPosition.as_view(),
         name="edit_sp",

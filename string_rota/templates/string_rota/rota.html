@@ -122,8 +122,18 @@
 
         <!-- Rota Form Section-->
         {% if user.is_authenticated %}
-        {% if rota_manager %}
-
+        {% if user.is_staff %}
+        <div class="col-12 text-center ">
+          <span><a href="{% url 'add_sp_office' project.slug seating_plan.id section.id %}"><button
+                class="btn btn-primary">Add
+                Player to Seating Plan</button></a></span>
+          <a href="{% url 'toggle_seating_plan_status' project.slug seating_plan.id %}"><button
+              class="btn btn-success">Draft/Published</button></a>
+          <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate
+              Reserved
+              Player</button></a>
+        </div>
+        {% elif rota_manager %}
         <div class="col-12 text-center ">
           <span><a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add
                 Player to Seating Plan</button></a></span>

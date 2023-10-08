@@ -52,7 +52,7 @@ class Home(View):
     def dispatch(self, *args, **kwargs):
         return super(Home, self).dispatch(*args, **kwargs)
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         """Load projects into sidebar"""
         projects = Project.objects.all()
         sections = Section.objects.all()
@@ -89,9 +89,9 @@ class Rota(View):
         office = request.user.groups.filter(name="Office")
         sections = Section.objects.all()
         project = get_project(slug)
-        if office:
+        if kwargs:
             section = get_object_or_404(Section, pk=kwargs["section_id"])
-        else:
+        if not office:
             try:
                 player = get_object_or_404(
                     Player, users_django=request.user.id
@@ -182,11 +182,17 @@ class Rota(View):
 class AddSeatingPosition(Rota):
     """Add a player seating position to a Seating Plan"""
 
-    def get(self, request, slug, seating_plan_id):
+    def get(self, request, slug, seating_plan_id, **kwargs):
+        """Show Add Seating Position Form"""
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
+        project = get_project(slug)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_object_or_404(Player, users_django=request.user.id)
+            section = player.section
         projects = Project.objects.all()
-        project = get_object_or_404(projects, slug=slug)
-        player = get_object_or_404(Player, users_django=request.user.id)
-        section = player.section
         seating_plan = get_object_or_404(SeatingPlan, pk=seating_plan_id)
 
         seating_position_form = SeatingPositionForm(section, seating_plan)
@@ -196,6 +202,7 @@ class AddSeatingPosition(Rota):
 
         context = {
             "projects": projects,
+            "sections": sections,
             "project": project,
             "section": section,
             "seating_position_form": seating_position_form,
@@ -204,12 +211,18 @@ class AddSeatingPosition(Rota):
 
         return render(request, template, context)
 
-    def post(self, request, slug, seating_plan_id):
+    def post(self, request, slug, seating_plan_id, **kwargs):
         """Add a Seating Position to a seating plan"""
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
         projects = Project.objects.all()
+
         project = get_object_or_404(projects, slug=slug)
-        player = get_object_or_404(Player, users_django=request.user.id)
-        section = player.section
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_object_or_404(Player, users_django=request.user.id)
+            section = player.section
         seating_plan = get_object_or_404(SeatingPlan, pk=seating_plan_id)  # noqa E501
 
         seating_position_form = SeatingPositionForm(
@@ -231,6 +244,7 @@ class AddSeatingPosition(Rota):
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "seating_position_form": seating_position_form,
@@ -248,6 +262,7 @@ class AddSeatingPosition(Rota):
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "seating_position_form": seating_position_form,
@@ -257,6 +272,13 @@ class AddSeatingPosition(Rota):
 
             return render(request, template, context)
         messages.success(request, "Your seating position is added ")
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
