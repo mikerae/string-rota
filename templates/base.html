@@ -117,8 +117,8 @@
 
             <ul class="sidebar-nav" id="sidebar-nav">
 
-                {% if request.user.is_staff %}
-                {% else %}
+
+
                 <!-- Projects Nav -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -128,15 +128,21 @@
                     <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
                             {% for project in projects %}
+                            {% if request.user.is_staff %}
+                            <a href="">
+                                <i class="bi bi-circle"></i><span>{{project.name}}</span>
+                            </a>
+                            {% else %}
                             <a href="{% url 'rota' project.slug %}">
                                 <i class="bi bi-circle"></i><span>{{project.name}}</span>
                             </a>
+                            {% endif %}
                             {% endfor %}
                         </li>
                     </ul>
                 </li>
                 <!-- End Projects Nav -->
-                {% endif %}
+
                 <!-- Register Nav -->
                 {% if rota_manager %}
                 <li class="nav-item">
@@ -145,7 +151,7 @@
                     </a>
                 </li>
                 {% endif %}
-                {% if request.user.is_staff %}
+                {% if request.user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="../admin/">
                         <i class="bi bi-menu-button-wide"></i><span>Admin</span>
