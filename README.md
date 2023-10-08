@@ -282,6 +282,8 @@ The following manual tests were made:
     - [see issue #170 here](https://github.com/mikerae/string-rota/issues/170)
 - [Admin Seating Position CRUD  #170 Testing](/readme_assets/images/testing-issue170-2.png)
     - [see issue #170 here](https://github.com/mikerae/string-rota/issues/170)
+- [Admin Toggle Draft/Published Rotas  #170 Testing](/readme_assets/images/testing-issue170-3.png)
+    - [see issue #170 here](https://github.com/mikerae/string-rota/issues/170)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 

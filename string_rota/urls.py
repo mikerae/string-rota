@@ -49,4 +49,9 @@ urlpatterns = [
         views.ToggleSeatingPlanStatus.as_view(),
         name="toggle_seating_plan_status",
     ),
+    path(
+        "toggle/<slug:slug>/<seating_plan_id>/<section_id>/",
+        views.ToggleSeatingPlanStatus.as_view(),
+        name="toggle_seating_plan_status_office",
+    ),
 ]

@@ -134,7 +134,7 @@
           <span><a href="{% url 'add_sp_office' project.slug seating_plan.id section.id %}"><button
                 class="btn btn-primary">Add
                 Player to Seating Plan</button></a></span>
-          <a href="{% url 'toggle_seating_plan_status' project.slug seating_plan.id %}"><button
+          <a href="{% url 'toggle_seating_plan_status_office' project.slug seating_plan.id section.id %}"><button
               class="btn btn-success">Draft/Published</button></a>
           <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate
               Reserved

@@ -547,12 +547,18 @@ class DeleteSeatingPosition(View):
 class ToggleSeatingPlanStatus(Rota):
     """Toggle the status of a seating plan from draft to published"""
 
-    def get(self, request, slug, seating_plan_id):
-        print("ToggleSeatingPlanStatus called")
+    def get(self, request, slug, seating_plan_id, **kwargs):
+        """Toggle the status of a seating plan from draft to published"""
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
+        project = get_project(slug)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_player(request)
+            section = get_section(player)
 
         project = get_project(slug)
-        player = get_player(request)
-        section = get_section(player)
         seating_plan = get_seating_plan(project, section)
 
         status = seating_plan.plan_status
@@ -567,9 +573,19 @@ class ToggleSeatingPlanStatus(Rota):
         else:
             seating_plan.plan_status = "D"
             seating_plan.save()
-            messages.success(
+            messages.error(
                 request,
-                f"The {section} section Rota for {project} is set to  Draft and is not viewable by players or office",  # noqa E501
+                f"The {section} section Rota for {project} is set to  DRAFT and is not viewable by players or office.",  # noqa E501
             )  # noqa E501
-
+            messages.warning(
+                request,
+                "The Admin superuser can view and edit draft rotas",  # noqa E501
+            )
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))
