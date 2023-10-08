@@ -276,6 +276,8 @@ The following manual tests were made:
     - [see issue #156 here](https://github.com/mikerae/string-rota/issues/156)
 - [Show sections in sidebar #156 Testing](/readme_assets/images/testing-issue156-2.png)
     - [see issue #156 here](https://github.com/mikerae/string-rota/issues/156)
+- [Admin/Orch Manager View Rotas #156 Testing](/readme_assets/images/testing-issue156-3.png)
+    - [see issue #156 here](https://github.com/mikerae/string-rota/issues/156)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 

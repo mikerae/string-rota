@@ -140,7 +140,7 @@
                                 <ul id="section-nav" class="nav-content collapse" data-bs-parent="#sections-nav">
                                     <li>
                                         {% for section in sections %}
-                                        <a id="section" href="">
+                                        <a id="section" href="{% url 'rota_office' project.slug section.id %}">
                                             <i class="bi bi-circle"></i><span>{{section.name}}</span>
                                         </a>
                                         {% endfor %}
@@ -174,7 +174,7 @@
                 {% endif %}
                 {% if request.user.is_superuser %}
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="../admin/">
+                    <a class="nav-link collapsed" href="/admin">
                         <i class="bi bi-menu-button-wide"></i><span>Admin</span>
                     </a>
                 </li>

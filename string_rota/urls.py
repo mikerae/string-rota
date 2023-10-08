@@ -1,10 +1,14 @@
 """ Urls for string-rota app """
+from django.contrib import admin
 from django.urls import path
 from . import views
 
 urlpatterns = [
     path("", views.Home.as_view(), name="home"),
     path("<slug:slug>/", views.Rota.as_view(), name="rota"),
+    path(
+        "<slug:slug>/<section_id>/", views.Rota.as_view(), name="rota_office"
+    ),  # noqa E501
     path(
         "add_sp/<slug:slug>/<seating_plan_id>/",
         views.AddSeatingPosition.as_view(),
@@ -26,7 +30,7 @@ urlpatterns = [
         name="delete_sp",
     ),
     path(
-        "<slug:slug>/<seating_plan_id>/",
+        "toggle/<slug:slug>/<seating_plan_id>/",
         views.ToggleSeatingPlanStatus.as_view(),
         name="toggle_seating_plan_status",
     ),

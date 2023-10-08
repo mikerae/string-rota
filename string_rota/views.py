@@ -84,17 +84,23 @@ class Rota(View):
     def dispatch(self, *args, **kwargs):
         return super(Rota, self).dispatch(*args, **kwargs)
 
-    def get(self, request, slug):
+    def get(self, request, slug, **kwargs):
         """Creates rota view for selected project"""
-
-        try:
-            player = get_object_or_404(Player, users_django=request.user.id)
-        except player.DoesNotExist:
-            messages.warning(request, "You are not logged in as a player.")
-            return redirect(reverse("home"))
-        projects = Project.objects.all()
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
         project = get_project(slug)
-        section = get_section(player)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            try:
+                player = get_object_or_404(
+                    Player, users_django=request.user.id
+                )  # noqa E501
+            except player.DoesNotExist:
+                messages.warning(request, "You are not logged in as a player.")
+                return redirect(reverse("home"))
+            section = get_section(player)
+        projects = Project.objects.all()
 
         # no seating_plan record?
         try:
@@ -157,6 +163,7 @@ class Rota(View):
 
         context = {
             "projects": projects,
+            "sections": sections,
             "project": project,
             "seating_plan": seating_plan,
             "seating_positions": seating_positions,
