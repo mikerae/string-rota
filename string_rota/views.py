@@ -124,7 +124,7 @@ class Rota(View):
             messages.warning(
                 request,
                 f"There are no all_playerproject \
-                records for the {project} project. Please contact a manager",
+                records for the {project} project. Please contact a manager",  # noqa E501
             )
             return redirect(reverse("rota"))
 
@@ -285,11 +285,18 @@ class AddSeatingPosition(Rota):
 class EditSeatingPosition(Rota):
     """View and Edit the seating positions in a Seating Plan"""
 
-    def get(self, request, slug, seating_position_id):
-        projects = Project.objects.all()
+    def get(self, request, slug, seating_position_id, **kwargs):
+        """Show Edit Seating Position Form"""
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
         project = get_project(slug)
-        player = get_player(request)
-        section = get_section(player)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_player(request)
+            section = get_section(player)
+        projects = Project.objects.all()
+
         seating_position = get_object_or_404(
             SeatingPosition, pk=seating_position_id
         )  # noqa E501
@@ -308,6 +315,7 @@ class EditSeatingPosition(Rota):
 
         context = {
             "player": sp_player,
+            "sections": sections,
             "projects": projects,
             "project": project,
             "section": section,
@@ -318,13 +326,20 @@ class EditSeatingPosition(Rota):
 
         return render(request, template, context)
 
-    def post(self, request, slug, seating_position_id):
+    def post(self, request, slug, seating_position_id, **kwargs):
         """Edit a seating position in a seating Plan"""
 
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
         projects = Project.objects.all()
+
         project = get_object_or_404(projects, slug=slug)
-        player = get_object_or_404(Player, users_django=request.user.id)
-        section = player.section
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_object_or_404(Player, users_django=request.user.id)
+            section = player.section
+        projects = Project.objects.all()
         seating_position = get_object_or_404(
             SeatingPosition, pk=seating_position_id
         )  # noqa E501
@@ -348,6 +363,7 @@ class EditSeatingPosition(Rota):
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "position": seating_position,
@@ -367,6 +383,7 @@ class EditSeatingPosition(Rota):
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "seating_position_form": seating_position_form,
@@ -376,7 +393,13 @@ class EditSeatingPosition(Rota):
 
             return render(request, template, context)
         messages.success(request, "Your seating position is updated ")
-
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
@@ -486,11 +509,14 @@ class Reserve(Rota):
 class DeleteSeatingPosition(View):
     """Delete a seating position in a project"""
 
-    def get(self, request, slug, position_id):
+    def get(self, request, slug, position_id, **kwargs):
         """Logic for deleting a seating position"""
+        office = request.user.groups.filter(name="Office")
         seating_position = get_object_or_404(
             SeatingPosition, id=position_id
         )  # noqa E501
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
         player = seating_position.player
         project = seating_position.seating_plan.project
         player_project = get_object_or_404(
@@ -508,6 +534,13 @@ class DeleteSeatingPosition(View):
         messages.success(
             request, f"{player.first_name} has been removed from this rota."
         )  # noqa E501
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 

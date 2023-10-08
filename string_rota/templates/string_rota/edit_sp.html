@@ -36,10 +36,18 @@
               <span class="col-md-4">{{player_project_form | crispy }}</span>
               <div class="text-center">
                 <button type="submit" class="btn btn-success">Edit Position</button>
+                {% if user.is_staff %}
+                <a href="{% url 'rota_office' project.slug section.id %}" class="btn btn-secondary">
+                  Cancel</a>
+                <a class="btn btn-danger" href="{% url 'delete_sp_office' project.slug position.id section.id %}">
+                  Delete</a>
+                {% else %}
                 <a href="{% url 'rota' project.slug %}" class="btn btn-secondary">
                   Cancel</a>
                 <a class="btn btn-danger" href="{% url 'delete_sp' project.slug position.id %}">
                   Delete</a>
+                {% endif %}
+
               </div>
             </form>
             <!-- End Rota Form -->

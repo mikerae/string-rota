@@ -25,6 +25,11 @@ urlpatterns = [
         name="edit_sp",
     ),
     path(
+        "edit_sp/<slug:slug>/<seating_position_id>/<section_id>/",
+        views.EditSeatingPosition.as_view(),
+        name="edit_sp_office",
+    ),
+    path(
         "reserve/<slug:slug>/",
         views.Reserve.as_view(),
         name="reserve",
@@ -33,6 +38,11 @@ urlpatterns = [
         "delete_sp/<slug:slug>/<position_id>/",
         views.DeleteSeatingPosition.as_view(),
         name="delete_sp",
+    ),
+    path(
+        "delete_sp/<slug:slug>/<position_id>/<section_id>/",
+        views.DeleteSeatingPosition.as_view(),
+        name="delete_sp_office",
     ),
     path(
         "toggle/<slug:slug>/<seating_plan_id>/",

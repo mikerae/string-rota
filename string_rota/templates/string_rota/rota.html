@@ -102,7 +102,14 @@
 
                     {% if rota_manager %}
                     <tr>
-                      <td><a class="bi" href="{% url 'edit_sp' project.slug position.id %}">{{position.player}}</a></td>
+                      {% if user.is_staff %}
+                      <td><a class="bi"
+                          href="{% url 'edit_sp_office' project.slug position.id section.id %}">{{position.player}}</a>
+                      </td>
+                      {% else %}
+                      <td><a class="bi" href="{% url 'edit_sp' project.slug position.id %}">{{position.player}}</a>
+                      </td>
+                      {% endif %}
                       <td>{{position.position_number}}</td>
                     </tr>
                     {% else %}
