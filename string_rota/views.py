@@ -20,6 +20,7 @@ from .models import (
     SeatingPosition,
     Player,
     PlayerProject,
+    Section,
 )
 from .utilities import (
     check_player_project,
@@ -54,6 +55,7 @@ class Home(View):
     def get(self, request):
         """Load projects into sidebar"""
         projects = Project.objects.all()
+        sections = Section.objects.all()
         office = request.user.groups.filter(name="Office")
         rota_manager = request.user.groups.filter(name="Rota_Manager")
         section = False
@@ -68,6 +70,7 @@ class Home(View):
         context = {
             "projects": projects,
             "section": section,
+            "sections": sections,
             "rota_manager": rota_manager,
             "office": office,
         }
