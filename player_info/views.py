@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
 
-from string_rota.models import Project, Player
+from string_rota.models import Project, Player, Section
 from string_rota.utilities import (
     get_player,
     get_section,
@@ -33,19 +33,25 @@ class Register(View):
     def dispatch(self, *args, **kwargs):
         return super(Register, self).dispatch(*args, **kwargs)
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         """Display list of players currently on the rota
         list for a given section, and shows which are registered.
         Presents a registration form which can be populated with a
         chosen unregistered player."""
 
-        player = get_player(request)
-        section = get_section(player)
         office = request.user.groups.filter(name="Office")
         rota_manager = request.user.groups.filter(name="Rota_Manager")
         projects = Project.objects.all()
+        sections = sections = Section.objects.all()
+        if kwargs:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        if not office:
+            player = get_player(request)
+            section = get_section(player)
+
         section_players = get_players(section)
         unregistered_players = section_players.filter(users_django__isnull=True)  # noqa
+
         if unregistered_players:
             create_user_form = UserCreationForm()
 
@@ -56,6 +62,7 @@ class Register(View):
                 "office": office,
                 "rota_manager": rota_manager,
                 "projects": projects,
+                "sections": sections,
                 "unregistered_players": unregistered_players,
                 "create_user_form": create_user_form,
             }

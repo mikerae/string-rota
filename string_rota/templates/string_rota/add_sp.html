@@ -23,13 +23,13 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h1 class="card-title">Add Seating Position</h1>
+            <h2 class="card-title">Add Seating Position</h2>
 
             <!-- Rota Form -->
             <form method="POST" class="row g-3">
               {% csrf_token %}
-              <span class="col-md-4">{{seating_position_form|crispy }}</span>
-              <span class="col-md-4">{{player_project_form|crispy }}</span>
+              <div class="col-md-4">{{seating_position_form|crispy }}</div>
+              <div class="col-md-4">{{player_project_form|crispy }}</div>
               <div class="text-center">
                 <button type="submit" class="btn btn-success">Add Position</button>
                 {% if user.is_staff %}

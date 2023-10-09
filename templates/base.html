@@ -117,36 +117,31 @@
 
             <ul class="sidebar-nav" id="sidebar-nav">
 
-
-
                 <!-- Projects Nav -->
                 <li class="nav-item">
                     <a id="projects-nav" class="nav-link collapsed" data-bs-target="#components-nav"
-                        data-bs-toggle="collapse" href="#">
+                        data-bs-toggle="collapse" href="">
                         <i class="bi bi-menu-button-wide"></i><span>Projects</span><i
                             class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    {% if request.user.is_staff %}
-                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#projects-nav">
-                        <li>
+                    {% if office %}
+                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li class="nav-item">
                             {% for project in projects %}
-                            <a id="sections-nav" class="nav-content collapsed" data-bs-target="#section-nav"
-                                data-bs-toggle="collapse" href="#">
+                            <a class="nav-content collapsed" data-bs-target="#{{project.slug}}-nav"
+                                data-bs-toggle="collapse" href="">
                                 <i class="bi bi-menu-button-wide"></i><span>{{project.name}}</span><i
                                     class="bi bi-chevron-down ms-auto"></i>
                             </a>
-                            <a class="nav-content collapse " data-bs-target="#section-nav" data-bs-toggle="collapse"
-                                data-bs-parent="#sections-nav" href="">
-                                <ul id="section-nav" class="nav-content collapse" data-bs-parent="#sections-nav">
-                                    <li>
-                                        {% for section in sections %}
-                                        <a id="section" href="{% url 'rota_office' project.slug section.id %}">
-                                            <i class="bi bi-circle"></i><span>{{section.name}}</span>
-                                        </a>
-                                        {% endfor %}
-                                    </li>
-                                </ul>
-                            </a>
+                            <ul id="{{project.slug}}-nav" class="nav-content collapse" data-bs-parent="#components-nav">
+                                <li class="nav-item">
+                                    {% for section in sections %}
+                                    <a href="{% url 'rota_office' project.slug section.id %}">
+                                        <i class="bi bi-circle"></i><span>{{section.name}}</span>
+                                    </a>
+                                    {% endfor %}
+                                </li>
+                            </ul>
                             {% endfor %}
                         </li>
                     </ul>
@@ -162,18 +157,37 @@
                     </ul>
                     {% endif %}
                 </li>
-                <!-- End Projects Nav -->
 
                 <!-- Register Nav -->
-                {% if rota_manager %}
-                <li class="nav-item {% if user.is_superuser %}d-none{% endif %}">
-                    <a class="nav-link collapsed" href="{% url 'register' %}">
-                        <i class="bi bi-menu-button-wide"></i><span>Register a Player</span>
+                {% if office %}
+                <li class="nav-item">
+                    <a id="register-nav" class="nav-link collapsed" data-bs-target="#sections-nav"
+                        data-bs-toggle="collapse" href="">
+                        <i class="bi bi-menu-button-wide"></i><span>Register a
+                            Player</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="sections-nav" class="nav-content collapse" data-bs-parent="#register-nav">
+                        <li class="nav-item">
+                            {% for section in sections %}
+                            <a href="{% url 'register_office' section.id %}">
+                                <i class="bi bi-circle"></i><span>{{section.name}}</span>
+                            </a>
+                            {% endfor %}
+                        </li>
+                    </ul>
+                </li>
+                {% elif  rota_manager %}
+                <li class="nav-item">
+                    <a id="register-nav" class="nav-link collapsed" href="{% url 'register' %}">
+                        <i class="bi bi-menu-button-wide"></i><span>Register a
+                            Player</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                 </li>
                 {% endif %}
+
+                <!-- Admin Nav -->
                 {% if request.user.is_superuser %}
-                <li class="nav-item">
+                <li class=" nav-item">
                     <a class="nav-link collapsed" href="/admin">
                         <i class="bi bi-menu-button-wide"></i><span>Admin</span>
                     </a>

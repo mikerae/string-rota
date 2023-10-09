@@ -34,7 +34,6 @@ from .utilities import (
     get_not_playing_in_playerproject,
     get_all_playerproject,
     get_seating_positions,
-    get_reserve_vars,
 )  # noqa E501
 
 
@@ -52,7 +51,7 @@ class Home(View):
     def dispatch(self, *args, **kwargs):
         return super(Home, self).dispatch(*args, **kwargs)
 
-    def get(self, request, **kwargs):
+    def get(self, request):
         """Load projects into sidebar"""
         projects = Project.objects.all()
         sections = Section.objects.all()
