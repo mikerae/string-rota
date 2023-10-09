@@ -166,7 +166,7 @@
 
                 <!-- Register Nav -->
                 {% if rota_manager %}
-                <li class="nav-item">
+                <li class="nav-item {% if user.is_superuser %}d-none{% endif %}">
                     <a class="nav-link collapsed" href="{% url 'register' %}">
                         <i class="bi bi-menu-button-wide"></i><span>Register a Player</span>
                     </a>

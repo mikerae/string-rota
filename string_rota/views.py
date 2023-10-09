@@ -406,15 +406,23 @@ class EditSeatingPosition(Rota):
 class Reserve(Rota):
     """Set the Reserve and Reduced status for a plyer iin a project"""
 
-    def get(self, request, slug):
+    def get(self, request, slug, **kwargs):
         projects = Project.objects.all()
+        sections = Section.objects.all()
+        office = request.user.groups.filter(name="Office")
+        project = get_project(slug)
 
-        (
-            project,
-            section,
-            seating_plan,
-            not_playing_in_playerproject,
-        ) = get_reserve_vars(request, slug)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_player(request)
+            section = get_section(player)
+
+        seating_plan = get_seating_plan(project, section)
+        players = get_players(section)
+        not_playing_in_playerproject = get_not_playing_in_playerproject(
+            players, seating_plan, project
+        )
 
         reserve_form = ReserveForm(section, seating_plan)
 
@@ -422,6 +430,7 @@ class Reserve(Rota):
 
         context = {
             "projects": projects,
+            "sections": sections,
             "project": project,
             "section": section,
             "reserve_form": reserve_form,
@@ -430,13 +439,18 @@ class Reserve(Rota):
 
         return render(request, template, context)
 
-    def post(self, request, slug):
+    def post(self, request, slug, **kwargs):
         """Saves reserve status for player in project"""
 
         projects = Project.objects.all()
+        sections = Section.objects.all()
+        office = request.user.groups.filter(name="Office")
         project = get_project(slug)
-        player = get_player(request)
-        section = get_section(player)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_player(request)
+            section = get_section(player)
         players = get_players(section)
         seating_plan = get_seating_plan(project, section)
         not_playing_in_playerproject = get_not_playing_in_playerproject(
@@ -449,7 +463,6 @@ class Reserve(Rota):
             data=request.POST,
         )
         if reserve_form.is_valid():
-            print("reserve form valid")
             plpr_from_form = get_object_or_404(
                 PlayerProject,
                 project=project,
@@ -489,11 +502,11 @@ class Reserve(Rota):
             plpr_from_form.save()
 
         else:
-            print("reserve form not valid")
             template = "string_rota/reserve.html"
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "reserve_form": reserve_form,
@@ -503,6 +516,13 @@ class Reserve(Rota):
 
             return render(request, template, context)
 
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 

@@ -136,8 +136,8 @@
                 Player to Seating Plan</button></a></span>
           <a href="{% url 'toggle_seating_plan_status_office' project.slug seating_plan.id section.id %}"><button
               class="btn btn-success">Draft/Published</button></a>
-          <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate
-              Reserved
+          <a href="{% url 'reserve_office' project.slug section.id %}"><button class="btn btn-primary">Allocate
+              Reserve
               Player</button></a>
         </div>
         {% elif rota_manager %}
@@ -146,8 +146,7 @@
                 Player to Seating Plan</button></a></span>
           <a href="{% url 'toggle_seating_plan_status' project.slug seating_plan.id %}"><button
               class="btn btn-success">Draft/Published</button></a>
-          <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate
-              Reserved
+          <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate Reserve
               Player</button></a>
         </div>
         {% endif %}
