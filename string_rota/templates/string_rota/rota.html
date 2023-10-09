@@ -102,7 +102,14 @@
 
                     {% if rota_manager %}
                     <tr>
-                      <td><a class="bi" href="{% url 'edit_sp' project.slug position.id %}">{{position.player}}</a></td>
+                      {% if user.is_staff %}
+                      <td><a class="bi"
+                          href="{% url 'edit_sp_office' project.slug position.id section.id %}">{{position.player}}</a>
+                      </td>
+                      {% else %}
+                      <td><a class="bi" href="{% url 'edit_sp' project.slug position.id %}">{{position.player}}</a>
+                      </td>
+                      {% endif %}
                       <td>{{position.position_number}}</td>
                     </tr>
                     {% else %}
@@ -122,15 +129,24 @@
 
         <!-- Rota Form Section-->
         {% if user.is_authenticated %}
-        {% if rota_manager %}
-
+        {% if user.is_staff %}
+        <div class="col-12 text-center ">
+          <span><a href="{% url 'add_sp_office' project.slug seating_plan.id section.id %}"><button
+                class="btn btn-primary">Add
+                Player to Seating Plan</button></a></span>
+          <a href="{% url 'toggle_seating_plan_status_office' project.slug seating_plan.id section.id %}"><button
+              class="btn btn-success">Draft/Published</button></a>
+          <a href="{% url 'reserve_office' project.slug section.id %}"><button class="btn btn-primary">Allocate
+              Reserve
+              Player</button></a>
+        </div>
+        {% elif rota_manager %}
         <div class="col-12 text-center ">
           <span><a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add
                 Player to Seating Plan</button></a></span>
           <a href="{% url 'toggle_seating_plan_status' project.slug seating_plan.id %}"><button
               class="btn btn-success">Draft/Published</button></a>
-          <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate
-              Reserved
+          <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate Reserve
               Player</button></a>
         </div>
         {% endif %}

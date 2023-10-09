@@ -272,6 +272,20 @@ The following manual tests were made:
     - [see issue #166 here](https://github.com/mikerae/string-rota/issues/166)
 - [Enable Email Server #166 Testing](/readme_assets/images/testing-issue166-3.png)
     - [see issue #166 here](https://github.com/mikerae/string-rota/issues/166)
+- [Update Sidebar and Welcome Screen #156 Testing](/readme_assets/images/testing-issue156-1.png)
+    - [see issue #156 here](https://github.com/mikerae/string-rota/issues/156)
+- [Show sections in sidebar #156 Testing](/readme_assets/images/testing-issue156-2.png)
+    - [see issue #156 here](https://github.com/mikerae/string-rota/issues/156)
+- [Admin/Orch Manager View Rotas #156 Testing](/readme_assets/images/testing-issue156-3.png)
+    - [see issue #156 here](https://github.com/mikerae/string-rota/issues/156)
+- [Admin Add Seating Position View Rotas #170 Testing](/readme_assets/images/testing-issue170-1.png)
+    - [see issue #170 here](https://github.com/mikerae/string-rota/issues/170)
+- [Admin Seating Position CRUD  #170 Testing](/readme_assets/images/testing-issue170-2.png)
+    - [see issue #170 here](https://github.com/mikerae/string-rota/issues/170)
+- [Admin Toggle Draft/Published Rotas  #170 Testing](/readme_assets/images/testing-issue170-3.png)
+    - [see issue #170 here](https://github.com/mikerae/string-rota/issues/170)
+- [Admin Allocate Reserve Player  #170 Testing](/readme_assets/images/testing-issue170-4.png)
+    - [see issue #170 here](https://github.com/mikerae/string-rota/issues/170)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 

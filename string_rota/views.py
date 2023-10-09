@@ -20,6 +20,7 @@ from .models import (
     SeatingPosition,
     Player,
     PlayerProject,
+    Section,
 )
 from .utilities import (
     check_player_project,
@@ -51,9 +52,10 @@ class Home(View):
     def dispatch(self, *args, **kwargs):
         return super(Home, self).dispatch(*args, **kwargs)
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         """Load projects into sidebar"""
         projects = Project.objects.all()
+        sections = Section.objects.all()
         office = request.user.groups.filter(name="Office")
         rota_manager = request.user.groups.filter(name="Rota_Manager")
         section = False
@@ -68,6 +70,7 @@ class Home(View):
         context = {
             "projects": projects,
             "section": section,
+            "sections": sections,
             "rota_manager": rota_manager,
             "office": office,
         }
@@ -81,17 +84,23 @@ class Rota(View):
     def dispatch(self, *args, **kwargs):
         return super(Rota, self).dispatch(*args, **kwargs)
 
-    def get(self, request, slug):
+    def get(self, request, slug, **kwargs):
         """Creates rota view for selected project"""
-
-        try:
-            player = get_object_or_404(Player, users_django=request.user.id)
-        except player.DoesNotExist:
-            messages.warning(request, "You are not logged in as a player.")
-            return redirect(reverse("home"))
-        projects = Project.objects.all()
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
         project = get_project(slug)
-        section = get_section(player)
+        if kwargs:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        if not office:
+            try:
+                player = get_object_or_404(
+                    Player, users_django=request.user.id
+                )  # noqa E501
+            except player.DoesNotExist:
+                messages.warning(request, "You are not logged in as a player.")
+                return redirect(reverse("home"))
+            section = get_section(player)
+        projects = Project.objects.all()
 
         # no seating_plan record?
         try:
@@ -115,7 +124,7 @@ class Rota(View):
             messages.warning(
                 request,
                 f"There are no all_playerproject \
-                records for the {project} project. Please contact a manager",
+                records for the {project} project. Please contact a manager",  # noqa E501
             )
             return redirect(reverse("rota"))
 
@@ -154,6 +163,7 @@ class Rota(View):
 
         context = {
             "projects": projects,
+            "sections": sections,
             "project": project,
             "seating_plan": seating_plan,
             "seating_positions": seating_positions,
@@ -172,11 +182,17 @@ class Rota(View):
 class AddSeatingPosition(Rota):
     """Add a player seating position to a Seating Plan"""
 
-    def get(self, request, slug, seating_plan_id):
+    def get(self, request, slug, seating_plan_id, **kwargs):
+        """Show Add Seating Position Form"""
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
+        project = get_project(slug)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_object_or_404(Player, users_django=request.user.id)
+            section = player.section
         projects = Project.objects.all()
-        project = get_object_or_404(projects, slug=slug)
-        player = get_object_or_404(Player, users_django=request.user.id)
-        section = player.section
         seating_plan = get_object_or_404(SeatingPlan, pk=seating_plan_id)
 
         seating_position_form = SeatingPositionForm(section, seating_plan)
@@ -186,6 +202,7 @@ class AddSeatingPosition(Rota):
 
         context = {
             "projects": projects,
+            "sections": sections,
             "project": project,
             "section": section,
             "seating_position_form": seating_position_form,
@@ -194,12 +211,18 @@ class AddSeatingPosition(Rota):
 
         return render(request, template, context)
 
-    def post(self, request, slug, seating_plan_id):
+    def post(self, request, slug, seating_plan_id, **kwargs):
         """Add a Seating Position to a seating plan"""
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
         projects = Project.objects.all()
+
         project = get_object_or_404(projects, slug=slug)
-        player = get_object_or_404(Player, users_django=request.user.id)
-        section = player.section
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_object_or_404(Player, users_django=request.user.id)
+            section = player.section
         seating_plan = get_object_or_404(SeatingPlan, pk=seating_plan_id)  # noqa E501
 
         seating_position_form = SeatingPositionForm(
@@ -221,6 +244,7 @@ class AddSeatingPosition(Rota):
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "seating_position_form": seating_position_form,
@@ -238,6 +262,7 @@ class AddSeatingPosition(Rota):
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "seating_position_form": seating_position_form,
@@ -247,17 +272,31 @@ class AddSeatingPosition(Rota):
 
             return render(request, template, context)
         messages.success(request, "Your seating position is added ")
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
 class EditSeatingPosition(Rota):
     """View and Edit the seating positions in a Seating Plan"""
 
-    def get(self, request, slug, seating_position_id):
-        projects = Project.objects.all()
+    def get(self, request, slug, seating_position_id, **kwargs):
+        """Show Edit Seating Position Form"""
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
         project = get_project(slug)
-        player = get_player(request)
-        section = get_section(player)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_player(request)
+            section = get_section(player)
+        projects = Project.objects.all()
+
         seating_position = get_object_or_404(
             SeatingPosition, pk=seating_position_id
         )  # noqa E501
@@ -276,6 +315,7 @@ class EditSeatingPosition(Rota):
 
         context = {
             "player": sp_player,
+            "sections": sections,
             "projects": projects,
             "project": project,
             "section": section,
@@ -286,13 +326,20 @@ class EditSeatingPosition(Rota):
 
         return render(request, template, context)
 
-    def post(self, request, slug, seating_position_id):
+    def post(self, request, slug, seating_position_id, **kwargs):
         """Edit a seating position in a seating Plan"""
 
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
         projects = Project.objects.all()
+
         project = get_object_or_404(projects, slug=slug)
-        player = get_object_or_404(Player, users_django=request.user.id)
-        section = player.section
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_object_or_404(Player, users_django=request.user.id)
+            section = player.section
+        projects = Project.objects.all()
         seating_position = get_object_or_404(
             SeatingPosition, pk=seating_position_id
         )  # noqa E501
@@ -316,6 +363,7 @@ class EditSeatingPosition(Rota):
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "position": seating_position,
@@ -335,6 +383,7 @@ class EditSeatingPosition(Rota):
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "seating_position_form": seating_position_form,
@@ -344,22 +393,36 @@ class EditSeatingPosition(Rota):
 
             return render(request, template, context)
         messages.success(request, "Your seating position is updated ")
-
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
 class Reserve(Rota):
     """Set the Reserve and Reduced status for a plyer iin a project"""
 
-    def get(self, request, slug):
+    def get(self, request, slug, **kwargs):
         projects = Project.objects.all()
+        sections = Section.objects.all()
+        office = request.user.groups.filter(name="Office")
+        project = get_project(slug)
 
-        (
-            project,
-            section,
-            seating_plan,
-            not_playing_in_playerproject,
-        ) = get_reserve_vars(request, slug)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_player(request)
+            section = get_section(player)
+
+        seating_plan = get_seating_plan(project, section)
+        players = get_players(section)
+        not_playing_in_playerproject = get_not_playing_in_playerproject(
+            players, seating_plan, project
+        )
 
         reserve_form = ReserveForm(section, seating_plan)
 
@@ -367,6 +430,7 @@ class Reserve(Rota):
 
         context = {
             "projects": projects,
+            "sections": sections,
             "project": project,
             "section": section,
             "reserve_form": reserve_form,
@@ -375,13 +439,18 @@ class Reserve(Rota):
 
         return render(request, template, context)
 
-    def post(self, request, slug):
+    def post(self, request, slug, **kwargs):
         """Saves reserve status for player in project"""
 
         projects = Project.objects.all()
+        sections = Section.objects.all()
+        office = request.user.groups.filter(name="Office")
         project = get_project(slug)
-        player = get_player(request)
-        section = get_section(player)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_player(request)
+            section = get_section(player)
         players = get_players(section)
         seating_plan = get_seating_plan(project, section)
         not_playing_in_playerproject = get_not_playing_in_playerproject(
@@ -394,7 +463,6 @@ class Reserve(Rota):
             data=request.POST,
         )
         if reserve_form.is_valid():
-            print("reserve form valid")
             plpr_from_form = get_object_or_404(
                 PlayerProject,
                 project=project,
@@ -434,11 +502,11 @@ class Reserve(Rota):
             plpr_from_form.save()
 
         else:
-            print("reserve form not valid")
             template = "string_rota/reserve.html"
 
             context = {
                 "projects": projects,
+                "sections": sections,
                 "project": project,
                 "section": section,
                 "reserve_form": reserve_form,
@@ -448,17 +516,27 @@ class Reserve(Rota):
 
             return render(request, template, context)
 
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
 class DeleteSeatingPosition(View):
     """Delete a seating position in a project"""
 
-    def get(self, request, slug, position_id):
+    def get(self, request, slug, position_id, **kwargs):
         """Logic for deleting a seating position"""
+        office = request.user.groups.filter(name="Office")
         seating_position = get_object_or_404(
             SeatingPosition, id=position_id
         )  # noqa E501
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
         player = seating_position.player
         project = seating_position.seating_plan.project
         player_project = get_object_or_404(
@@ -476,18 +554,31 @@ class DeleteSeatingPosition(View):
         messages.success(
             request, f"{player.first_name} has been removed from this rota."
         )  # noqa E501
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))
 
 
 class ToggleSeatingPlanStatus(Rota):
     """Toggle the status of a seating plan from draft to published"""
 
-    def get(self, request, slug, seating_plan_id):
-        print("ToggleSeatingPlanStatus called")
+    def get(self, request, slug, seating_plan_id, **kwargs):
+        """Toggle the status of a seating plan from draft to published"""
+        office = request.user.groups.filter(name="Office")
+        sections = Section.objects.all()
+        project = get_project(slug)
+        if office:
+            section = get_object_or_404(Section, pk=kwargs["section_id"])
+        else:
+            player = get_player(request)
+            section = get_section(player)
 
         project = get_project(slug)
-        player = get_player(request)
-        section = get_section(player)
         seating_plan = get_seating_plan(project, section)
 
         status = seating_plan.plan_status
@@ -502,9 +593,19 @@ class ToggleSeatingPlanStatus(Rota):
         else:
             seating_plan.plan_status = "D"
             seating_plan.save()
-            messages.success(
+            messages.error(
                 request,
-                f"The {section} section Rota for {project} is set to  Draft and is not viewable by players or office",  # noqa E501
+                f"The {section} section Rota for {project} is set to  DRAFT and is not viewable by players or office.",  # noqa E501
             )  # noqa E501
-
+            messages.warning(
+                request,
+                "The Admin superuser can view and edit draft rotas",  # noqa E501
+            )
+        if office:
+            return HttpResponseRedirect(
+                reverse(
+                    "rota_office",
+                    args=[slug, section.id],
+                ),  # noqa E501
+            )
         return HttpResponseRedirect(reverse("rota", args=[slug]))

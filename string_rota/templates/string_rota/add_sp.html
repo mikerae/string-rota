@@ -32,8 +32,13 @@
               <span class="col-md-4">{{player_project_form|crispy }}</span>
               <div class="text-center">
                 <button type="submit" class="btn btn-success">Add Position</button>
+                {% if user.is_staff %}
+                <a href="{% url 'rota_office' project.slug section.id %}" class="btn btn-secondary">
+                  Cancel</a>
+                {% else %}
                 <a href="{% url 'rota' project.slug %}" class="btn btn-secondary">
                   Cancel</a>
+                {% endif %}
               </div>
             </form>
 
