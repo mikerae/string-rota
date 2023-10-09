@@ -7,7 +7,8 @@
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Project: {{project.name}}</h1>
+    <h1>Project: {{project.name}} {% if office %} <strong>- {{section}} Section</strong>{% endif %}
+    </h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -27,7 +28,7 @@
             <div class="card info-card sales-card">
 
               <div class="card-body">
-                <h2 class="card-title">Repertoire<span></h2>
+                <h2 class="card-title">Repertoire</h2>
 
                 <div class="d-flex align-items-center">
                   <div class="ps-3">
@@ -130,24 +131,23 @@
         <!-- Rota Form Section-->
         {% if user.is_authenticated %}
         {% if user.is_staff %}
-        <div class="col-12 text-center ">
-          <span><a href="{% url 'add_sp_office' project.slug seating_plan.id section.id %}"><button
-                class="btn btn-primary">Add
-                Player to Seating Plan</button></a></span>
-          <a href="{% url 'toggle_seating_plan_status_office' project.slug seating_plan.id section.id %}"><button
-              class="btn btn-success">Draft/Published</button></a>
-          <a href="{% url 'reserve_office' project.slug section.id %}"><button class="btn btn-primary">Allocate
-              Reserve
-              Player</button></a>
+        <div class="col-12 text-center">
+          <a href="{% url 'add_sp_office' project.slug seating_plan.id section.id %}" class="btn btn-primary">Add
+            Player to Seating Plan</a>
+          <a href="{% url 'toggle_seating_plan_status_office' project.slug seating_plan.id section.id %}"
+            class="btn btn-success">Draft/Published</a>
+          <a href="{% url 'reserve_office' project.slug section.id %}" class="btn btn-primary">Allocate
+            Reserve
+            Player</a>
         </div>
         {% elif rota_manager %}
         <div class="col-12 text-center ">
-          <span><a href="{% url 'add_sp' project.slug seating_plan.id %}"><button class="btn btn-primary">Add
-                Player to Seating Plan</button></a></span>
-          <a href="{% url 'toggle_seating_plan_status' project.slug seating_plan.id %}"><button
-              class="btn btn-success">Draft/Published</button></a>
-          <a href="{% url 'reserve' project.slug %}"><button class="btn btn-primary">Allocate Reserve
-              Player</button></a>
+          <a href="{% url 'add_sp' project.slug seating_plan.id %}" class="btn btn-primary">Add
+            Player to Seating Plan</a>
+          <a href="{% url 'toggle_seating_plan_status' project.slug seating_plan.id %}"
+            class="btn btn-success">Draft/Published</a>
+          <a href="{% url 'reserve' project.slug %}" class="btn btn-primary">Allocate Reserve
+            Player</a>
         </div>
         {% endif %}
         {% endif %}
@@ -162,7 +162,7 @@
         {% endif %}">
           <div class="card info-card sales-card">
             <div class="card-body">
-              <h2 class="card-title">Reserve Player<span></h2>
+              <h2 class="card-title">Reserve Player</h2>
 
               <div class="d-flex align-items-center">
                 <div class="ps-3">
@@ -192,7 +192,7 @@
         {% endif %}">
           <div class="card info-card sales-card">
             <div class="card-body">
-              <h2 class="card-title">Reduced Rep Player(s)<span></h2>
+              <h2 class="card-title">Reduced Rep Player(s)</h2>
 
               <div class="d-flex align-items-center">
                 <div class="ps-3">
@@ -216,7 +216,7 @@
         {% endif %}">
           <div class="card info-card sales-card">
             <div class="card-body">
-              <h2 class="card-title">Players Not Available<span></h2>
+              <h2 class="card-title">Players Not Available</h2>
               <div class="d-flex align-items-center">
                 <div class="ps-3">
                   <ul>
@@ -233,9 +233,7 @@
         </div><!-- End Not Available -->
       </div>
     </div>
-    </div><!-- End Right side columns -->
-
-    </div>
+    <!-- End Right side columns -->
   </section>
 
 </main><!-- End #main -->

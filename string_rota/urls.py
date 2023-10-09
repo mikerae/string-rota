@@ -6,6 +6,9 @@ urlpatterns = [
     path("", views.Home.as_view(), name="home"),
     path("<slug:slug>/", views.Rota.as_view(), name="rota"),
     path(
+        "<slug:slug>/<section_id>/", views.Rota.as_view(), name="rota_office"
+    ),  # noqa E501
+    path(
         "reserve/<slug:slug>/",
         views.Reserve.as_view(),
         name="reserve",
@@ -15,9 +18,6 @@ urlpatterns = [
         views.Reserve.as_view(),
         name="reserve_office",
     ),
-    path(
-        "<slug:slug>/<section_id>/", views.Rota.as_view(), name="rota_office"
-    ),  # noqa E501
     path(
         "add_sp/<slug:slug>/<seating_plan_id>/",
         views.AddSeatingPosition.as_view(),

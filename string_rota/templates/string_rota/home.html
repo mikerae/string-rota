@@ -5,7 +5,7 @@
 {% block content %}
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>RSNO String Rota {% if section %} for the <strong>{{ section }} section. {% endif %}</strong></h1>
+    <h1>RSNO String Rota {% if section %} for the <strong>{{ section }} section.</strong>{% endif %}</h1>
     <h2>Welcome {{user.first_name}}!</h2>
     <nav>
       <ol class="breadcrumb">
@@ -59,14 +59,15 @@
           </div>
         </div>
         <!-- Player Info -->
-        {% if rota_manager %}
+        {% if rota_manager or office %}
         <div class="col-lg-7">
           <div class="card">
             <div class="card-body">
               <h2 class="card-title">
                 Register a Player
               </h2>
-              <p class="ps-3">To enable an existing member the {{section}} section to access this app, please choose
+              <p class="ps-3">To enable an existing member {% if not office %}the {{section}} section{% endif %} to
+                access this app, please choose
                 "Register a Player" from the side menu.</p>
             </div>
           </div>
