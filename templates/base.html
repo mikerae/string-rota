@@ -19,9 +19,9 @@
         <link href="https://fonts.gstatic.com" rel="preconnect">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i"
             rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Open+Nunito:300,300i,400,400i,600,600i,700,700i"
+        <link href="https://fonts.googleapis.com/css?family=Nunito:300,300i,400,400i,600,600i,700,700i"
             rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Open+Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
             rel="stylesheet">
 
         <!-- Vendor CSS Files -->
@@ -71,9 +71,8 @@
                             <li class="dropdown-header">
                                 <h6>{{user.first_name}} {{user.last_name}}</h6>
                                 {% if user.is_superuser %}
-                                Use your super-powers wisely young Padawan...
+                                Use your super powers wisely young Padawan...
                                 {% elif office %}
-                                Office Staff
                                 {% else %}
                                 {% if section %}
                                 <p><span>Member of {{section}} Section</span></p>
@@ -111,7 +110,7 @@
                                 </a>
                             </li>
 
-                        </ul>
+                        </ul><!-- End Profile Dropdown Items -->
                     </li><!-- End Profile Nav -->
                 </ul>
             </nav><!-- End Icons Navigation -->
@@ -125,37 +124,38 @@
 
                 <!-- Projects Nav -->
                 <li class="nav-item">
-                    <a id="projects-nav" class="nav-link collapsed" data-bs-target="#project-nav"
+                    <a id="projects-nav" class="nav-link collapsed" data-bs-target="#components-nav"
                         data-bs-toggle="collapse" href="">
                         <i class="bi bi-menu-button-wide"></i><span>Projects</span><i
                             class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     {% if office %}
-                    <ul id="project-nav" class="nav-content collapse" data-bs-parent="#projects-nav">
-                        <li>
+                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li class="nav-item">
                             {% for project in projects %}
-                            <a id="project{{project.id}}-nav" class="dropdown-toggle" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false" data-bs-parent="#project-nav" href="">
-                                <i class="bi bi-circle"></i><span class="text-wrap">{{project.name}}</span>
+                            <a class="nav-content collapsed" data-bs-target="#{{project.slug}}-nav"
+                                data-bs-toggle="collapse" href="">
+                                <i class="bi bi-menu-button-wide"></i><span>{{project.name}}</span><i
+                                    class="bi bi-chevron-down ms-auto"></i>
                             </a>
-                            <ul class="dropdown-menu">
-                                {% for section in sections %}
-                                <li>
-                                    <a class="dropdown-item" href="{% url 'rota_office' project.slug section.id%}">
-                                        <i class="bi bi-circle"></i>{{section.name}}
+                            <ul id="{{project.slug}}-nav" class="nav-content collapse" data-bs-parent="#components-nav">
+                                <li class="nav-item">
+                                    {% for section in sections %}
+                                    <a href="{% url 'rota_office' project.slug section.id %}">
+                                        <i class="bi bi-circle"></i><span>{{section.name}}</span>
                                     </a>
+                                    {% endfor %}
                                 </li>
-                                {% endfor %}
                             </ul>
                             {% endfor %}
                         </li>
                     </ul>
                     {% else %}
-                    <ul id="project-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
                             {% for project in projects %}
                             <a href="{% url 'rota' project.slug %}">
-                                <i class="bi bi-circle"></i>{{project.name}}
+                                <i class="bi bi-circle"></i><span>{{project.name}}</span>
                             </a>
                             {% endfor %}
                         </li>
