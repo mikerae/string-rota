@@ -130,7 +130,7 @@
 
         <!-- Rota Form Section-->
         {% if user.is_authenticated %}
-        {% if user.is_staff %}
+        {% if user.is_superuser %}
         <div class="col-12 text-center">
           <a href="{% url 'add_sp_office' project.slug seating_plan.id section.id %}" class="btn btn-primary">Add
             Player to Seating Plan</a>
