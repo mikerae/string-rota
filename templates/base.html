@@ -71,8 +71,9 @@
                             <li class="dropdown-header">
                                 <h6>{{user.first_name}} {{user.last_name}}</h6>
                                 {% if user.is_superuser %}
-                                Use your super powers wisely young Padawan...
+                                Use your super-powers wisely young Padawan...
                                 {% elif office %}
+                                Office Staff
                                 {% else %}
                                 {% if section %}
                                 <p><span>Member of {{section}} Section</span></p>
