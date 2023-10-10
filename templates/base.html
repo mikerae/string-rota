@@ -70,11 +70,16 @@
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
                                 <h6>{{user.first_name}} {{user.last_name}}</h6>
+                                {% if user.is_superuser %}
+                                Use your super powers wisely young Padawan...
+                                {% elif office %}
+                                {% else %}
                                 {% if section %}
                                 <p><span>Member of {{section}} Section</span></p>
                                 {% endif %}
                                 {% if rota_manager %}
                                 <p><span>{{section}} Rota Manager</span></p>
+                                {% endif %}
                                 {% endif %}
                             </li>
                             <li>
