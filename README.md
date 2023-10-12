@@ -298,6 +298,7 @@ The following manual tests were made:
     - [see issue #184 here](https://github.com/mikerae/string-rota/issues/184)
 - [Update messaging  #176 Testing](/readme_assets/images/testing-issue176.png)
     - [see issue #176 here](https://github.com/mikerae/string-rota/issues/176)
+- [Final Commit Testing](/readme_assets/images/final-commit-testing.png)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 

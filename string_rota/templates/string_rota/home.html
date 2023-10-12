@@ -74,25 +74,24 @@
                   {% endfor %}
                   {% endif %}
                 </div>
-              </div>
-              <!-- Player Info -->
-              {% if rota_manager or office %}
-              <div class="col-lg-7">
-                <div class="card">
-                  <div class="card-body">
-                    <h2 class="card-title">
-                      Register a Player
-                    </h2>
-                    <p class="ps-3">To enable an existing member {% if not office %}the {{section}} section{% endif %}
-                      to
-                      access this app, please choose
-                      "Register a Player" from the side menu.</p>
+                <!-- Player Info -->
+                {% if rota_manager or office %}
+                <div class="col-lg-7">
+                  <div class="card">
+                    <div class="card-body">
+                      <h2 class="card-title">
+                        Register a Player
+                      </h2>
+                      <p class="ps-3">To enable an existing member {% if not office %}the {{section}} section{% endif %}
+                        to
+                        access this app, please choose
+                        "Register a Player" from the side menu.</p>
+                    </div>
                   </div>
                 </div>
+                {% endif %}
               </div>
-              {% endif %}
             </div>
-          </div>
   </section>
 </main>
 {% endblock %}
