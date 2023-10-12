@@ -294,6 +294,10 @@ The following manual tests were made:
     - [see issue #175 here](https://github.com/mikerae/string-rota/issues/175)
 - [Fix Project selection for Admin and Orch Manager  #179 Testing](/readme_assets/images/testing-issue179.png)
     - [see issue #179 here](https://github.com/mikerae/string-rota/issues/179)
+- [Fix Allocate Reserve Button for Admin and Rota Manager  #184 Testing](/readme_assets/images/testing-issue184.png)
+    - [see issue #184 here](https://github.com/mikerae/string-rota/issues/184)
+- [Update messaging  #176 Testing](/readme_assets/images/testing-issue176.png)
+    - [see issue #176 here](https://github.com/mikerae/string-rota/issues/176)
 #### Human Testing
 No human testing was done for this MVP, but once office manager functionality, and the hiding of draft rotas is implemented, user feedback will be sort.
 
