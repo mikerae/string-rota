@@ -9,12 +9,12 @@ urlpatterns = [
         "<slug:slug>/<section_id>/", views.Rota.as_view(), name="rota_office"
     ),  # noqa E501
     path(
-        "reserve/<slug:slug>/",
+        "reserve/rota-manger/<slug:slug>/",
         views.Reserve.as_view(),
         name="reserve",
     ),
     path(
-        "reserve/<slug:slug>/<section_id>/",
+        "reserve/admin/<slug:slug>/<section_id>/",
         views.Reserve.as_view(),
         name="reserve_office",
     ),
