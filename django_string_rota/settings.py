@@ -13,8 +13,15 @@ import os
 from pathlib import Path
 import dj_database_url
 
-if os.path.isfile("env.py"):
-    import env
+# Load environment variables from env.py if it exists (local development)
+try:
+    import env  # noqa: F401
+except ImportError:
+    pass
+
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = "DEVELOPMENT" in os.environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,8 +33,11 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "DEVELOPMENT" in os.environ
+# SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = os.environ("SECRET_KEY")
+# SECRET_KEY="jt_@-co)63iks_d2su7v)hp6nzth!oys+*0z$q++!qr7td@=7)"
+# print("SECRET_KEY:", SECRET_KEY)
+
 
 
 ALLOWED_HOSTS = [
@@ -36,8 +46,8 @@ ALLOWED_HOSTS = [
     "8000-mikerae-stringrota-srhpnofzijg.ws-eu105.gitpod.io",
     "string-rota.herokuapp.com",
     "localhost",
+    "127.0.0.1"
 ]
-
 
 # Application definition
 
@@ -75,6 +85,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware"
 ]
 
 ROOT_URLCONF = "django_string_rota.urls"
@@ -99,7 +110,6 @@ MESSAGES_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 WSGI_APPLICATION = "django_string_rota.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -114,7 +124,6 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
-
 
 # Account email verification
 
@@ -138,7 +147,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -149,7 +157,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -162,7 +169,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "/media/"
 
-CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
+# CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    'API_KEY': os.environ.get("CLOUDINARY_API_KEY"),
+    'API_SECRET': os.environ.get("CLOUDINARY_API_SECRET")
+}
+
 STATICFILES_STORAGE = (
     "cloudinary_storage.storage.StaticHashedCloudinaryStorage"  # noqa E501
 )
