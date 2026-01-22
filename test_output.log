@@ -1,0 +1,367 @@
+Found 66 test(s).
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Operations to perform:
+  Synchronize unmigrated apps: allauth, cloudinary, cloudinary_storage, crispy_forms, messages, staticfiles
+  Apply all migrations: account, admin, auth, contenttypes, django_summernote, sessions, sites, socialaccount, string_rota
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying account.0001_initial... OK
+  Applying account.0002_email_max_length... OK
+  Applying account.0003_alter_emailaddress_create_unique_verified_email... OK
+  Applying account.0004_alter_emailaddress_drop_unique_email... OK
+  Applying account.0005_emailaddress_idx_upper_email... OK
+  Applying account.0006_emailaddress_lower... OK
+  Applying account.0007_emailaddress_idx_email... OK
+  Applying account.0008_emailaddress_unique_primary_email_fixup... OK
+  Applying account.0009_emailaddress_unique_primary_email... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying django_summernote.0001_initial... OK
+  Applying django_summernote.0002_update-help_text... OK
+  Applying sessions.0001_initial... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+  Applying socialaccount.0001_initial... OK
+  Applying socialaccount.0002_token_max_lengths... OK
+  Applying socialaccount.0003_extra_data_default_dict... OK
+  Applying socialaccount.0004_app_provider_id_settings... OK
+  Applying socialaccount.0005_socialtoken_nullable_app... OK
+  Applying socialaccount.0006_alter_socialaccount_extra_data... OK
+  Applying string_rota.0001_initial... OK
+  Applying string_rota.0002_remove_section_players... OK
+  Applying string_rota.0003_section_players... OK
+  Applying string_rota.0004_alter_seatingposition_position_number... OK
+  Applying string_rota.0005_auto_20230801_1552... OK
+  Applying string_rota.0006_alter_player_users_django... OK
+System check identified no issues (0 silenced).
+test_add_seating_position_updates_player_project_status (string_rota.tests.AddSeatingPositionViewTest)
+Test adding seating position updates PlayerProject status ... ok
+test_add_seating_position_view_get (string_rota.tests.AddSeatingPositionViewTest)
+Test add seating position view loads form ... ERROR
+test_add_seating_position_view_post_valid (string_rota.tests.AddSeatingPositionViewTest)
+Test add seating position post with valid data ... ok
+test_delete_seating_position (string_rota.tests.DeleteSeatingPositionViewTest)
+Test seating position deletion ... ok
+test_delete_seating_position_resets_player_project (string_rota.tests.DeleteSeatingPositionViewTest)
+Test deletion resets player project status and off_reduced_rep ... ok
+test_form_invalid_duplicate_different_position (string_rota.tests.EditSeatingPositionFormTest)
+Test form rejects duplicate position when changing ... ok
+test_form_shows_only_position_number (string_rota.tests.EditSeatingPositionFormTest)
+Test edit form only shows position_number field ... ok
+test_form_valid_changed_position (string_rota.tests.EditSeatingPositionFormTest)
+Test form accepts changed position number ... ok
+test_form_valid_unchanged_position (string_rota.tests.EditSeatingPositionFormTest)
+Test form accepts unchanged position number ... ok
+test_home_view_contains_projects (string_rota.tests.HomeViewTest)
+Test home view contains projects in context ... ok
+test_home_view_loads_for_logged_in_user (string_rota.tests.HomeViewTest)
+Test home view loads for authenticated user ... ok
+test_home_view_office_group_check (string_rota.tests.HomeViewTest)
+Test home view checks office group ... ok
+test_home_view_requires_login (string_rota.tests.HomeViewTest)
+Test home view redirects to login if not authenticated ... ok
+test_player_creation (string_rota.tests.PlayerModelTest)
+Test player is created correctly ... ok
+test_player_default_values (string_rota.tests.PlayerModelTest)
+Test player default values ... ok
+test_player_optional_notes (string_rota.tests.PlayerModelTest)
+Test player notes field is optional ... ok
+test_player_section_relationship (string_rota.tests.PlayerModelTest)
+Test player belongs to section ... ok
+test_player_str_representation (string_rota.tests.PlayerModelTest)
+Test string representation of Player ... ok
+test_player_user_relationship (string_rota.tests.PlayerModelTest)
+Test player linked to Django user ... ok
+test_form_fields (string_rota.tests.PlayerProjectFormTest)
+Test form has off_reduced_rep field ... ok
+test_form_valid_off_reduced_rep_false (string_rota.tests.PlayerProjectFormTest)
+Test form accepts off_reduced_rep false ... ok
+test_form_valid_off_reduced_rep_true (string_rota.tests.PlayerProjectFormTest)
+Test form accepts off_reduced_rep true ... ok
+test_player_project_creation (string_rota.tests.PlayerProjectModelTest)
+Test player project is created correctly ... ok
+test_player_project_default_values (string_rota.tests.PlayerProjectModelTest)
+Test player project default values ... ok
+test_player_project_status_choices (string_rota.tests.PlayerProjectModelTest)
+Test player project status choices ... ok
+test_player_project_str_representation (string_rota.tests.PlayerProjectModelTest)
+Test string representation of PlayerProject ... ok
+test_project_creation (string_rota.tests.ProjectModelTest)
+Test project is created correctly ... ok
+test_project_name_uniqueness (string_rota.tests.ProjectModelTest)
+Test project name is unique ... ok
+test_project_slug_uniqueness (string_rota.tests.ProjectModelTest)
+Test project slug is unique ... ok
+test_project_str_representation (string_rota.tests.ProjectModelTest)
+Test string representation of Project ... ok
+test_repertoire_creation (string_rota.tests.RepertoireModelTest)
+Test repertoire is created correctly ... ok
+test_repertoire_str_representation (string_rota.tests.RepertoireModelTest)
+Test string representation of Repertoire ... ok
+test_repertoire_verbose_name_plural (string_rota.tests.RepertoireModelTest)
+Test verbose_name_plural is set correctly ... ok
+test_form_shows_unallocated_players (string_rota.tests.ReserveFormTest)
+Test form only shows players not allocated to seating plan ... ok
+test_form_valid_player_selection (string_rota.tests.ReserveFormTest)
+Test form accepts valid player selection ... ok
+test_reserve_view_get (string_rota.tests.ReserveViewTest)
+Test reserve view GET request ... ERROR
+test_reserve_view_only_one_reserve (string_rota.tests.ReserveViewTest)
+Test only one player can be reserve ... ok
+test_reserve_view_post_set_reserve (string_rota.tests.ReserveViewTest)
+Test setting a player as reserve ... ok
+test_reserve_view_post_toggle_reserve_off (string_rota.tests.ReserveViewTest)
+Test toggling reserve status off ... ok
+test_rota_view_contains_seating_positions (string_rota.tests.RotaViewTest)
+Test rota view includes seating positions ... ok
+test_rota_view_handles_no_seating_plan (string_rota.tests.RotaViewTest)
+Test rota view handles missing seating plan with redirect ... ok
+test_rota_view_loads_for_player (string_rota.tests.RotaViewTest)
+Test rota view loads for player user ... ok
+test_rota_view_requires_login (string_rota.tests.RotaViewTest)
+Test rota view requires authentication ... ok
+test_seating_plan_creation (string_rota.tests.SeatingPlanModelTest)
+Test seating plan is created correctly ... ok
+test_seating_plan_custom_strength (string_rota.tests.SeatingPlanModelTest)
+Test custom strength overrides default ... ok
+test_seating_plan_status_choices (string_rota.tests.SeatingPlanModelTest)
+Test seating plan status choices ... ok
+test_seating_plan_str_representation (string_rota.tests.SeatingPlanModelTest)
+Test string representation of SeatingPlan ... ok
+test_form_fields_present (string_rota.tests.SeatingPositionFormTest)
+Test form has correct fields ... ok
+test_form_invalid_duplicate_position (string_rota.tests.SeatingPositionFormTest)
+Test form rejects duplicate position number ... ok
+test_form_invalid_position_number_too_high (string_rota.tests.SeatingPositionFormTest)
+Test form rejects position number above strength ... ok
+test_form_invalid_position_number_zero (string_rota.tests.SeatingPositionFormTest)
+Test form rejects position number below 1 ... ok
+test_form_player_queryset_filtered (string_rota.tests.SeatingPositionFormTest)
+Test form only shows unallocated players ... ok
+test_form_valid_position_number (string_rota.tests.SeatingPositionFormTest)
+Test form accepts valid position number ... ok
+test_form_with_custom_strength (string_rota.tests.SeatingPositionFormTest)
+Test form respects custom seating plan strength ... ok
+test_seating_position_creation (string_rota.tests.SeatingPositionModelTest)
+Test seating position is created correctly ... ok
+test_seating_position_str_representation (string_rota.tests.SeatingPositionModelTest)
+Test string representation of SeatingPosition ... ok
+test_section_add_player (string_rota.tests.SectionModelTest)
+Test adding player to section ... ok
+test_section_creation (string_rota.tests.SectionModelTest)
+Test section is created correctly ... ok
+test_section_default_strength (string_rota.tests.SectionModelTest)
+Test default_strength defaults to 1 ... ok
+test_section_str_representation (string_rota.tests.SectionModelTest)
+Test string representation of Section ... ok
+test_session_creation (string_rota.tests.SessionModelTest)
+Test session is created correctly ... ok
+test_session_repertoire_many_to_many (string_rota.tests.SessionModelTest)
+Test session can have multiple repertoire ... ok
+test_session_str_representation (string_rota.tests.SessionModelTest)
+Test string representation of Session ... ok
+test_session_type_choices (string_rota.tests.SessionModelTest)
+Test session type choices ... ok
+test_toggle_status_draft_to_published (string_rota.tests.ToggleSeatingPlanStatusViewTest)
+Test toggling status from draft to published ... ok
+test_toggle_status_published_to_draft (string_rota.tests.ToggleSeatingPlanStatusViewTest)
+Test toggling status from published to draft ... ok
+
+======================================================================
+ERROR: test_add_seating_position_view_get (string_rota.tests.AddSeatingPositionViewTest)
+Test add seating position view loads form
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/utils.py", line 112, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/utils.py", line 112, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 742, in resolve
+    new_obj = func(obj, *arg_vals)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/crispy_forms/templatetags/crispy_forms_filters.py", line 58, in as_crispy_form
+    template = uni_form_template(template_pack)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/crispy_forms/templatetags/crispy_forms_filters.py", line 21, in uni_form_template
+    return get_template("%s/uni_form.html" % template_pack)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: bootstrap4/uni_form.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mikerae/Library/Mobile Documents/com~apple~CloudDocs/Work/Coding/rsno-string-rota/string-rota/string_rota/tests.py", line 837, in test_add_seating_position_view_get
+    response = self.client.get(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 927, in get
+    response = super().get(path, data=data, secure=secure, headers=headers, **extra)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 457, in get
+    return self.generic(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 609, in generic
+    return self.request(**r)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 891, in request
+    self.check_exception(response)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 738, in check_exception
+    raise exc_value
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/mikerae/Library/Mobile Documents/com~apple~CloudDocs/Work/Coding/rsno-string-rota/string-rota/string_rota/views.py", line 84, in dispatch
+    return super(Rota, self).dispatch(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/Users/mikerae/Library/Mobile Documents/com~apple~CloudDocs/Work/Coding/rsno-string-rota/string-rota/string_rota/views.py", line 209, in get
+    return render(request, template, context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/backends/django.py", line 63, in render
+    reraise(exc, self.backend)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/backends/django.py", line 84, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: bootstrap4/uni_form.html
+
+======================================================================
+ERROR: test_reserve_view_get (string_rota.tests.ReserveViewTest)
+Test reserve view GET request
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/utils.py", line 112, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/utils.py", line 112, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/base.py", line 742, in resolve
+    new_obj = func(obj, *arg_vals)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/crispy_forms/templatetags/crispy_forms_filters.py", line 58, in as_crispy_form
+    template = uni_form_template(template_pack)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/crispy_forms/templatetags/crispy_forms_filters.py", line 21, in uni_form_template
+    return get_template("%s/uni_form.html" % template_pack)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: bootstrap4/uni_form.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mikerae/Library/Mobile Documents/com~apple~CloudDocs/Work/Coding/rsno-string-rota/string-rota/string_rota/tests.py", line 1053, in test_reserve_view_get
+    response = self.client.get(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 927, in get
+    response = super().get(path, data=data, secure=secure, headers=headers, **extra)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 457, in get
+    return self.generic(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 609, in generic
+    return self.request(**r)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 891, in request
+    self.check_exception(response)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/test/client.py", line 738, in check_exception
+    raise exc_value
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/Users/mikerae/Library/Mobile Documents/com~apple~CloudDocs/Work/Coding/rsno-string-rota/string-rota/string_rota/views.py", line 84, in dispatch
+    return super(Rota, self).dispatch(*args, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/Users/mikerae/Library/Mobile Documents/com~apple~CloudDocs/Work/Coding/rsno-string-rota/string-rota/string_rota/views.py", line 437, in get
+    return render(request, template, context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/backends/django.py", line 63, in render
+    reraise(exc, self.backend)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/django/template/backends/django.py", line 84, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: bootstrap4/uni_form.html
+
+----------------------------------------------------------------------
+Ran 66 tests in 22.731s
+
+FAILED (errors=2)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...

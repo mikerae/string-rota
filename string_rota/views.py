@@ -104,9 +104,7 @@ class Rota(View):
         # no seating_plan record?
         try:
             seating_plan = get_seating_plan(project, section)
-        except (
-            seating_plan.DoesNotExist
-        ):  # no seating plan record for user's section  # noqa E501
+        except SeatingPlan.DoesNotExist:  # no seating plan record for user's section  # noqa E501
             messages.warning(
                 request,
                 f"There is no Seating \
@@ -119,7 +117,7 @@ class Rota(View):
             all_playerproject = get_all_playerproject(
                 seating_plan, project
             )  # noqa E501
-        except all_playerproject.DoesNotExist():
+        except PlayerProject.DoesNotExist:
             messages.warning(
                 request,
                 f"There are no all_playerproject \

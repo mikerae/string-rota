@@ -3,6 +3,7 @@
 Utilities to ensure correct background records exist, and to validate CRUD
 actions.
 """
+import logging
 from django.shortcuts import get_object_or_404
 from .models import (
     PlayerProject,
@@ -13,13 +14,15 @@ from .models import (
     SeatingPosition,
 )
 
+logger = logging.getLogger(__name__)
+
 
 def check_player_project():
     """
     Check for existance of player_project record for each player and
     projects. If not found, creates one.
     """
-    print("checking player_project records...")
+    logger.info("Checking player_project records...")
     players = Player.objects.all()
     projects = Project.objects.all()
     for project in projects:
@@ -34,14 +37,14 @@ def check_player_project():
                     project=project,
                     player=player,
                 )
-                print(f"record created for  {project} - {player}")
+                logger.info(f"Record created for {project} - {player}")
             elif player_in_project.count() != 1:
-                print(
+                logger.warning(
                     f"Error: found {player_in_project.count()} records \
                     for {project} - {player}"
                 )
 
-    print("check for player_project records completed")
+    logger.info("Check for player_project records completed")
 
 
 def check_seating_plan():
@@ -49,7 +52,7 @@ def check_seating_plan():
     Check for existance of seating_plan for each project and section.
     If not found, creates one.
     """
-    print("checking check_seating_plan records...")
+    logger.info("Checking seating_plan records...")
     projects = Project.objects.all()
     seating_plans = SeatingPlan.objects.all()
     sections = Section.objects.all()
@@ -63,8 +66,8 @@ def check_seating_plan():
                     project=project,
                     section=section,
                 )
-                print(f"seating plan created for  {project} - {section}")
-    print("check for seating plan records completed")
+                logger.info(f"Seating plan created for {project} - {section}")
+    logger.info("Check for seating plan records completed")
 
 
 def get_reserve_vars(request, slug):
