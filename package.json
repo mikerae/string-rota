@@ -1,0 +1,11 @@
+{
+  "name": "rsno-string-rota",
+  "version": "1.0.0",
+  "description": "RSNO String Rota Management System",
+  "scripts": {
+    "lint:js": "jshint static/assets/js/ --exclude=static/assets/vendor/"
+  },
+  "devDependencies": {
+    "jshint": "^2.13.6"
+  }
+}
