@@ -133,7 +133,6 @@ class EditSeatingPositionForm(forms.ModelForm):
                     ),
                     code="NA",
                 )
-        print("position is unchanged")
         return position_number
 
 
