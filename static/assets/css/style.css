@@ -49,7 +49,7 @@ h6 {
   transition: all 0.3s;
 }
 
-@media (max-width: 1199px) {
+@media (width <= 1199px) {
   #main {
     padding: 20px;
   }
@@ -154,7 +154,7 @@ h6 {
   background-color: #f6f9ff;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .dropdown-menu-arrow::before {
     content: "";
     width: 13px;
@@ -302,7 +302,7 @@ h6 {
 }
 
 .accordion-flush .accordion-body {
-  padding: 0 0 15px 0;
+  padding: 0 0 15px;
   color: #3e4f6f;
   font-size: 15px;
 }
@@ -362,7 +362,7 @@ h6 {
   line-height: 1;
 }
 
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   .logo {
     width: 280px;
   }
@@ -401,7 +401,7 @@ h6 {
   padding: 0 20px;
 }
 
-@media (max-width: 1199px) {
+@media (width <= 1199px) {
   .header .search-bar {
     position: fixed;
     top: 50px;
@@ -428,7 +428,6 @@ h6 {
 }
 
 .header .search-form input {
-  border: 0;
   font-size: 14px;
   color: #012970;
   border: 1px solid rgb(1 41 112 / 20%);
@@ -619,7 +618,7 @@ h6 {
   background-color: #fff;
 }
 
-@media (max-width: 1199px) {
+@media (width <= 1199px) {
   .sidebar {
     left: -300px;
   }
@@ -635,22 +634,20 @@ h6 {
   background-color: #aab7cf;
 }
 
-@media (min-width: 1200px) {
-
+@media (width >= 1200px) {
   #main,
   #footer {
     margin-left: 300px;
   }
 }
 
-@media (max-width: 1199px) {
+@media (width <= 1199px) {
   .toggle-sidebar .sidebar {
     left: 0;
   }
 }
 
-@media (min-width: 1200px) {
-
+@media (width >= 1200px) {
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
     margin-left: 0;
@@ -731,7 +728,7 @@ h6 {
 }
 
 .sidebar-nav .nav-content {
-  padding: 5px 0 0 0;
+  padding: 5px 0 0;
   margin: 0;
   list-style: none;
 }
@@ -769,7 +766,7 @@ h6 {
 /* Filter dropdown */
 .dashboard .filter {
   position: absolute;
-  right: 0px;
+  right: 0;
   top: 15px;
 }
 
@@ -935,11 +932,11 @@ h6 {
 }
 
 .dashboard .recent-sales .dataTable-top {
-  padding: 0 0 10px 0;
+  padding: 0 0 10px;
 }
 
 .dashboard .recent-sales .dataTable-bottom {
-  padding: 10px 0 0 0;
+  padding: 10px 0 0;
 }
 
 /* Top Selling */
@@ -1019,7 +1016,7 @@ h6 {
   font-size: 24px;
   font-weight: 700;
   color: #2c384e;
-  margin: 10px 0 0 0;
+  margin: 10px 0 0;
 }
 
 .profile .profile-card h3 {
@@ -1092,7 +1089,7 @@ h6 {
   font-size: 20px;
   color: #012970;
   font-weight: 700;
-  margin: 20px 0 10px 0;
+  margin: 20px 0 10px;
 }
 
 .contact .info-box p {
@@ -1130,7 +1127,7 @@ h6 {
   margin-bottom: 24px;
 }
 
-.contact .php-email-form .loading:before {
+.contact .php-email-form .loading::before {
   content: "";
   display: inline-block;
   border-radius: 50%;
@@ -1144,7 +1141,6 @@ h6 {
 
 .contact .php-email-form input,
 .contact .php-email-form textarea {
-  border-radius: 0;
   box-shadow: none;
   font-size: 14px;
   border-radius: 0;
@@ -1218,7 +1214,7 @@ h6 {
   background: #3e4f6f;
 }
 
-@media (min-width: 992px) {
+@media (width >= 992px) {
   .error-404 img {
     max-width: 50%;
   }
