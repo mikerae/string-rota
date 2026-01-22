@@ -10,3 +10,5 @@ cloudinary_python.txt
 db.sqlite3
 creds.json
 uv.lock
+# Ignore archived unused static assets
+static/assets/archive_unused/
