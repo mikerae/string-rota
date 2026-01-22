@@ -92,11 +92,15 @@
                     <div class="card-body">
                       <h2 class="card-title">
                         Seating Plan for {{seating_plan.section}} Section
-                        <span {% if not rota_manager %}class="d-none"
-                          {% elif rota_manager and seating_plan.plan_status == "D"%}class="text-danger"
-                          {% elif rota_manager and seating_plan.plan_status == "P"%}class="text-success"
-                          {% endif %}>Status:
-                          {{seating_plan.get_plan_status_display}}</span>
+                        {% if not rota_manager %}
+                        <span class="d-none">Status: {{seating_plan.get_plan_status_display}}</span>
+                        {% elif rota_manager and seating_plan.plan_status == "D" %}
+                        <span class="text-danger">Status: {{seating_plan.get_plan_status_display}}</span>
+                        {% elif rota_manager and seating_plan.plan_status == "P" %}
+                        <span class="text-success">Status: {{seating_plan.get_plan_status_display}}</span>
+                        {% else %}
+                        <span>Status: {{seating_plan.get_plan_status_display}}</span>
+                        {% endif %}
                       </h2>
                       <p {% if not rota_manager %}class="d-none" {% endif %}>This project
                         needs <strong>{{ strength }}</strong> players.</p>
