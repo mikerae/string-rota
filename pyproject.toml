@@ -8,7 +8,7 @@ dependencies = [
     "asgiref>=3.6.0",
     "cachetools==5.2.0",
     "cloudinary==1.25.0",
-    "cryptography==42.0.4",
+    "cryptography==44.0.1",
     "dj-database-url==0.5.0",
     "dj3-cloudinary-storage==0.0.5",
     "Django==4.2.27",
@@ -42,7 +42,7 @@ dependencies = [
     "tqdm==4.66.3",
     "tzdata==2023.3",
     "uritemplate==4.1.1",
-    "urllib3==1.26.17",
+    "urllib3==2.6.3",
 ]
 authors = [
     { name = "mikerae", email = "73435638+mikerae@users.noreply.github.com" },
