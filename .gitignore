@@ -12,3 +12,5 @@ creds.json
 uv.lock
 # Ignore archived unused static assets
 static/assets/archive_unused/
+unreferenced_assets_css_js.txt
+moved_unreferenced.txt
