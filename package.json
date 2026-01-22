@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "RSNO String Rota Management System",
   "scripts": {
-    "lint:js": "jshint static/assets/js/ --exclude=static/assets/vendor/"
+    "lint:js": "jshint static/assets/js/ --exclude=static/assets/vendor/",
+    "lint:css": "stylelint static/assets/css/style.css"
   },
   "devDependencies": {
-    "jshint": "^2.13.6"
+    "jshint": "^2.13.6",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0"
   }
 }
