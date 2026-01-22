@@ -136,6 +136,19 @@ wheels = [
 ]
 
 [[package]]
+name = "crispy-bootstrap4"
+version = "2025.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "django-crispy-forms" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/99/f7/5dea1c2ad806fb28b42da08f1dc19ac172e909a63bcef0734bfdf811fedf/crispy_bootstrap4-2025.6.tar.gz", hash = "sha256:69066c33fc9c8841cbd8741a7ec99ad9234f12877b4549490031a47c2c1abd79", size = 35938, upload-time = "2025-06-08T08:04:54.872Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/28/f9/a43aeecf5bf7c9b05eccf9f35d1878291a1f2c5ffc501bd96b8759fb6b10/crispy_bootstrap4-2025.6-py3-none-any.whl", hash = "sha256:64bf732b27690c7147bfaa154b4b690217bee81c71731daf5da73de00ee01943", size = 23281, upload-time = "2025-06-08T08:04:53.622Z" },
+]
+
+[[package]]
 name = "cryptography"
 version = "44.0.1"
 source = { registry = "https://pypi.org/simple" }
@@ -230,11 +243,14 @@ wheels = [
 
 [[package]]
 name = "django-crispy-forms"
-version = "1.11.2"
+version = "2.5"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/8a/79/f976b92e8590108b1d03c55d13502c09bfad0235c836a1f140ad083e37ca/django-crispy-forms-1.11.2.tar.gz", hash = "sha256:88efa857ce6111bd696cc4f74057539a3456102fe9c3a3ece8868e1e4579e70a", size = 63791, upload-time = "2021-03-21T19:16:03.703Z" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/79/a1/6a638d13717e4d4f8df169dade0fa51bdc65d9825df39d98ce709a776b49/django_crispy_forms-2.5.tar.gz", hash = "sha256:066e72a8f152a1334f1c811cc37740868efe3265e5a218f79079ef89f848c3d8", size = 1097999, upload-time = "2025-11-06T20:44:01.921Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2a/df/f4618a94c3b1f748c6876bc178f2f80ec7a9fc6ef17a406c80009bbb130d/django_crispy_forms-1.11.2-py3-none-any.whl", hash = "sha256:3db71ab06d17ec9d0195c086d3ad454da300ac268752ac3a4f63d72f7a490254", size = 112992, upload-time = "2021-03-21T19:16:02.414Z" },
+    { url = "https://files.pythonhosted.org/packages/2c/58/ac3a11950baaf75c1f3242e3af9dfe45201f6ee10c113dd37a9c000876d2/django_crispy_forms-2.5-py3-none-any.whl", hash = "sha256:adc99d5901baca09479c53bf536b3909e80a9f2bb299438a223de4c106ebf1f9", size = 31464, upload-time = "2025-11-06T20:44:00.795Z" },
 ]
 
 [[package]]
@@ -584,6 +600,7 @@ dependencies = [
     { name = "asgiref" },
     { name = "cachetools" },
     { name = "cloudinary" },
+    { name = "crispy-bootstrap4" },
     { name = "cryptography" },
     { name = "dj-database-url" },
     { name = "dj3-cloudinary-storage" },
@@ -626,12 +643,13 @@ requires-dist = [
     { name = "asgiref", specifier = ">=3.6.0" },
     { name = "cachetools", specifier = "==5.2.0" },
     { name = "cloudinary", specifier = "==1.25.0" },
+    { name = "crispy-bootstrap4", specifier = "==2025.6" },
     { name = "cryptography", specifier = "==44.0.1" },
     { name = "dj-database-url", specifier = "==0.5.0" },
     { name = "dj3-cloudinary-storage", specifier = "==0.0.5" },
     { name = "django", specifier = "==4.2.27" },
     { name = "django-allauth", specifier = "==65.14.0" },
-    { name = "django-crispy-forms", specifier = "==1.11.2" },
+    { name = "django-crispy-forms", specifier = "==2.5" },
     { name = "django-summernote", specifier = "==0.8.11.6" },
     { name = "google-api-core", specifier = "==2.11.0" },
     { name = "google-api-python-client", specifier = "==2.68.0" },
