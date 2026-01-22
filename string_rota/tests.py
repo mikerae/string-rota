@@ -657,6 +657,577 @@ class ReserveFormTest(TestCase):
 # UTILITY TESTS
 # ============================================================================
 
+class GetProjectUtilityTest(TestCase):
+    """Unit tests for get_project utility function"""
+
+    def setUp(self):
+        """Create test project"""
+        self.project = Project.objects.create(
+            name="Test Project",
+            slug="test-project"
+        )
+
+    def test_get_project_returns_correct_project(self):
+        """Test get_project returns project for valid slug"""
+        result = get_project("test-project")
+        self.assertEqual(result, self.project)
+
+    def test_get_project_returns_project_instance(self):
+        """Test get_project returns Project instance"""
+        result = get_project("test-project")
+        self.assertIsInstance(result, Project)
+
+    def test_get_project_raises_404_for_invalid_slug(self):
+        """Test get_project raises 404 for non-existent slug"""
+        from django.http import Http404
+        with self.assertRaises(Http404):
+            get_project("non-existent-project")
+
+
+class GetPlayerUtilityTest(TestCase):
+    """Unit tests for get_player utility function"""
+
+    def setUp(self):
+        """Create test player and user"""
+        self.section = Section.objects.create(name="Violin 1")
+        self.user = User.objects.create_user(
+            'testuser',
+            'test@example.com',
+            'password'
+        )
+        self.player = Player.objects.create(
+            first_name="John",
+            last_name="Doe",
+            section=self.section,
+            users_django=self.user
+        )
+
+    def test_get_player_returns_correct_player(self):
+        """Test get_player returns player for valid user"""
+        from unittest.mock import Mock
+        request = Mock()
+        request.user.id = self.user.id
+        result = get_player(request)
+        self.assertEqual(result, self.player)
+
+    def test_get_player_returns_player_instance(self):
+        """Test get_player returns Player instance"""
+        from unittest.mock import Mock
+        request = Mock()
+        request.user.id = self.user.id
+        result = get_player(request)
+        self.assertIsInstance(result, Player)
+
+    def test_get_player_raises_404_for_invalid_user(self):
+        """Test get_player raises 404 for user without player"""
+        from django.http import Http404
+        from unittest.mock import Mock
+        invalid_user = User.objects.create_user(
+            'noplayeruser',
+            'noplayer@example.com',
+            'password'
+        )
+        request = Mock()
+        request.user.id = invalid_user.id
+        with self.assertRaises(Http404):
+            get_player(request)
+
+
+class GetSectionUtilityTest(TestCase):
+    """Unit tests for get_section utility function"""
+
+    def setUp(self):
+        """Create test player"""
+        self.section = Section.objects.create(name="Violin 1")
+        self.user = User.objects.create_user(
+            'testuser',
+            'test@example.com',
+            'password'
+        )
+        self.player = Player.objects.create(
+            first_name="John",
+            last_name="Doe",
+            section=self.section,
+            users_django=self.user
+        )
+
+    def test_get_section_returns_correct_section(self):
+        """Test get_section returns player's section"""
+        result = get_section(self.player)
+        self.assertEqual(result, self.section)
+
+    def test_get_section_returns_section_instance(self):
+        """Test get_section returns Section instance"""
+        result = get_section(self.player)
+        self.assertIsInstance(result, Section)
+
+
+class GetPlayersUtilityTest(TestCase):
+    """Unit tests for get_players utility function"""
+
+    def setUp(self):
+        """Create test section with multiple players"""
+        self.section = Section.objects.create(name="Violin 1")
+        self.user1 = User.objects.create_user(
+            'player1',
+            'player1@example.com',
+            'password'
+        )
+        self.user2 = User.objects.create_user(
+            'player2',
+            'player2@example.com',
+            'password'
+        )
+        self.player1 = Player.objects.create(
+            first_name="John",
+            last_name="Doe",
+            section=self.section,
+            users_django=self.user1
+        )
+        self.player2 = Player.objects.create(
+            first_name="Jane",
+            last_name="Smith",
+            section=self.section,
+            users_django=self.user2
+        )
+        self.other_section = Section.objects.create(name="Cello")
+        self.user3 = User.objects.create_user(
+            'player3',
+            'player3@example.com',
+            'password'
+        )
+        self.player3 = Player.objects.create(
+            first_name="Bob",
+            last_name="Johnson",
+            section=self.other_section,
+            users_django=self.user3
+        )
+
+    def test_get_players_returns_all_players_in_section(self):
+        """Test get_players returns all players in section"""
+        result = get_players(self.section)
+        self.assertEqual(result.count(), 2)
+        self.assertIn(self.player1, result)
+        self.assertIn(self.player2, result)
+
+    def test_get_players_excludes_players_from_other_sections(self):
+        """Test get_players excludes players from other sections"""
+        result = get_players(self.section)
+        self.assertNotIn(self.player3, result)
+
+    def test_get_players_returns_queryset(self):
+        """Test get_players returns queryset"""
+        result = get_players(self.section)
+        self.assertEqual(result.model, Player)
+
+
+class GetSeatingPlanUtilityTest(TestCase):
+    """Unit tests for get_seating_plan utility function"""
+
+    def setUp(self):
+        """Create test seating plan"""
+        self.section = Section.objects.create(name="Violin 1")
+        self.project = Project.objects.create(
+            name="Test Project",
+            slug="test-project"
+        )
+        self.seating_plan = SeatingPlan.objects.create(
+            project=self.project,
+            section=self.section
+        )
+
+    def test_get_seating_plan_returns_correct_plan(self):
+        """Test get_seating_plan returns correct seating plan"""
+        result = get_seating_plan(self.project, self.section)
+        self.assertEqual(result, self.seating_plan)
+
+    def test_get_seating_plan_returns_seating_plan_instance(self):
+        """Test get_seating_plan returns SeatingPlan instance"""
+        result = get_seating_plan(self.project, self.section)
+        self.assertIsInstance(result, SeatingPlan)
+
+    def test_get_seating_plan_raises_404_for_missing_plan(self):
+        """Test get_seating_plan raises 404 for non-existent plan"""
+        from django.http import Http404
+        new_section = Section.objects.create(name="Cello")
+        with self.assertRaises(Http404):
+            get_seating_plan(self.project, new_section)
+
+
+class GetSeatingPositionsUtilityTest(TestCase):
+    """Unit tests for get_seating_positions utility function"""
+
+    def setUp(self):
+        """Create test seating positions"""
+        self.section = Section.objects.create(name="Violin 1")
+        self.project = Project.objects.create(
+            name="Test Project",
+            slug="test-project"
+        )
+        self.seating_plan = SeatingPlan.objects.create(
+            project=self.project,
+            section=self.section
+        )
+        self.user1 = User.objects.create_user(
+            'player1',
+            'player1@example.com',
+            'password'
+        )
+        self.user2 = User.objects.create_user(
+            'player2',
+            'player2@example.com',
+            'password'
+        )
+        self.player1 = Player.objects.create(
+            first_name="John",
+            last_name="Doe",
+            section=self.section,
+            users_django=self.user1
+        )
+        self.player2 = Player.objects.create(
+            first_name="Jane",
+            last_name="Smith",
+            section=self.section,
+            users_django=self.user2
+        )
+        self.sp1 = SeatingPosition.objects.create(
+            position_number=2,
+            seating_plan=self.seating_plan,
+            player=self.player2
+        )
+        self.sp2 = SeatingPosition.objects.create(
+            position_number=1,
+            seating_plan=self.seating_plan,
+            player=self.player1
+        )
+
+    def test_get_seating_positions_returns_all_positions(self):
+        """Test get_seating_positions returns all positions"""
+        result = get_seating_positions(self.seating_plan)
+        self.assertEqual(result.count(), 2)
+
+    def test_get_seating_positions_ordered_by_position_number(self):
+        """Test get_seating_positions returns positions ordered by number"""
+        result = get_seating_positions(self.seating_plan)
+        positions = list(result)
+        self.assertEqual(positions[0].position_number, 1)
+        self.assertEqual(positions[1].position_number, 2)
+
+    def test_get_seating_positions_returns_queryset(self):
+        """Test get_seating_positions returns queryset"""
+        result = get_seating_positions(self.seating_plan)
+        self.assertEqual(result.model, SeatingPosition)
+
+    def test_get_seating_positions_empty_for_no_positions(self):
+        """Test get_seating_positions returns empty queryset for no positions"""
+        new_plan = SeatingPlan.objects.create(
+            project=self.project,
+            section=self.section
+        )
+        result = get_seating_positions(new_plan)
+        self.assertEqual(result.count(), 0)
+
+
+class GetNotAvailablePlayersUtilityTest(TestCase):
+    """Unit tests for get_not_available_players utility function"""
+
+    def setUp(self):
+        """Create test data"""
+        self.section = Section.objects.create(name="Violin 1")
+        self.project = Project.objects.create(
+            name="Test Project",
+            slug="test-project"
+        )
+        self.seating_plan = SeatingPlan.objects.create(
+            project=self.project,
+            section=self.section
+        )
+        self.user1 = User.objects.create_user(
+            'player1',
+            'player1@example.com',
+            'password'
+        )
+        self.user2 = User.objects.create_user(
+            'player2',
+            'player2@example.com',
+            'password'
+        )
+        self.player1 = Player.objects.create(
+            first_name="John",
+            last_name="Doe",
+            section=self.section,
+            users_django=self.user1
+        )
+        self.player2 = Player.objects.create(
+            first_name="Jane",
+            last_name="Smith",
+            section=self.section,
+            users_django=self.user2
+        )
+        # Create seating position to add player1 to seating plan
+        SeatingPosition.objects.create(
+            position_number=1,
+            seating_plan=self.seating_plan,
+            player=self.player1
+        )
+
+    def test_get_not_available_players_returns_unallocated(self):
+        """Test function returns players not allocated to seating plan"""
+        all_players = get_players(self.section)
+        result = get_not_available_players(self.seating_plan, all_players)
+        self.assertEqual(result.count(), 1)
+        self.assertIn(self.player2, result)
+
+    def test_get_not_available_players_excludes_allocated(self):
+        """Test function excludes allocated players"""
+        all_players = get_players(self.section)
+        result = get_not_available_players(self.seating_plan, all_players)
+        self.assertNotIn(self.player1, result)
+
+    def test_get_not_available_players_empty_when_all_allocated(self):
+        """Test function returns empty when all players allocated"""
+        SeatingPosition.objects.create(
+            position_number=2,
+            seating_plan=self.seating_plan,
+            player=self.player2
+        )
+        all_players = get_players(self.section)
+        result = get_not_available_players(self.seating_plan, all_players)
+        self.assertEqual(result.count(), 0)
+
+
+class GetNotPlayingInPlayerProjectUtilityTest(TestCase):
+    """Unit tests for get_not_playing_in_playerproject utility function"""
+
+    def setUp(self):
+        """Create test data"""
+        self.section = Section.objects.create(name="Violin 1")
+        self.project = Project.objects.create(
+            name="Test Project",
+            slug="test-project"
+        )
+        self.seating_plan = SeatingPlan.objects.create(
+            project=self.project,
+            section=self.section
+        )
+        self.user1 = User.objects.create_user(
+            'player1',
+            'player1@example.com',
+            'password'
+        )
+        self.user2 = User.objects.create_user(
+            'player2',
+            'player2@example.com',
+            'password'
+        )
+        self.player1 = Player.objects.create(
+            first_name="John",
+            last_name="Doe",
+            section=self.section,
+            users_django=self.user1
+        )
+        self.player2 = Player.objects.create(
+            first_name="Jane",
+            last_name="Smith",
+            section=self.section,
+            users_django=self.user2
+        )
+        # Create seating position to add player1 to seating plan
+        SeatingPosition.objects.create(
+            position_number=1,
+            seating_plan=self.seating_plan,
+            player=self.player1
+        )
+        self.pp1 = PlayerProject.objects.create(
+            project=self.project,
+            player=self.player1,
+            performance_status="PL"
+        )
+        self.pp2 = PlayerProject.objects.create(
+            project=self.project,
+            player=self.player2,
+            performance_status="NA"
+        )
+
+    def test_get_not_playing_returns_unallocated_player_projects(self):
+        """Test function returns PlayerProject for unallocated players"""
+        all_players = get_players(self.section)
+        result = get_not_playing_in_playerproject(all_players, self.seating_plan, self.project)
+        self.assertEqual(result.count(), 1)
+        self.assertIn(self.pp2, result)
+
+    def test_get_not_playing_excludes_allocated_player_projects(self):
+        """Test function excludes allocated player projects"""
+        all_players = get_players(self.section)
+        result = get_not_playing_in_playerproject(all_players, self.seating_plan, self.project)
+        self.assertNotIn(self.pp1, result)
+
+    def test_get_not_playing_returns_queryset(self):
+        """Test function returns PlayerProject queryset"""
+        all_players = get_players(self.section)
+        result = get_not_playing_in_playerproject(all_players, self.seating_plan, self.project)
+        self.assertEqual(result.model, PlayerProject)
+
+
+class GetPlayingInPlayerProjectUtilityTest(TestCase):
+    """Unit tests for get_playing_in_playerproject utility function"""
+
+    def setUp(self):
+        """Create test data"""
+        self.section = Section.objects.create(name="Violin 1")
+        self.project = Project.objects.create(
+            name="Test Project",
+            slug="test-project"
+        )
+        self.seating_plan = SeatingPlan.objects.create(
+            project=self.project,
+            section=self.section
+        )
+        self.user1 = User.objects.create_user(
+            'player1',
+            'player1@example.com',
+            'password'
+        )
+        self.user2 = User.objects.create_user(
+            'player2',
+            'player2@example.com',
+            'password'
+        )
+        self.player1 = Player.objects.create(
+            first_name="John",
+            last_name="Doe",
+            section=self.section,
+            users_django=self.user1
+        )
+        self.player2 = Player.objects.create(
+            first_name="Jane",
+            last_name="Smith",
+            section=self.section,
+            users_django=self.user2
+        )
+        # Create seating position to add player1 to seating plan
+        SeatingPosition.objects.create(
+            position_number=1,
+            seating_plan=self.seating_plan,
+            player=self.player1
+        )
+        self.pp1 = PlayerProject.objects.create(
+            project=self.project,
+            player=self.player1,
+            performance_status="PL"
+        )
+        self.pp2 = PlayerProject.objects.create(
+            project=self.project,
+            player=self.player2,
+            performance_status="NA"
+        )
+
+    def test_get_playing_returns_allocated_player_projects(self):
+        """Test function returns PlayerProject for allocated players"""
+        result = get_playing_in_playerproject(self.seating_plan, self.project)
+        self.assertEqual(result.count(), 1)
+        self.assertIn(self.pp1, result)
+
+    def test_get_playing_excludes_unallocated_player_projects(self):
+        """Test function excludes unallocated player projects"""
+        result = get_playing_in_playerproject(self.seating_plan, self.project)
+        self.assertNotIn(self.pp2, result)
+
+    def test_get_playing_returns_queryset(self):
+        """Test function returns PlayerProject queryset"""
+        result = get_playing_in_playerproject(self.seating_plan, self.project)
+        self.assertEqual(result.model, PlayerProject)
+
+
+class GetAllPlayerProjectUtilityTest(TestCase):
+    """Unit tests for get_all_playerproject utility function"""
+
+    def setUp(self):
+        """Create test data"""
+        self.section = Section.objects.create(name="Violin 1")
+        self.project = Project.objects.create(
+            name="Test Project",
+            slug="test-project"
+        )
+        self.other_section = Section.objects.create(name="Cello")
+        self.seating_plan = SeatingPlan.objects.create(
+            project=self.project,
+            section=self.section
+        )
+        self.user1 = User.objects.create_user(
+            'player1',
+            'player1@example.com',
+            'password'
+        )
+        self.user2 = User.objects.create_user(
+            'player2',
+            'player2@example.com',
+            'password'
+        )
+        self.user3 = User.objects.create_user(
+            'player3',
+            'player3@example.com',
+            'password'
+        )
+        self.player1 = Player.objects.create(
+            first_name="John",
+            last_name="Doe",
+            section=self.section,
+            users_django=self.user1
+        )
+        self.player2 = Player.objects.create(
+            first_name="Jane",
+            last_name="Smith",
+            section=self.section,
+            users_django=self.user2
+        )
+        self.player3 = Player.objects.create(
+            first_name="Bob",
+            last_name="Johnson",
+            section=self.other_section,
+            users_django=self.user3
+        )
+        self.pp1 = PlayerProject.objects.create(
+            project=self.project,
+            player=self.player1,
+            performance_status="PL"
+        )
+        self.pp2 = PlayerProject.objects.create(
+            project=self.project,
+            player=self.player2,
+            performance_status="NA"
+        )
+        self.pp3 = PlayerProject.objects.create(
+            project=self.project,
+            player=self.player3,
+            performance_status="PL"
+        )
+
+    def test_get_all_playerproject_returns_all_for_section(self):
+        """Test function returns all PlayerProject for section players"""
+        result = get_all_playerproject(self.seating_plan, self.project)
+        self.assertEqual(result.count(), 2)
+        self.assertIn(self.pp1, result)
+        self.assertIn(self.pp2, result)
+
+    def test_get_all_playerproject_excludes_other_sections(self):
+        """Test function excludes players from other sections"""
+        result = get_all_playerproject(self.seating_plan, self.project)
+        self.assertNotIn(self.pp3, result)
+
+    def test_get_all_playerproject_returns_queryset(self):
+        """Test function returns PlayerProject queryset"""
+        result = get_all_playerproject(self.seating_plan, self.project)
+        self.assertEqual(result.model, PlayerProject)
+
+    def test_get_all_playerproject_with_multiple_statuses(self):
+        """Test function returns projects with any status"""
+        result = get_all_playerproject(self.seating_plan, self.project)
+        statuses = [pp.performance_status for pp in result]
+        self.assertIn("PL", statuses)
+        self.assertIn("NA", statuses)
+
+
 # ============================================================================
 # INTEGRATION/VIEW TESTS
 # ============================================================================
