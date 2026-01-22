@@ -1,0 +1,9 @@
+{
+  "doctype-first": false,
+  "spec-char-escape": false,
+  "attr-no-duplication": false,
+  "tag-pair": true,
+  "id-unique": false,
+  "tagname-lowercase": true
+}
+

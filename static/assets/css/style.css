@@ -9,14 +9,14 @@
 * License: https://bootstrapmade.com/license/
 */
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # General
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
-  color: #444444;
+  color: #444;
   max-width: 100%;
   overflow-x: hidden;
 }
@@ -37,27 +37,27 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Nunito", sans-serif;
+  font-family: Nunito, sans-serif;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Main
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 #main {
   margin-top: 60px;
   padding: 20px 30px;
   transition: all 0.3s;
 }
 
-@media (max-width: 1199px) {
+@media (width <= 1199px) {
   #main {
     padding: 20px;
   }
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Page Title
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .pagetitle {
   margin-bottom: 10px;
 }
@@ -69,9 +69,9 @@ h6 {
   color: #012970;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Back to top button
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .back-to-top {
   position: fixed;
   visibility: hidden;
@@ -102,21 +102,19 @@ h6 {
   opacity: 1;
 }
 
-/*--------------------------------------------------------------
+/* -------------------------------------------------------
 # Override some default Bootstrap stylings
---------------------------------------------------------------*/
+------------------------------------------------------- */
+
 /* Dropdown menus */
 .dropdown-menu {
   border-radius: 4px;
   padding: 10px 0;
-  -webkit-animation-name: dropdown-animate;
   animation-name: dropdown-animate;
-  -webkit-animation-duration: 0.2s;
   animation-duration: 0.2s;
-  -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   border: 0;
-  box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+  box-shadow: 0 5px 30px rgb(82 63 105 / 20%);
 }
 
 .dropdown-menu .dropdown-header,
@@ -127,7 +125,7 @@ h6 {
 }
 
 .dropdown-menu .dropdown-footer a {
-  color: #444444;
+  color: #444;
   text-decoration: underline;
 }
 
@@ -156,7 +154,7 @@ h6 {
   background-color: #f6f9ff;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .dropdown-menu-arrow::before {
     content: "";
     width: 13px;
@@ -171,20 +169,6 @@ h6 {
   }
 }
 
-@-webkit-keyframes dropdown-animate {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-
-  0% {
-    opacity: 0;
-  }
-}
-
 @keyframes dropdown-animate {
   0% {
     opacity: 0;
@@ -192,10 +176,6 @@ h6 {
 
   100% {
     opacity: 1;
-  }
-
-  0% {
-    opacity: 0;
   }
 }
 
@@ -240,7 +220,7 @@ h6 {
   margin-bottom: 30px;
   border: none;
   border-radius: 5px;
-  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  box-shadow: 0 0 30px rgb(1 41 112 / 10%);
 }
 
 .card-header,
@@ -252,11 +232,11 @@ h6 {
 }
 
 .card-title {
-  padding: 20px 0 15px 0;
+  padding: 20px 0 15px;
   font-size: 18px;
   font-weight: 500;
   color: #012970;
-  font-family: "Poppins", sans-serif;
+  font-family: Poppins, sans-serif;
 }
 
 .card-title span {
@@ -266,17 +246,17 @@ h6 {
 }
 
 .card-body {
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 20px;
 }
 
 .card-img-overlay {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgb(255 255 255 / 60%);
 }
 
 /* Alerts */
 .alert-heading {
   font-weight: 500;
-  font-family: "Poppins", sans-serif;
+  font-family: Poppins, sans-serif;
   font-size: 20px;
 }
 
@@ -322,7 +302,7 @@ h6 {
 }
 
 .accordion-flush .accordion-body {
-  padding: 0 0 15px 0;
+  padding: 0 0 15px;
   color: #3e4f6f;
   font-size: 15px;
 }
@@ -330,14 +310,12 @@ h6 {
 /* Breadcrumbs */
 .breadcrumb {
   font-size: 14px;
-  font-family: "Nunito", sans-serif;
-  /* color: #899bbd; */
+  font-family: Nunito, sans-serif;
   color: #2f4a7b;
   font-weight: 600;
 }
 
 .breadcrumb a {
-  /* color: #899bbd; */
   color: #2f4a7b;
   transition: 0.3s;
 }
@@ -377,14 +355,14 @@ h6 {
   border-bottom: 2px solid #4154f1;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Header
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .logo {
   line-height: 1;
 }
 
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   .logo {
     width: 280px;
   }
@@ -399,18 +377,16 @@ h6 {
   font-size: 26px;
   font-weight: 700;
   color: #012970;
-  font-family: "Nunito", sans-serif;
+  font-family: Nunito, sans-serif;
 }
 
 .header {
   transition: all 0.5s;
   z-index: 997;
   height: 60px;
-  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+  box-shadow: 0 2px 20px rgb(1 41 112 / 10%);
   background-color: #fff;
   padding-left: 20px;
-  /* Toggle Sidebar Button */
-  /* Search Bar */
 }
 
 .header .toggle-sidebar-btn {
@@ -425,14 +401,14 @@ h6 {
   padding: 0 20px;
 }
 
-@media (max-width: 1199px) {
+@media (width <= 1199px) {
   .header .search-bar {
     position: fixed;
     top: 50px;
     left: 0;
     right: 0;
     padding: 20px;
-    box-shadow: 0px 0px 15px 0px rgba(1, 41, 112, 0.1);
+    box-shadow: 0 0 15px rgb(1 41 112 / 10%);
     background: white;
     z-index: 9999;
     transition: 0.3s;
@@ -452,10 +428,9 @@ h6 {
 }
 
 .header .search-form input {
-  border: 0;
   font-size: 14px;
   color: #012970;
-  border: 1px solid rgba(1, 41, 112, 0.2);
+  border: 1px solid rgb(1 41 112 / 20%);
   padding: 7px 38px 7px 8px;
   border-radius: 3px;
   transition: 0.3s;
@@ -465,8 +440,8 @@ h6 {
 .header .search-form input:focus,
 .header .search-form input:hover {
   outline: none;
-  box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
-  border: 1px solid rgba(1, 41, 112, 0.3);
+  box-shadow: 0 0 10px rgb(1 41 112 / 15%);
+  border: 1px solid rgb(1 41 112 / 30%);
 }
 
 .header .search-form button {
@@ -480,9 +455,9 @@ h6 {
   color: #012970;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Header Nav
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .header-nav ul {
   list-style: none;
 }
@@ -578,7 +553,7 @@ h6 {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 5px;
-  color: #444444;
+  color: #444;
 }
 
 .header-nav .messages .message-item p {
@@ -601,7 +576,7 @@ h6 {
   font-size: 18px;
   margin-bottom: 0;
   font-weight: 600;
-  color: #444444;
+  color: #444;
 }
 
 .header-nav .profile .dropdown-header span {
@@ -624,9 +599,9 @@ h6 {
   background-color: #f6f9ff;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Sidebar
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .sidebar {
   position: fixed;
   top: 60px;
@@ -639,11 +614,11 @@ h6 {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
-  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+  box-shadow: 0 0 20px rgb(1 41 112 / 10%);
   background-color: #fff;
 }
 
-@media (max-width: 1199px) {
+@media (width <= 1199px) {
   .sidebar {
     left: -300px;
   }
@@ -659,22 +634,20 @@ h6 {
   background-color: #aab7cf;
 }
 
-@media (min-width: 1200px) {
-
+@media (width >= 1200px) {
   #main,
   #footer {
     margin-left: 300px;
   }
 }
 
-@media (max-width: 1199px) {
+@media (width <= 1199px) {
   .toggle-sidebar .sidebar {
     left: 0;
   }
 }
 
-@media (min-width: 1200px) {
-
+@media (width >= 1200px) {
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
     margin-left: 0;
@@ -715,7 +688,7 @@ h6 {
   font-size: 15px;
   font-weight: 600;
   color: #4154f1;
-  transition: 0.3;
+  transition: 0.3s;
   background: #f6f9ff;
   padding: 10px 15px;
   border-radius: 4px;
@@ -755,7 +728,7 @@ h6 {
 }
 
 .sidebar-nav .nav-content {
-  padding: 5px 0 0 0;
+  padding: 5px 0 0;
   margin: 0;
   list-style: none;
 }
@@ -766,7 +739,6 @@ h6 {
   font-size: 14px;
   font-weight: 600;
   color: #012970;
-  transition: 0.3;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
 }
@@ -787,13 +759,14 @@ h6 {
   background-color: #4154f1;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Dashboard
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
+
 /* Filter dropdown */
 .dashboard .filter {
   position: absolute;
-  right: 0px;
+  right: 0;
   top: 15px;
 }
 
@@ -941,7 +914,7 @@ h6 {
 
 .dashboard .news p {
   font-size: 14px;
-  color: #777777;
+  color: #777;
   margin-left: 95px;
 }
 
@@ -959,11 +932,11 @@ h6 {
 }
 
 .dashboard .recent-sales .dataTable-top {
-  padding: 0 0 10px 0;
+  padding: 0 0 10px;
 }
 
 .dashboard .recent-sales .dataTable-bottom {
-  padding: 10px 0 0 0;
+  padding: 10px 0 0;
 }
 
 /* Top Selling */
@@ -988,17 +961,17 @@ h6 {
   max-width: 60px;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Login Page
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 
-#login_out {
+#login-out {
   background-color: #a0c7f6;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Icons list page
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .iconslist {
   display: grid;
   max-width: 100%;
@@ -1032,9 +1005,9 @@ h6 {
   color: #666;
 }
 
-/*--------------------------------------------------------------
-# Profie Page
---------------------------------------------------------------*/
+/* --------------------------------------------------------------
+# Profile Page
+-------------------------------------------------------------- */
 .profile .profile-card img {
   max-width: 120px;
 }
@@ -1043,7 +1016,7 @@ h6 {
   font-size: 24px;
   font-weight: 700;
   color: #2c384e;
-  margin: 10px 0 0 0;
+  margin: 10px 0 0;
 }
 
 .profile .profile-card h3 {
@@ -1053,7 +1026,7 @@ h6 {
 .profile .profile-card .social-links a {
   font-size: 20px;
   display: inline-block;
-  color: rgba(1, 41, 112, 0.5);
+  color: rgb(1 41 112 / 50%);
   line-height: 0;
   margin-right: 10px;
   transition: 0.3s;
@@ -1074,21 +1047,21 @@ h6 {
 
 .profile .profile-overview .label {
   font-weight: 600;
-  color: rgba(1, 41, 112, 0.6);
+  color: rgb(1 41 112 / 60%);
 }
 
 .profile .profile-edit label {
   font-weight: 600;
-  color: rgba(1, 41, 112, 0.6);
+  color: rgb(1 41 112 / 60%);
 }
 
 .profile .profile-edit img {
   max-width: 120px;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # F.A.Q Page
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .faq .basic h6 {
   font-size: 18px;
   font-weight: 600;
@@ -1099,9 +1072,9 @@ h6 {
   color: #6980aa;
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Contact
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .contact .info-box {
   padding: 28px 30px;
 }
@@ -1116,7 +1089,7 @@ h6 {
   font-size: 20px;
   color: #012970;
   font-weight: 700;
-  margin: 20px 0 10px 0;
+  margin: 20px 0 10px;
 }
 
 .contact .info-box p {
@@ -1154,7 +1127,7 @@ h6 {
   margin-bottom: 24px;
 }
 
-.contact .php-email-form .loading:before {
+.contact .php-email-form .loading::before {
   content: "";
   display: inline-block;
   border-radius: 50%;
@@ -1163,13 +1136,11 @@ h6 {
   margin: 0 10px -6px 0;
   border: 3px solid #18d26e;
   border-top-color: #eee;
-  -webkit-animation: animate-loading 1s linear infinite;
   animation: animate-loading 1s linear infinite;
 }
 
 .contact .php-email-form input,
 .contact .php-email-form textarea {
-  border-radius: 0;
   box-shadow: none;
   font-size: 14px;
   border-radius: 0;
@@ -1188,7 +1159,7 @@ h6 {
   padding: 12px 15px;
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[type="submit"] {
   background: #4154f1;
   border: 0;
   padding: 10px 30px;
@@ -1197,18 +1168,8 @@ h6 {
   border-radius: 4px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .php-email-form button[type="submit"]:hover {
   background: #5969f3;
-}
-
-@-webkit-keyframes animate-loading {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 @keyframes animate-loading {
@@ -1221,9 +1182,9 @@ h6 {
   }
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Error 404
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .error-404 {
   padding: 30px;
 }
@@ -1253,15 +1214,15 @@ h6 {
   background: #3e4f6f;
 }
 
-@media (min-width: 992px) {
+@media (width >= 992px) {
   .error-404 img {
     max-width: 50%;
   }
 }
 
-/*--------------------------------------------------------------
+/* --------------------------------------------------------------
 # Footer
---------------------------------------------------------------*/
+-------------------------------------------------------------- */
 .footer {
   padding: 20px 0;
   font-size: 14px;

@@ -1,0 +1,14 @@
+{
+  "esversion": 6,
+  "node": true,
+  "browser": true,
+  "strict": false,
+  "globals": {
+    "Chart": false,
+    "ApexCharts": false,
+    "echarts": false,
+    "tinymce": false,
+    "DataTable": false,
+    "Quill": false
+  }
+}
