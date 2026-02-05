@@ -15,7 +15,7 @@ class CustomPasswordChangeView(PasswordChangeView):
 
 urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
-    path("summernote/", include("django_summernote.urls")),
+    path("ckeditor/", include("ckeditor_uploader.urls")),
     path("string_rota/", include("string_rota.urls")),
     path("", login, name="login"),
     re_path(

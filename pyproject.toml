@@ -3,7 +3,7 @@ name = "string-rota"
 version = "0.1.0"
 description = "A web app to managed RSNO String Rotas. Codebase derived from Code Institute 4th milestone project for Full Stach Developer Diploma"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = "==3.14.3"
 dependencies = [
     "asgiref>=3.6.0",
     "cachetools==5.2.0",
@@ -11,17 +11,17 @@ dependencies = [
     "cryptography==44.0.1",
     "dj-database-url==0.5.0",
     "dj3-cloudinary-storage==0.0.5",
-    "Django==4.2.27",
-    "django-allauth==65.14.0",
-    "django-crispy-forms==2.5",
-    "crispy-bootstrap4==2025.6",
-    "django-summernote==0.8.11.6",
-    "google-api-core==2.11.0",
+    "Django>=5.0.0",
+    "django-allauth>=65.14.0",
+    "django-crispy-forms>=2.5",
+    "crispy-bootstrap4>=2025.6",
+    "django-ckeditor>=6.5.1",
+    "google-api-core==2.29.0",
     "google-api-python-client==2.68.0",
     "google-auth==2.15.0",
     "google-auth-httplib2==0.1.0",
     "google-auth-oauthlib==0.7.1",
-    "googleapis-common-protos==1.57.0",
+    "googleapis-common-protos==1.72.0",
     "gspread==5.7.2",
     "gunicorn==22.0.0",
     "httplib2==0.21.0",
@@ -29,7 +29,7 @@ dependencies = [
     "multipledispatch==0.6.0",
     "natsort==8.2.0",
     "oauthlib==3.2.2",
-    "protobuf==4.25.8",
+    "protobuf==6.33.5",
     "psycopg2==2.9.11",
     "pyasn1==0.4.8",
     "pyasn1-modules==0.2.8",
